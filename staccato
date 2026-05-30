@@ -180,7 +180,7 @@ const lyrics = [
     { t: 45, text: "Bu açık hava tımarhanesinde..." },
     { t: 47, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
     { t: 55, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
-    { t: 62, text: "(staccato) Din! Din! Din!" },
+    { t: 62, text: "Din! Din! Din!" },
     { t: 70, text: "Dinlemez dinler!" },
     { t: 73, text: "Şehirleri dar etseler de," },
     { t: 77, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
