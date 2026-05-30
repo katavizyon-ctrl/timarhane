@@ -353,6 +353,19 @@
             pointer-events: none;
         }
 
+        /* ── Page transition ── */
+        .page-veil {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: #050505;
+            opacity: 1;
+            pointer-events: none;
+            transition: opacity 600ms ease;
+        }
+
+        .page-veil.revealed { opacity: 0; }
+
         /* ── TABLET (≤ 980px) ── */
         @media (max-width: 980px) {
             #home-stage {
@@ -551,6 +564,8 @@
         <button class="mobile-menu-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobileMenu"><span></span></button>
     </header>
 
+    <div class="page-veil" id="pageVeil"></div>
+
     <nav class="mobile-drawer" id="mobileMenu" aria-label="Mobil menü">
         <a href="home.html">Core</a>
         <a href="frekans.html">Frekans_101</a>
@@ -582,6 +597,13 @@
 
     <script>
         (function () {
+            // Fade in on load
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.getElementById('pageVeil').classList.add('revealed');
+                });
+            });
+
             const toggle = document.querySelector('.mobile-menu-toggle');
             const drawer = document.getElementById('mobileMenu');
             if (!toggle || !drawer) return;

@@ -217,6 +217,19 @@
             100% { opacity: 0.52; }
         }
 
+        /* ── Page transition ── */
+        .page-veil {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: #050505;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 520ms ease;
+        }
+
+        .page-veil.fading { opacity: 1; }
+
         @media (max-width: 760px) {
             body {
                 min-height: 100svh;
@@ -279,6 +292,7 @@
     </style>
 </head>
 <body>
+    <div class="page-veil" id="pageVeil"></div>
     <div class="collage-backdrop"></div>
 
     <div class="language-switch" aria-label="Language switch">
@@ -402,9 +416,15 @@
             btn.style.borderColor = "var(--blue-dim)";
             btn.style.color = "var(--blue-dim)";
 
+            const veil = document.getElementById("pageVeil");
+            veil.style.pointerEvents = "all";
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => { veil.classList.add("fading"); });
+            });
+
             setTimeout(() => {
                 window.location.href = "home-en.html";
-            }, 800);
+            }, 560);
         }
 
         document.addEventListener("DOMContentLoaded", () => {
