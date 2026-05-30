@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIMARHANE // Mavi Randevu</title>
+    <title>TIMARHANE // Blue Rendezvous</title>
     <style>
         :root {
             --cyber-blue: #00f0ff;
@@ -96,8 +96,6 @@
         }
 
 
-
-
         .lang-switch {
             display: inline-flex;
             align-items: center;
@@ -120,6 +118,7 @@
         .lang-switch a.lang-active {
             color: var(--paper);
         }
+
 
 
         .menu-toggle {
@@ -326,6 +325,11 @@
                 letter-spacing: 0.20em;
             }
 
+            .lang-switch {
+                padding: 18px 0 4px;
+                font-size: 0.82rem;
+            }
+
             .main-interface {
                 margin: 0 18px 44px;
                 max-width: calc(100vw - 36px);
@@ -444,6 +448,11 @@
                 letter-spacing: 0.20em !important;
             }
 
+            .lang-switch {
+                padding: 18px 0 4px;
+                font-size: 0.82rem;
+            }
+
             .main-interface {
                 position: relative;
                 z-index: 12;
@@ -495,23 +504,23 @@
     <div class="neon-pulse-engine"></div>
     <canvas id="matrixCanvas"></canvas>
 
-    <nav class="site-nav" aria-label="Ana navigasyon">
-        <a class="nav-brand" href="home.html">SİSTEM DIŞI FREKANS</a>
-        <button class="menu-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="songMenu"><span></span></button>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a class="nav-brand" href="home-en.html">OUT-OF-SYSTEM FREQUENCY</a>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="songMenu"><span></span></button>
         <div class="nav-links" id="songMenu">
-            <a class="top-nav-link" href="home.html">Core</a>
-            <a class="top-nav-link active" href="frekans.html">Frekans_101</a>
-            <a class="top-nav-link" href="#">Sentetik Anılar</a>
-            <a class="top-nav-link" href="#">Veri Mahzeni</a>
-            <a class="top-nav-link disabled" href="#" aria-disabled="true">Senkron: Kopuk</a>
-            <div class="lang-switch" aria-label="Dil seçimi">
-                <a href="mavi.html" class="lang-active">TR</a><span>/</span><a href="mavi-en.html">EN</a>
+            <a class="top-nav-link" href="home-en.html">Core</a>
+            <a class="top-nav-link active" href="frekans-en.html">Frequency_101</a>
+            <a class="top-nav-link" href="#">Synthetic Memories</a>
+            <a class="top-nav-link" href="#">Data Vault</a>
+            <a class="top-nav-link disabled" href="#" aria-disabled="true">Sync: Offline</a>
+            <div class="lang-switch" aria-label="Language switch">
+                <a href="mavi.html">TR</a><span>/</span><a href="mavi-en.html" class="lang-active">EN</a>
             </div>
         </div>
     </nav>
 
     <div class="main-interface">
-        <header><div class="sys-title">TIMARHANE_OS v7.0</div></header>
+        <header><div class="sys-title">TIMARHANE_OS v7.0 // BLUE RENDEZVOUS</div></header>
         <div class="audio-wrapper"><audio id="cyberPlayer" controls src="Onno v3.mp3"></audio></div>
         <div class="lyrics-container"><div class="scroller-engine" id="scrollerEngine"></div></div>
     </div>
@@ -525,13 +534,13 @@
             toggle.addEventListener('click', () => {
                 const open = document.body.classList.toggle('menu-open');
                 toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+                toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
             });
             drawer.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     document.body.classList.remove('menu-open');
                     toggle.setAttribute('aria-expanded', 'false');
-                    toggle.setAttribute('aria-label', 'Menüyü aç');
+                    toggle.setAttribute('aria-label', 'Open menu');
                 });
             });
         })();

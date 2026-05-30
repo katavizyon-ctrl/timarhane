@@ -258,6 +258,37 @@
 
 
 
+
+        .language-switch {
+            position: absolute;
+            z-index: 3;
+            top: clamp(28px, 5vh, 56px);
+            right: clamp(28px, 5vw, 72px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--paper-dim);
+            font-size: clamp(0.68rem, 1vw, 0.82rem);
+            font-weight: 800;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .language-switch a {
+            color: rgba(232, 216, 184, 0.48);
+            text-decoration: none;
+            transition: color 200ms ease;
+        }
+
+        .language-switch a:hover,
+        .language-switch a.lang-active {
+            color: var(--phosphor);
+        }
+
+        .language-switch span {
+            color: rgba(232, 216, 184, 0.28);
+        }
+
         /* MOBILE HAMBURGER NAV */
         .mobile-topbar {
             display: none;
@@ -736,9 +767,11 @@
         <a href="#">Sentetik Anılar</a>
         <a href="#">Veri Mahzeni</a>
         <a href="#" class="is-offline" aria-disabled="true">Senkron: Kopuk</a>
+        <a href="home-en.html">EN</a>
     </nav>
     <main id="home-stage" aria-label="TIMARHANE ana ekranı">
         <div class="signal-marker">Sistem Dışı Frekans // 01</div>
+        <div class="language-switch" aria-label="Dil seçimi"><a href="home.html" class="lang-active">TR</a><span>/</span><a href="home-en.html">EN</a></div>
 
         <!-- SOL: Manifesto -->
         <section class="manifesto-panel" aria-label="Manifesto">

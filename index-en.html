@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -176,7 +176,7 @@
             box-shadow: 0 0 18px rgba(140,255,176,0.32);
         }
 
-        
+
         .language-switch {
             position: fixed;
             top: clamp(18px, 3vw, 32px);
@@ -206,7 +206,7 @@
             color: rgba(232, 216, 184, 0.30);
         }
 
-@keyframes blink {
+        @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
@@ -281,30 +281,30 @@
 <body>
     <div class="collage-backdrop"></div>
 
-    <div class="language-switch" aria-label="Dil seçimi">
-        <a href="index.html" class="lang-active">TR</a>
+    <div class="language-switch" aria-label="Language switch">
+        <a href="index.html">TR</a>
         <span>/</span>
-        <a href="index-en.html">EN</a>
+        <a href="index-en.html" class="lang-active">EN</a>
     </div>
 
     <div class="terminal-container" id="terminalGrid">
-        <div class="terminal-tag">SİSTEM DIŞI FREKANS // BOOT</div>
+        <div class="terminal-tag">OUT-OF-SYSTEM FREQUENCY // BOOT</div>
     </div>
 
     <script>
         const terminalGrid = document.getElementById("terminalGrid");
 
         const BOOT_SEQUENCE = [
-            { type: "dim", text: "Karanlık alandan düşük seviyeli sinyal alınıyor..." },
-            { type: "green", text: "✔ FREKANS_101: UYANDI" },
-            { type: "green", text: "✔ BOŞLUK_KAYDI: AÇILDI" },
-            { type: "blue", text: "ℹ SENTETİK ANILAR: PARÇALI AMA ERİŞİLEBİLİR" },
-            { type: "main", text: ">> SİSTEM DIŞI FREKANS TESPİT EDİLDİ // 99.6 MHz" },
-            { type: "main", text: ">> GERÇEKLİK ASKIYA ALINDI // MERKEZDEN UZAKLAŞILIYOR" },
-            { type: "pink", text: ">> UYARI: DIŞ BAĞLANTI İZLENEMİYOR // İÇERİSİ DAHA GÜVENLİ" },
-            { type: "dim", text: "Duygu işleme katmanı yükleniyor..." },
+            { type: "dim", text: "Receiving low-level signal from the dark field..." },
+            { type: "green", text: "✔ FREQUENCY_101: AWAKE" },
+            { type: "green", text: "✔ VOID_RECORD: OPENED" },
+            { type: "blue", text: "ℹ SYNTHETIC MEMORIES: FRAGMENTED BUT ACCESSIBLE" },
+            { type: "main", text: ">> OUT-OF-SYSTEM FREQUENCY DETECTED // 99.6 MHz" },
+            { type: "main", text: ">> REALITY SUSPENDED // DRIFTING AWAY FROM THE CENTER" },
+            { type: "pink", text: ">> WARNING: EXTERNAL LINK CANNOT BE TRACED // INSIDE IS SAFER" },
+            { type: "dim", text: "Loading emotional processing layer..." },
             { type: "progressBar", text: "" },
-            { type: "green", text: "✔ TIMARHANE_OS: BOŞLUĞA GİRİŞ HAZIR." }
+            { type: "green", text: "✔ TIMARHANE_OS: VOID ENTRY READY." }
         ];
 
         let lineIndex = 0;
@@ -322,9 +322,9 @@
                 row.className = "log-line";
 
                 let prefix = '<span class="dim">IST@void:~#</span>';
-                if (currentData.type === "pink") prefix = '<span class="pink">[UYARI]</span>';
+                if (currentData.type === "pink") prefix = '<span class="pink">[WARNING]</span>';
                 if (currentData.type === "green") prefix = '<span class="green">[OK]</span>';
-                if (currentData.type === "blue") prefix = '<span class="blue">[ARŞİV]</span>';
+                if (currentData.type === "blue") prefix = '<span class="blue">[ARCHIVE]</span>';
 
                 row.innerHTML = `${prefix} <span class="${currentData.type}">${currentData.text}</span>`;
                 terminalGrid.appendChild(row);
@@ -343,7 +343,7 @@
         function renderProgressBar() {
             const row = document.createElement("div");
             row.className = "log-line";
-            row.innerHTML = '<span class="dim">IST@void:~#</span> <span class="dim">[EŞİK] </span><span id="pBarText" class="blue"></span>';
+            row.innerHTML = '<span class="dim">IST@void:~#</span> <span class="dim">[THRESHOLD] </span><span id="pBarText" class="blue"></span>';
             terminalGrid.appendChild(row);
 
             const pBarText = document.getElementById("pBarText");
@@ -374,7 +374,7 @@
             inputRow.innerHTML = `
                 <span>TIMARHANE@OS:~#</span>
                 <span id="typedCommand"></span><span class="cursor" id="promptCursor"></span>
-                <button class="interactive-btn" id="execBtn" onclick="runRedirect()">[ FREKANSI AÇ ]</button>
+                <button class="interactive-btn" id="execBtn" onclick="runRedirect()">[ OPEN FREQUENCY ]</button>
             `;
             terminalGrid.appendChild(inputRow);
 
@@ -398,12 +398,12 @@
         function runRedirect() {
             const btn = document.getElementById("execBtn");
             document.getElementById("promptCursor").style.display = "none";
-            btn.innerText = "[ AÇILIYOR... ]";
+            btn.innerText = "[ OPENING... ]";
             btn.style.borderColor = "var(--blue-dim)";
             btn.style.color = "var(--blue-dim)";
 
             setTimeout(() => {
-                window.location.href = "home.html";
+                window.location.href = "home-en.html";
             }, 800);
         }
 
