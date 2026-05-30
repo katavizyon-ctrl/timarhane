@@ -32,7 +32,7 @@
         .cyber-universe-bg {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url('tape_1.PNG'); 
+            background-image: url('tape_1.png'); 
             background-size: cover;
             background-position: center;
             z-index: 1;
