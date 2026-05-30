@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIMARHANE // Mavi Randevu</title>
+    <title>TIMARHANE // FINAL</title>
     <style>
         :root { --cyber-blue: #00f0ff; --matrix-green: #00ff66; --terminal-bg: rgba(10, 14, 23, 0.85); }
         body { margin: 0; background: #05070b; font-family: 'Courier New', monospace; color: #fff; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
@@ -11,14 +11,22 @@
         .neon-pulse-engine { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none; background: radial-gradient(circle at 75% 45%, rgba(0, 240, 255, 0.4) 0%, transparent 65%); opacity: 0; }
         .track-playing .neon-pulse-engine { opacity: 1; animation: cyberBeaconSTORM 2.5s steps(1, end) infinite; }
         #matrixCanvas { position: fixed; z-index: 3; opacity: 0.12; pointer-events: none; }
+        
         .main-interface { width: 100%; max-width: 530px; margin-left: 5%; padding: 24px; background: var(--terminal-bg); border: 1px solid rgba(0, 240, 255, 0.2); backdrop-filter: blur(8px); z-index: 10; border-radius: 4px; }
         .sys-title { font-size: 1.35rem; color: var(--cyber-blue); font-weight: bold; letter-spacing: 3px; margin-bottom: 20px; }
         .audio-wrapper { background: rgba(0,0,0,0.6); padding: 12px; margin: 15px 0; border: 1px solid var(--matrix-green); }
         audio { width: 100%; filter: invert(1) hue-rotate(180deg); }
+        
         .lyrics-container { height: 280px; overflow: hidden; position: relative; }
         .scroller-engine { position: absolute; width: 100%; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .lyrics-block { margin-bottom: 24px; opacity: 0.3; transition: 0.3s; font-size: 0.95rem; }
         .lyrics-block.active { opacity: 1; color: var(--cyber-blue); font-weight: bold; text-shadow: 0 0 8px var(--cyber-blue); }
+        
+        /* Final Görsel Animasyonu */
+        .final-stage { width: 100%; height: 100%; background: url('landing_bg_2.png') center/cover; position: relative; }
+        .star { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 10px white; animation: bloom 3s infinite; }
+        @keyframes bloom { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        
         @keyframes streetGlimmer { 0% { filter: brightness(0.9); } 100% { filter: brightness(1.1); } }
         @keyframes cyberBeaconSTORM { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
     </style>
@@ -27,72 +35,60 @@
     <div class="cyber-universe-bg"></div>
     <div class="neon-pulse-engine"></div>
     <canvas id="matrixCanvas"></canvas>
+    
     <div class="main-interface">
         <header><div class="sys-title">TIMARHANE_OS v7.0</div></header>
         <div class="audio-wrapper"><audio id="cyberPlayer" controls src="Onno v3.mp3"></audio></div>
-        <div class="lyrics-container"><div class="scroller-engine" id="scrollerEngine"></div></div>
+        <div class="lyrics-container" id="lyricsContainer">
+            <div class="scroller-engine" id="scrollerEngine"></div>
+        </div>
     </div>
 
     <script>
- const lyrics = [
-    { t: 32, text: "Sabah erkenden kalktık yine," },
-    { t: 36, text: "Cebimiz dar ama gülümsemek bedava." },
-    { t: 40, text: "Trafik çıldırmış, ekmek pahalanmış," },
-    { t: 45, text: "Bu açık hava tımarhanesinde..." },
-    { t: 47, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
-    { t: 55, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
-    { t: 62, text: "Din! Din! Din!" },
-    { t: 70, text: "Dinlemez dinler!" },
-    { t: 73, text: "Şehirleri dar etseler de," },
-    { t: 77, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-    { t: 81, text: "Yine daldık o muzip bilmeceye..." },
-    { t: 85, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-    { t: 92, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-    { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
-    { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!" },
-    { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!" },
-    { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller." },
-    { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler." },
-    { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana." },
-    { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-    { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun..." },
-    { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne." },
-    { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
-    { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!" },
-    { t: 227, text: "Hadi gel... Kodları kıralım..." },
-    { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da..." },
-    { t: 240, text: "Aaaah-yaaa... Çınlarız biz!" },
-    { t: 246, text: "Gülümse şimdi... Tam da böyle..." },
-    { t: 288, text: "Sabah erkenden kalktık yine," },
-    { t: 292, text: "Cebimiz dar ama gülümsemek bedava." },
-    { t: 296, text: "Trafik çıldırmış, ekmek pahalanmış," },
-    { t: 300, text: "Bu açık hava tımarhanesinde..." },
-    { t: 304, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
-    { t: 311, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
-    { t: 318, text: "Din! Din! Din!" },
-    { t: 319, text: "Dinlemez dinler!" },
-    { t: 322, text: "Şehirleri dar etseler de," },
-    { t: 326, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-    { t: 330, text: "Yine daldık o muzip bilmeceye..." },
-    { t: 332, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-    { t: 338, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-    { t: 348, text: "Dinlemez dinler!" },
-    { t: 351, text: "Şehirleri dar etseler de," },
-    { t: 355, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-    { t: 360, text: "Yine daldık o muzip bilmeceye..." },
-    { t: 362, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-    { t: 369, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-    { t: 378, text: "Dinler ah dinler!" },
-    { t: 380, text: "Şehirleri dar etseler de," },
-    { t: 383, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-    { t: 389, text: "Yine daldık o muzip bilmeceye..." },
-    { t: 392, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-    { t: 388, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" }
-];
+        const lyrics = [
+            { t: 32, text: "Sabah erkenden kalktık yine," }, { t: 36, text: "Cebimiz dar ama gülümsemek bedava." },
+            { t: 40, text: "Trafik çıldırmış, ekmek pahalanmış," }, { t: 45, text: "Bu açık hava tımarhanesinde..." },
+            { t: 47, text: "Sistem mi çökmüş? Veriler mi çalınmış?" }, { t: 55, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
+            { t: 62, text: "(staccato) Din! Din! Din!" }, { t: 70, text: "Dinlemez dinler!" },
+            { t: 73, text: "Şehirleri dar etseler de," }, { t: 77, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+            { t: 81, text: "Yine daldık o muzip bilmeceye..." }, { t: 85, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+            { t: 92, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
+            { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!" },
+            { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!" },
+            { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller." },
+            { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler." },
+            { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana." },
+            { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun..." },
+            { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne." },
+            { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
+            { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!" },
+            { t: 227, text: "Hadi gel... Kodları kıralım..." },
+            { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da..." },
+            { t: 236, text: "Aaaah-yaaa... Çınlarız biz!" },
+            { t: 248, text: "Gülümse şimdi... Tam da böyle..." },
+            { t: 288, text: "Sabah erkenden kalktık yine," }, { t: 290, text: "Cebimiz dar ama gülümsemek bedava." },
+            { t: 294, text: "Trafik çıldırmış, ekmek pahalanmış," }, { t: 300, text: "Bu açık hava tımarhanesinde..." },
+            { t: 306, text: "Sistem mi çökmüş? Veriler mi çalınmış?" }, { t: 311, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
+            { t: 318, text: "Din! Din! Din!" }, { t: 320, text: "Dinlemez dinler!" },
+            { t: 323, text: "Şehirleri dar etseler de," }, { t: 326, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+            { t: 330, text: "Yine daldık o muzip bilmeceye..." }, { t: 332, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+            { t: 338, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 348, text: "Dinlemez dinler!" }, { t: 350, text: "Şehirleri dar etseler de," },
+            { t: 356, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+            { t: 360, text: "Yine daldık o muzip bilmeceye..." }, { t: 368, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+            { t: 371, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 384, text: "Dinler ah dinler!" }, { t: 386, text: "Şehirleri dar etseler de," },
+            { t: 389, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+            { t: 392, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 394, text: "Yine daldık o muzip bilmeceye..." },
+            { t: 398, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+            { t: 479, text: "Sistem kapanıyor..." }
+        ];
 
         const p = document.getElementById('cyberPlayer'), sc = document.getElementById('scrollerEngine'), b = document.getElementById('cyberBody');
-        let currentIndex = -1;
-
+        
         lyrics.forEach((l) => {
             const d = document.createElement('div');
             d.className = 'lyrics-block';
@@ -103,18 +99,29 @@
         p.onpause = () => b.classList.remove('track-playing');
 
         p.ontimeupdate = () => {
-            let newIndex = -1;
-            for (let i = 0; i < lyrics.length; i++) {
-                if (p.currentTime >= lyrics[i].t) newIndex = i;
-                else break;
-            }
-
-            if (newIndex !== -1 && newIndex !== currentIndex) {
-                currentIndex = newIndex;
-                Array.from(sc.children).forEach(d => d.classList.remove('active'));
-                const el = sc.children[currentIndex];
-                el.classList.add('active');
-                sc.style.transform = `translateY(-${el.offsetTop}px)`;
+            if (p.currentTime > 398 && !window.isFinished) {
+                window.isFinished = true;
+                const container = document.getElementById('lyricsContainer');
+                container.innerHTML = '<div class="final-stage"></div>';
+                const stage = container.querySelector('.final-stage');
+                for(let i=0; i<15; i++) {
+                    let s = document.createElement('div');
+                    s.className = 'star';
+                    s.style.width = Math.random()*8 + 'px';
+                    s.style.height = s.style.width;
+                    s.style.left = Math.random()*90 + '%';
+                    s.style.top = Math.random()*90 + '%';
+                    s.style.animationDelay = Math.random()*2 + 's';
+                    stage.appendChild(s);
+                }
+            } else if (p.currentTime <= 398) {
+                lyrics.forEach((item, i) => {
+                    if (p.currentTime >= item.t) {
+                        Array.from(sc.children).forEach(d => d.classList.remove('active'));
+                        sc.children[i].classList.add('active');
+                        sc.style.transform = `translateY(-${sc.children[i].offsetTop}px)`;
+                    }
+                });
             }
         };
 
