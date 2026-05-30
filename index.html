@@ -34,55 +34,90 @@
     </div>
 
     <script>
-        const data = [
-            { t: 32, text: "Sabah erkenden kalktık yine," },
-            { t: 36, text: "Cebimiz dar ama gülümsemek bedava." },
-            { t: 40, text: "Trafik çıldırmış, ekmek pahalanmış," },
-            { t: 44, text: "Bu açık hava tımarhanesinde..." },
-            { t: 47, text: "Sistem mi çökmüş, veriler mi çalınmış?" },
-            { t: 54, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
-            { t: 62, text: "Din! Din! Din!" },
-            { t: 69, text: "Dinlemez dinler!" },
-            { t: 73, text: "Şehirleri dar etseler de," },
-            { t: 76, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 81, text: "Yine daldık o muzip bilmeceye..." },
-            { t: 85, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 90, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
-            { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!" },
-            { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!" },
-            { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller." },
-            { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler." },
-            { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana." },
-            { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun..." },
-            { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne." },
-            { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
-            { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!" },
-            { t: 227, text: "Hadi gel... Kodları kıralım..." },
-            { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da..." },
-            { t: 240, text: "Aaaah-yaaa... Çınlarız biz!" },
-            { t: 246, text: "Gülümse şimdi... Tam da böyle..." }
-        ];
+ const lyrics = [
+    { t: 32, text: "Sabah erkenden kalktık yine," },
+    { t: 36, text: "Cebimiz dar ama gülümsemek bedava." },
+    { t: 40, text: "Trafik çıldırmış, ekmek pahalanmış," },
+    { t: 45, text: "Bu açık hava tımarhanesinde..." },
+    { t: 47, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
+    { t: 55, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
+    { t: 62, text: "Din! Din! Din!" },
+    { t: 70, text: "Dinlemez dinler!" },
+    { t: 73, text: "Şehirleri dar etseler de," },
+    { t: 77, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+    { t: 81, text: "Yine daldık o muzip bilmeceye..." },
+    { t: 85, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+    { t: 92, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
+    { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!" },
+    { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!" },
+    { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller." },
+    { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler." },
+    { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana." },
+    { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun..." },
+    { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne." },
+    { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
+    { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!" },
+    { t: 227, text: "Hadi gel... Kodları kıralım..." },
+    { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da..." },
+    { t: 240, text: "Aaaah-yaaa... Çınlarız biz!" },
+    { t: 246, text: "Gülümse şimdi... Tam da böyle..." },
+    { t: 288, text: "Sabah erkenden kalktık yine," },
+    { t: 292, text: "Cebimiz dar ama gülümsemek bedava." },
+    { t: 296, text: "Trafik çıldırmış, ekmek pahalanmış," },
+    { t: 300, text: "Bu açık hava tımarhanesinde..." },
+    { t: 304, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
+    { t: 311, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
+    { t: 318, text: "Din! Din! Din!" },
+    { t: 319, text: "Dinlemez dinler!" },
+    { t: 322, text: "Şehirleri dar etseler de," },
+    { t: 326, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+    { t: 330, text: "Yine daldık o muzip bilmeceye..." },
+    { t: 332, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+    { t: 338, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 348, text: "Dinlemez dinler!" },
+    { t: 351, text: "Şehirleri dar etseler de," },
+    { t: 355, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+    { t: 360, text: "Yine daldık o muzip bilmeceye..." },
+    { t: 362, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+    { t: 369, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 378, text: "Dinler ah dinler!" },
+    { t: 380, text: "Şehirleri dar etseler de," },
+    { t: 383, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+    { t: 389, text: "Yine daldık o muzip bilmeceye..." },
+    { t: 392, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+    { t: 388, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" }
+];
 
         const p = document.getElementById('cyberPlayer'), sc = document.getElementById('scrollerEngine'), b = document.getElementById('cyberBody');
-        data.forEach((l, i) => {
+        let currentIndex = -1;
+
+        lyrics.forEach((l) => {
             const d = document.createElement('div');
             d.className = 'lyrics-block';
-            d.innerHTML = l.text; d.dataset.time = l.t; sc.appendChild(d);
+            d.innerHTML = l.text; sc.appendChild(d);
         });
+
         p.onplay = () => b.classList.add('track-playing');
         p.onpause = () => b.classList.remove('track-playing');
+
         p.ontimeupdate = () => {
-            data.forEach((item, i) => {
-                const el = sc.children[i];
-                if (p.currentTime >= item.t) {
-                    Array.from(sc.children).forEach(d => d.classList.remove('active'));
-                    el.classList.add('active');
-                    sc.style.transform = `translateY(-${el.offsetTop}px)`;
-                }
-            });
+            let newIndex = -1;
+            for (let i = 0; i < lyrics.length; i++) {
+                if (p.currentTime >= lyrics[i].t) newIndex = i;
+                else break;
+            }
+
+            if (newIndex !== -1 && newIndex !== currentIndex) {
+                currentIndex = newIndex;
+                Array.from(sc.children).forEach(d => d.classList.remove('active'));
+                const el = sc.children[currentIndex];
+                el.classList.add('active');
+                sc.style.transform = `translateY(-${el.offsetTop}px)`;
+            }
         };
+
         const canvas = document.getElementById('matrixCanvas'), ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const alphabet = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ1023456789".split("");
