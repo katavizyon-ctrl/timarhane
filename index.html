@@ -3,140 +3,344 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIMARHANE // FINAL</title>
+    <title>TIMARHANE // Terminal Boot</title>
     <style>
-        :root { --cyber-blue: #00f0ff; --matrix-green: #00ff66; --terminal-bg: rgba(10, 14, 23, 0.85); }
-        body { margin: 0; background: #05070b; font-family: 'Courier New', monospace; color: #fff; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
-        .cyber-universe-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('tape_1.png'); background-size: cover; z-index: 1; animation: streetGlimmer 8s infinite alternate; }
-        .neon-pulse-engine { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none; background: radial-gradient(circle at 75% 45%, rgba(0, 240, 255, 0.4) 0%, transparent 65%); opacity: 0; }
-        .track-playing .neon-pulse-engine { opacity: 1; animation: cyberBeaconSTORM 2.5s steps(1, end) infinite; }
-        #matrixCanvas { position: fixed; z-index: 3; opacity: 0.12; pointer-events: none; }
-        
-        .main-interface { width: 100%; max-width: 530px; margin-left: 5%; padding: 24px; background: var(--terminal-bg); border: 1px solid rgba(0, 240, 255, 0.2); backdrop-filter: blur(8px); z-index: 10; border-radius: 4px; }
-        .sys-title { font-size: 1.35rem; color: var(--cyber-blue); font-weight: bold; letter-spacing: 3px; margin-bottom: 20px; }
-        .audio-wrapper { background: rgba(0,0,0,0.6); padding: 12px; margin: 15px 0; border: 1px solid var(--matrix-green); }
-        audio { width: 100%; filter: invert(1) hue-rotate(180deg); }
-        
-        .lyrics-container { height: 280px; overflow: hidden; position: relative; }
-        .scroller-engine { position: absolute; width: 100%; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .lyrics-block { margin-bottom: 24px; opacity: 0.3; transition: 0.3s; font-size: 0.95rem; }
-        .lyrics-block.active { opacity: 1; color: var(--cyber-blue); font-weight: bold; text-shadow: 0 0 8px var(--cyber-blue); }
-        
-        /* Final Görsel Animasyonu */
-        .final-stage { width: 100%; height: 100%; background: url('landing_bg_2.png') center/cover; position: relative; }
-        .star { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 10px white; animation: bloom 3s infinite; }
-        @keyframes bloom { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
-        
-        @keyframes streetGlimmer { 0% { filter: brightness(0.9); } 100% { filter: brightness(1.1); } }
-        @keyframes cyberBeaconSTORM { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+        :root {
+            --void: #050505;
+            --text-main: #efe3c9;
+            --text-dim: rgba(239, 227, 201, 0.52);
+            --phosphor: #8cffb0;
+            --phosphor-dim: rgba(140, 255, 176, 0.62);
+            --warning: #b64a35;
+            --blue-dim: #8fdde3;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: clamp(24px, 4vw, 56px);
+            background: var(--void);
+            font-family: "Courier New", Courier, monospace;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .collage-backdrop {
+            position: fixed;
+            inset: 0;
+            background-image: url("landing_bg.png");
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            filter: brightness(0.72) contrast(1.06) saturate(0.95);
+            pointer-events: none;
+        }
+
+        .collage-backdrop::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.10) 52%, rgba(0,0,0,0.42) 100%),
+                linear-gradient(90deg, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.38) 34%, rgba(0,0,0,0.08) 58%, rgba(0,0,0,0.22) 100%);
+            z-index: 2;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.20) 50%),
+                linear-gradient(90deg, rgba(255,255,255,0.018), rgba(0,0,0,0.018));
+            z-index: 20;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            animation: crtHardwareFlicker 0.18s infinite;
+            opacity: 0.55;
+        }
+
+        .terminal-container {
+            width: min(760px, 92vw);
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 10;
+            padding: clamp(18px, 2.4vw, 30px);
+            background: rgba(0, 0, 0, 0.16);
+            border-left: 1px solid rgba(140,255,176,0.42);
+            box-shadow: 0 24px 90px rgba(0,0,0,0.48);
+            backdrop-filter: blur(1.5px);
+        }
+
+        .terminal-tag {
+            color: var(--text-dim);
+            letter-spacing: 0.34em;
+            font-weight: 700;
+            font-size: clamp(0.74rem, 0.85vw, 0.9rem);
+            margin-bottom: 14px;
+        }
+
+        .terminal-tag::before {
+            content: "";
+            display: inline-block;
+            width: 44px;
+            height: 1px;
+            margin-right: 18px;
+            vertical-align: middle;
+            background: rgba(182,74,53,0.8);
+        }
+
+        .log-line,
+        .input-line {
+            text-shadow:
+                0 2px 8px rgba(0,0,0,0.88),
+                0 0 12px rgba(0,0,0,0.50);
+        }
+
+        .log-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            line-height: 1.7;
+            font-size: clamp(0.86rem, 0.95vw, 1rem);
+            margin-bottom: 2px;
+            color: var(--text-main);
+        }
+
+        .dim { color: var(--text-dim); }
+        .green { color: var(--phosphor); font-weight: 600; }
+        .pink { color: var(--warning); font-weight: 700; }
+        .blue { color: var(--blue-dim); font-weight: 600; }
+        .main { color: var(--text-main); font-weight: 600; }
+
+        .input-line {
+            display: none;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+            color: var(--phosphor);
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1vw, 1.05rem);
+        }
+
+        #typedCommand {
+            color: var(--text-main);
+            min-width: 2px;
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: var(--phosphor);
+            width: 9px;
+            height: 18px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+
+        .interactive-btn {
+            background: rgba(0,0,0,0.20);
+            border: 1px solid rgba(140,255,176,0.64);
+            color: var(--phosphor);
+            font-family: inherit;
+            font-size: clamp(0.82rem, 0.9vw, 0.96rem);
+            padding: 9px 18px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-left: 8px;
+        }
+
+        .interactive-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .interactive-btn:hover {
+            background: rgba(140,255,176,0.90);
+            color: #020402;
+            box-shadow: 0 0 18px rgba(140,255,176,0.32);
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes crtHardwareFlicker {
+            0% { opacity: 0.48; }
+            50% { opacity: 0.58; }
+            100% { opacity: 0.52; }
+        }
+
+        @media (max-width: 760px) {
+            body {
+                overflow-y: auto;
+                align-items: flex-start;
+            }
+
+            .collage-backdrop {
+                background-position: center top;
+                filter: brightness(0.58) contrast(1.08) saturate(0.92);
+            }
+
+            .terminal-container {
+                width: 100%;
+                margin-top: 12px;
+                background: rgba(0,0,0,0.34);
+            }
+
+            .log-line {
+                line-height: 1.55;
+            }
+
+            .interactive-btn {
+                margin-left: 0;
+                margin-top: 8px;
+            }
+        }
     </style>
 </head>
-<body id="cyberBody">
-    <div class="cyber-universe-bg"></div>
-    <div class="neon-pulse-engine"></div>
-    <canvas id="matrixCanvas"></canvas>
-    
-    <div class="main-interface">
-        <header><div class="sys-title">TIMARHANE_OS v7.0</div></header>
-        <div class="audio-wrapper"><audio id="cyberPlayer" controls src="Onno v3.mp3"></audio></div>
-        <div class="lyrics-container" id="lyricsContainer">
-            <div class="scroller-engine" id="scrollerEngine"></div>
-        </div>
+<body>
+    <div class="collage-backdrop"></div>
+
+    <div class="terminal-container" id="terminalGrid">
+        <div class="terminal-tag">SİSTEM DIŞI FREKANS // BOOT</div>
     </div>
 
     <script>
-        const lyrics = [
-            { t: 32, text: "Sabah erkenden kalktık yine," }, { t: 36, text: "Cebimiz dar ama gülümsemek bedava." },
-            { t: 40, text: "Trafik çıldırmış, ekmek pahalanmış," }, { t: 45, text: "Bu açık hava tımarhanesinde..." },
-            { t: 47, text: "Sistem mi çökmüş? Veriler mi çalınmış?" }, { t: 55, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
-            { t: 62, text: "(staccato) Din! Din! Din!" }, { t: 70, text: "Dinlemez dinler!" },
-            { t: 73, text: "Şehirleri dar etseler de," }, { t: 77, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 81, text: "Yine daldık o muzip bilmeceye..." }, { t: 85, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 92, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
-            { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!" },
-            { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!" },
-            { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller." },
-            { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler." },
-            { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana." },
-            { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun..." },
-            { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne." },
-            { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
-            { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!" },
-            { t: 227, text: "Hadi gel... Kodları kıralım..." },
-            { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da..." },
-            { t: 236, text: "Aaaah-yaaa... Çınlarız biz!" },
-            { t: 248, text: "Gülümse şimdi... Tam da böyle..." },
-            { t: 288, text: "Sabah erkenden kalktık yine," }, { t: 290, text: "Cebimiz dar ama gülümsemek bedava." },
-            { t: 294, text: "Trafik çıldırmış, ekmek pahalanmış," }, { t: 300, text: "Bu açık hava tımarhanesinde..." },
-            { t: 306, text: "Sistem mi çökmüş? Veriler mi çalınmış?" }, { t: 311, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
-            { t: 318, text: "Din! Din! Din!" }, { t: 320, text: "Dinlemez dinler!" },
-            { t: 323, text: "Şehirleri dar etseler de," }, { t: 326, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 330, text: "Yine daldık o muzip bilmeceye..." }, { t: 332, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 338, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 348, text: "Dinlemez dinler!" }, { t: 350, text: "Şehirleri dar etseler de," },
-            { t: 356, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 360, text: "Yine daldık o muzip bilmeceye..." }, { t: 368, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 371, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 384, text: "Dinler ah dinler!" }, { t: 386, text: "Şehirleri dar etseler de," },
-            { t: 389, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 392, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 394, text: "Yine daldık o muzip bilmeceye..." },
-            { t: 398, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 479, text: "Sistem kapanıyor..." }
+        const terminalGrid = document.getElementById("terminalGrid");
+
+        const BOOT_SEQUENCE = [
+            { type: "dim", text: "Karanlık alandan düşük seviyeli sinyal alınıyor..." },
+            { type: "green", text: "✔ FREKANS_101: UYANDI" },
+            { type: "green", text: "✔ BOŞLUK_KAYDI: AÇILDI" },
+            { type: "blue", text: "ℹ SENTETİK ANILAR: PARÇALI AMA ERİŞİLEBİLİR" },
+            { type: "main", text: ">> SİSTEM DIŞI FREKANS TESPİT EDİLDİ // 99.6 MHz" },
+            { type: "main", text: ">> GERÇEKLİK ASKIYA ALINDI // MERKEZDEN UZAKLAŞILIYOR" },
+            { type: "pink", text: ">> UYARI: DIŞ BAĞLANTI İZLENEMİYOR // İÇERİSİ DAHA GÜVENLİ" },
+            { type: "dim", text: "Duygu işleme katmanı yükleniyor..." },
+            { type: "progressBar", text: "" },
+            { type: "green", text: "✔ TIMARHANE_OS: BOŞLUĞA GİRİŞ HAZIR." }
         ];
 
-        const p = document.getElementById('cyberPlayer'), sc = document.getElementById('scrollerEngine'), b = document.getElementById('cyberBody');
-        
-        lyrics.forEach((l) => {
-            const d = document.createElement('div');
-            d.className = 'lyrics-block';
-            d.innerHTML = l.text; sc.appendChild(d);
-        });
+        let lineIndex = 0;
 
-        p.onplay = () => b.classList.add('track-playing');
-        p.onpause = () => b.classList.remove('track-playing');
+        function printNextLine() {
+            if (lineIndex < BOOT_SEQUENCE.length) {
+                const currentData = BOOT_SEQUENCE[lineIndex];
 
-        p.ontimeupdate = () => {
-            if (p.currentTime > 398 && !window.isFinished) {
-                window.isFinished = true;
-                const container = document.getElementById('lyricsContainer');
-                container.innerHTML = '<div class="final-stage"></div>';
-                const stage = container.querySelector('.final-stage');
-                for(let i=0; i<15; i++) {
-                    let s = document.createElement('div');
-                    s.className = 'star';
-                    s.style.width = Math.random()*8 + 'px';
-                    s.style.height = s.style.width;
-                    s.style.left = Math.random()*90 + '%';
-                    s.style.top = Math.random()*90 + '%';
-                    s.style.animationDelay = Math.random()*2 + 's';
-                    stage.appendChild(s);
+                if (currentData.type === "progressBar") {
+                    renderProgressBar();
+                    return;
                 }
-            } else if (p.currentTime <= 398) {
-                lyrics.forEach((item, i) => {
-                    if (p.currentTime >= item.t) {
-                        Array.from(sc.children).forEach(d => d.classList.remove('active'));
-                        sc.children[i].classList.add('active');
-                        sc.style.transform = `translateY(-${sc.children[i].offsetTop}px)`;
-                    }
-                });
-            }
-        };
 
-        const canvas = document.getElementById('matrixCanvas'), ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const alphabet = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ1023456789".split("");
-        const drops = Array(Math.floor(canvas.width / 14)).fill(1);
-        setInterval(() => {
-            ctx.fillStyle = 'rgba(5, 7, 11, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00ff66';
-            drops.forEach((d, i) => {
-                ctx.fillText(alphabet[Math.floor(Math.random() * alphabet.length)], i * 14, d * 14);
-                if (d * 14 > canvas.height) drops[i] = 0; drops[i]++;
-            });
-        }, 30);
+                const row = document.createElement("div");
+                row.className = "log-line";
+
+                let prefix = '<span class="dim">IST@void:~#</span>';
+                if (currentData.type === "pink") prefix = '<span class="pink">[UYARI]</span>';
+                if (currentData.type === "green") prefix = '<span class="green">[OK]</span>';
+                if (currentData.type === "blue") prefix = '<span class="blue">[ARŞİV]</span>';
+
+                row.innerHTML = `${prefix} <span class="${currentData.type}">${currentData.text}</span>`;
+                terminalGrid.appendChild(row);
+
+                lineIndex++;
+
+                let speed = Math.floor(Math.random() * 220) + 90;
+                if (currentData.type === "pink") speed = 650;
+
+                setTimeout(printNextLine, speed);
+            } else {
+                triggerPromptInput();
+            }
+        }
+
+        function renderProgressBar() {
+            const row = document.createElement("div");
+            row.className = "log-line";
+            row.innerHTML = '<span class="dim">IST@void:~#</span> <span class="dim">[EŞİK] </span><span id="pBarText" class="blue"></span>';
+            terminalGrid.appendChild(row);
+
+            const pBarText = document.getElementById("pBarText");
+            const maxBlocks = 28;
+            let currentBlock = 0;
+
+            function updateBlocks() {
+                if (currentBlock <= maxBlocks) {
+                    const blocksStr = "█".repeat(currentBlock);
+                    const spacesStr = "░".repeat(maxBlocks - currentBlock);
+                    const percent = Math.floor((currentBlock / maxBlocks) * 100);
+                    pBarText.innerText = `[${blocksStr}${spacesStr}] ${percent}%`;
+                    currentBlock++;
+                    setTimeout(updateBlocks, 42);
+                } else {
+                    lineIndex++;
+                    printNextLine();
+                }
+            }
+
+            updateBlocks();
+        }
+
+        function triggerPromptInput() {
+            const inputRow = document.createElement("div");
+            inputRow.className = "input-line";
+            inputRow.style.display = "flex";
+            inputRow.innerHTML = `
+                <span>TIMARHANE@OS:~#</span>
+                <span id="typedCommand"></span><span class="cursor" id="promptCursor"></span>
+                <button class="interactive-btn" id="execBtn" onclick="runRedirect()">[ FREKANSI AÇ ]</button>
+            `;
+            terminalGrid.appendChild(inputRow);
+
+            const fullCommandText = "execute --enter-the-void";
+            const typedCommandSpan = document.getElementById("typedCommand");
+            let charIndex = 0;
+
+            function typeCharacter() {
+                if (charIndex < fullCommandText.length) {
+                    typedCommandSpan.innerText += fullCommandText.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeCharacter, 58);
+                } else {
+                    document.getElementById("execBtn").classList.add("visible");
+                }
+            }
+
+            setTimeout(typeCharacter, 500);
+        }
+
+        function runRedirect() {
+            const btn = document.getElementById("execBtn");
+            document.getElementById("promptCursor").style.display = "none";
+            btn.innerText = "[ AÇILIYOR... ]";
+            btn.style.borderColor = "var(--blue-dim)";
+            btn.style.color = "var(--blue-dim)";
+
+            setTimeout(() => {
+                window.location.href = "home.html";
+            }, 800);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(printNextLine, 600);
+        });
     </script>
 </body>
 </html>

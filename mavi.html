@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIMARHANE // Mavi Randevu</title>
+    <style>
+        :root {
+            --cyber-blue: #00f0ff;
+            --matrix-green: #8CFFB0;
+            --matrix-green-strong: #00ff66;
+            --paper: #E8D8B8;
+            --paper-dim: rgba(232, 216, 184, 0.64);
+            --red-memory: #B64A35;
+            --terminal-bg: rgba(10, 14, 23, 0.85);
+            --nav-glass: rgba(3, 6, 8, 0.58);
+        }
+        body { margin: 0; background: #05070b; font-family: 'Courier New', monospace; color: #fff; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+        .cyber-universe-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('tape_1.png'); background-size: cover; z-index: 1; animation: streetGlimmer 8s infinite alternate; }
+        .neon-pulse-engine { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none; background: radial-gradient(circle at 75% 45%, rgba(0, 240, 255, 0.4) 0%, transparent 65%); opacity: 0; }
+        .track-playing .neon-pulse-engine { opacity: 1; animation: cyberBeaconSTORM 2.5s steps(1, end) infinite; }
+        #matrixCanvas { position: fixed; z-index: 3; opacity: 0.12; pointer-events: none; }
+
+        .site-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 74px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5vw;
+            background: linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.36) 58%, transparent);
+            border-bottom: 1px solid rgba(140, 255, 176, 0.12);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            pointer-events: auto;
+        }
+
+        .nav-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 18px;
+            color: var(--paper-dim);
+            text-decoration: none;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(232,216,184,0.15);
+            white-space: nowrap;
+        }
+
+        .nav-brand::before {
+            content: "";
+            width: 42px;
+            height: 1px;
+            background: var(--red-memory);
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: clamp(18px, 2vw, 34px);
+        }
+
+        .top-nav-link {
+            color: rgba(140, 255, 176, 0.72);
+            text-decoration: none;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            padding: 10px 0;
+            border-bottom: 1px solid transparent;
+            opacity: 0.82;
+            transition: color 220ms ease, opacity 220ms ease, border-color 220ms ease, text-shadow 220ms ease;
+            white-space: nowrap;
+        }
+
+        .top-nav-link:hover,
+        .top-nav-link.active {
+            color: var(--paper);
+            opacity: 1;
+            border-color: rgba(182, 74, 53, 0.85);
+            text-shadow: 0 0 10px rgba(140,255,176,0.22);
+        }
+
+        .top-nav-link.disabled {
+            opacity: 0.34;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .main-interface { width: 100%; max-width: 530px; margin-left: 5%; padding: 24px; background: var(--terminal-bg); border: 1px solid rgba(0, 240, 255, 0.2); backdrop-filter: blur(8px); z-index: 10; border-radius: 4px; }
+        .sys-title { font-size: 1.35rem; color: var(--cyber-blue); font-weight: bold; letter-spacing: 3px; margin-bottom: 20px; }
+        .audio-wrapper { background: rgba(0,0,0,0.6); padding: 12px; margin: 15px 0; border: 1px solid var(--matrix-green); }
+        audio { width: 100%; filter: invert(1) hue-rotate(180deg); }
+        .lyrics-container { height: 280px; overflow: hidden; position: relative; }
+        .scroller-engine { position: absolute; width: 100%; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .lyrics-block { margin-bottom: 24px; opacity: 0.3; transition: 0.3s; font-size: 0.95rem; }
+        .lyrics-block.active { opacity: 1; color: var(--cyber-blue); font-weight: bold; text-shadow: 0 0 8px var(--cyber-blue); }
+
+        @media (max-width: 900px) {
+            body {
+                align-items: flex-start;
+                padding-top: 104px;
+            }
+
+            .site-nav {
+                height: auto;
+                min-height: 82px;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 14px;
+                padding: 18px 24px 16px;
+            }
+
+            .nav-brand {
+                font-size: 0.7rem;
+                letter-spacing: 0.26em;
+            }
+
+            .nav-brand::before {
+                width: 28px;
+            }
+
+            .nav-links {
+                width: 100%;
+                overflow-x: auto;
+                gap: 22px;
+                padding-bottom: 4px;
+            }
+
+            .top-nav-link {
+                font-size: 0.68rem;
+            }
+
+            .main-interface {
+                margin: 0 24px;
+                max-width: calc(100vw - 48px);
+            }
+        }
+
+        @keyframes streetGlimmer { 0% { filter: brightness(0.9); } 100% { filter: brightness(1.1); } }
+        @keyframes cyberBeaconSTORM { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+    </style>
+</head>
+<body id="cyberBody">
+    <div class="cyber-universe-bg"></div>
+    <div class="neon-pulse-engine"></div>
+    <canvas id="matrixCanvas"></canvas>
+
+    <nav class="site-nav" aria-label="Ana navigasyon">
+        <a class="nav-brand" href="home2_updated_v3.html">SİSTEM DIŞI FREKANS</a>
+        <div class="nav-links">
+            <a class="top-nav-link" href="home2_updated_v3.html">Core</a>
+            <a class="top-nav-link active" href="home.html">Frekans_101</a>
+            <a class="top-nav-link" href="#">Sentetik Anılar</a>
+            <a class="top-nav-link" href="#">Veri Mahzeni</a>
+            <a class="top-nav-link disabled" href="#" aria-disabled="true">Senkron: Kopuk</a>
+        </div>
+    </nav>
+
+    <div class="main-interface">
+        <header><div class="sys-title">TIMARHANE_OS v7.0</div></header>
+        <div class="audio-wrapper"><audio id="cyberPlayer" controls src="Onno v3.mp3"></audio></div>
+        <div class="lyrics-container"><div class="scroller-engine" id="scrollerEngine"></div></div>
+    </div>
+
+    <script>
+
+const lyrics = [
+    { t: 32, text: "Sabah erkenden kalktık yine," },
+    { t: 36, text: "Cebimiz dar ama gülümsemek bedava." },
+    { t: 40, text: "Trafik çıldırmış, ekmek pahalanmış," },
+    { t: 45, text: "Bu açık hava tımarhanesinde..." },
+    { t: 47, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
+    { t: 55, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
+    { t: 62, text: "(staccato) Din! Din! Din!" },
+    { t: 70, text: "Dinlemez dinler!" },
+    { t: 73, text: "Şehirleri dar etseler de," },
+    { t: 77, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+    { t: 81, text: "Yine daldık o muzip bilmeceye..." },
+    { t: 85, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+    { t: 92, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
+    { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!" },
+    { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!" },
+    { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller." },
+    { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler." },
+    { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana." },
+    { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun..." },
+    { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne." },
+    { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
+    { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!" },
+    { t: 227, text: "Hadi gel... Kodları kıralım..." },
+    { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da..." },
+    { t: 236, text: "Aaaah-yaaa... Çınlarız biz!" },
+    { t: 248, text: "Gülümse şimdi... Tam da böyle..." },
+    { t: 288, text: "Sabah erkenden kalktık yine," },
+    { t: 290, text: "Cebimiz dar ama gülümsemek bedava." },
+    { t: 294, text: "Trafik çıldırmış, ekmek pahalanmış," },
+    { t: 300, text: "Bu açık hava tımarhanesinde..." },
+    { t: 306, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
+    { t: 311, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
+    { t: 318, text: "Din! Din! Din!" },
+    { t: 320, text: "Dinlemez dinler!" },
+    { t: 323, text: "Şehirleri dar etseler de," },
+    { t: 326, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+    { t: 330, text: "Yine daldık o muzip bilmeceye..." },
+    { t: 332, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+    { t: 338, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 348, text: "Dinlemez dinler!" },
+    { t: 350, text: "Şehirleri dar etseler de," },
+    { t: 356, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+    { t: 360, text: "Yine daldık o muzip bilmeceye..." },
+    { t: 368, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+    { t: 371, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 384, text: "Dinler ah dinler!" },
+    { t: 386, text: "Şehirleri dar etseler de," },
+    { t: 389, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+    { t: 392, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+    { t: 394, text: "Yine daldık o muzip bilmeceye..." },
+    { t: 398, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+    { t: 479, text: "Sistem kapanıyor..." }
+];
+
+        const p = document.getElementById('cyberPlayer'), sc = document.getElementById('scrollerEngine'), b = document.getElementById('cyberBody');
+        lyrics.forEach((l, i) => {
+            const d = document.createElement('div');
+            d.className = 'lyrics-block';
+            d.innerHTML = l.text; d.dataset.time = l.t; sc.appendChild(d);
+        });
+        p.onplay = () => b.classList.add('track-playing');
+        p.onpause = () => b.classList.remove('track-playing');
+        p.ontimeupdate = () => {
+            lyrics.forEach((item, i) => {
+                const el = sc.children[i];
+                if (p.currentTime >= item.t) {
+                    Array.from(sc.children).forEach(d => d.classList.remove('active'));
+                    el.classList.add('active');
+                    sc.style.transform = `translateY(-${el.offsetTop}px)`;
+                }
+            });
+        };
+        const canvas = document.getElementById('matrixCanvas'), ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const alphabet = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ1023456789".split("");
+        const drops = Array(Math.floor(canvas.width / 14)).fill(1);
+        setInterval(() => {
+            ctx.fillStyle = 'rgba(5, 7, 11, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff66';
+            drops.forEach((d, i) => {
+                ctx.fillText(alphabet[Math.floor(Math.random() * alphabet.length)], i * 14, d * 14);
+                if (d * 14 > canvas.height) drops[i] = 0; drops[i]++;
+            });
+        }, 30);
+    </script>
+</body>
+</html>
