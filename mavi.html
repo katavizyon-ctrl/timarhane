@@ -106,22 +106,38 @@
 
         @media (max-width: 900px) {
             body {
-                align-items: flex-start;
-                padding-top: 104px;
+                display: block;
+                min-height: 100svh;
+                overflow-y: auto;
+                padding-top: 112px;
+            }
+
+            .cyber-universe-bg {
+                background-position: center top;
+                filter: brightness(0.82) contrast(1.05);
+            }
+
+            .neon-pulse-engine {
+                background: radial-gradient(circle at 50% 28%, rgba(0, 240, 255, 0.24) 0%, transparent 62%);
+            }
+
+            #matrixCanvas {
+                opacity: 0.05;
             }
 
             .site-nav {
                 height: auto;
-                min-height: 82px;
+                min-height: 94px;
                 align-items: flex-start;
                 flex-direction: column;
-                gap: 14px;
-                padding: 18px 24px 16px;
+                gap: 13px;
+                padding: 16px 20px 14px;
             }
 
             .nav-brand {
-                font-size: 0.7rem;
-                letter-spacing: 0.26em;
+                font-size: 0.68rem;
+                letter-spacing: 0.20em;
+                line-height: 1.5;
             }
 
             .nav-brand::before {
@@ -131,17 +147,46 @@
             .nav-links {
                 width: 100%;
                 overflow-x: auto;
+                white-space: nowrap;
                 gap: 22px;
                 padding-bottom: 4px;
+                scrollbar-width: none;
+            }
+
+            .nav-links::-webkit-scrollbar {
+                display: none;
             }
 
             .top-nav-link {
-                font-size: 0.68rem;
+                flex: 0 0 auto;
+                font-size: 0.64rem;
+                letter-spacing: 0.12em;
             }
 
             .main-interface {
-                margin: 0 24px;
-                max-width: calc(100vw - 48px);
+                margin: 0 18px 40px;
+                max-width: calc(100vw - 36px);
+                padding: 18px;
+                background: rgba(10, 14, 23, 0.88);
+            }
+
+            .sys-title {
+                font-size: 1rem;
+                letter-spacing: 0.18em;
+                line-height: 1.45;
+            }
+
+            .audio-wrapper {
+                padding: 10px;
+            }
+
+            .lyrics-container {
+                height: 360px;
+            }
+
+            .lyrics-block {
+                font-size: 0.90rem;
+                line-height: 1.55;
             }
         }
 
@@ -250,6 +295,7 @@ const lyrics = [
         };
         const canvas = document.getElementById('matrixCanvas'), ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
         const alphabet = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ1023456789".split("");
         const drops = Array(Math.floor(canvas.width / 14)).fill(1);
         setInterval(() => {

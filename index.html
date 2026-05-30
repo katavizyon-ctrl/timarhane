@@ -189,28 +189,61 @@
 
         @media (max-width: 760px) {
             body {
+                min-height: 100svh;
+                padding: 18px;
                 overflow-y: auto;
                 align-items: flex-start;
             }
 
             .collage-backdrop {
                 background-position: center top;
-                filter: brightness(0.58) contrast(1.08) saturate(0.92);
+                filter: brightness(0.62) contrast(1.08) saturate(0.92);
+            }
+
+            .collage-backdrop::after {
+                background:
+                    radial-gradient(circle at 50% 32%, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.24) 58%, rgba(0,0,0,0.66) 100%),
+                    linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.18) 42%, rgba(0,0,0,0.72) 100%);
             }
 
             .terminal-container {
                 width: 100%;
                 margin-top: 12px;
-                background: rgba(0,0,0,0.34);
+                padding: 20px;
+                background: rgba(0,0,0,0.42);
+                backdrop-filter: blur(2.5px);
             }
 
-            .log-line {
+            .terminal-tag {
+                letter-spacing: 0.20em;
                 line-height: 1.55;
             }
 
+            .terminal-tag::before {
+                width: 28px;
+                margin-right: 12px;
+            }
+
+            .log-line {
+                display: block;
+                font-size: 0.82rem;
+                line-height: 1.55;
+                overflow-wrap: anywhere;
+            }
+
+            .input-line {
+                display: none;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
             .interactive-btn {
+                width: 100%;
                 margin-left: 0;
                 margin-top: 8px;
+                padding: 14px 16px;
+                letter-spacing: 0.18em;
             }
         }
     </style>

@@ -277,21 +277,38 @@
         }
 
         @media (max-width: 680px) {
+            html,
+            body {
+                height: auto;
+                min-height: 100%;
+            }
+
             body {
                 overflow: auto;
             }
 
             #home-stage {
-                min-height: 860px;
+                display: flex;
+                flex-direction: column;
+                min-height: 100svh;
                 height: auto;
+                padding-bottom: 34px;
+                overflow: visible;
                 background:
                     linear-gradient(
                         180deg,
-                        rgba(0, 0, 0, 0.76) 0%,
-                        rgba(0, 0, 0, 0.22) 42%,
-                        rgba(0, 0, 0, 0.84) 100%
+                        rgba(0, 0, 0, 0.72) 0%,
+                        rgba(0, 0, 0, 0.16) 36%,
+                        rgba(0, 0, 0, 0.66) 62%,
+                        rgba(0, 0, 0, 0.90) 100%
                     ),
-                    url("home.png") center top / cover no-repeat;
+                    url("home.png") 52% top / auto 54vh no-repeat,
+                    var(--void);
+            }
+
+            #home-stage::before,
+            #home-stage::after {
+                position: fixed;
             }
 
             .signal-marker,
@@ -303,24 +320,65 @@
                 top: auto;
                 bottom: auto;
                 transform: none;
-                width: calc(100vw - 44px);
-                margin-left: 22px;
-                margin-right: 22px;
+                width: calc(100vw - 40px);
+                margin-left: 20px;
+                margin-right: 20px;
             }
 
             .signal-marker {
-                padding-top: 28px;
-                margin-bottom: 280px;
+                order: 1;
+                padding-top: 24px;
+                margin-bottom: 42vh;
+                font-size: 0.70rem;
+                line-height: 1.55;
+                letter-spacing: 0.20em;
+            }
+
+            .signal-marker::before {
+                width: 28px;
+                margin-right: 10px;
             }
 
             .nav-box {
+                order: 2;
                 margin-top: 0;
                 gap: 12px;
+                text-align: right;
+            }
+
+            .nav-link {
+                min-height: 58px;
+                padding: 16px 20px 16px 56px;
+                font-size: 0.82rem;
+                letter-spacing: 0.20em;
+                background: linear-gradient(90deg, rgba(0,0,0,0.24), rgba(3,6,5,0.62));
+            }
+
+            .nav-link::before {
+                left: 16px;
+            }
+
+            .archive-caption {
+                text-align: right;
+                font-size: 0.62rem;
             }
 
             .manifesto-panel {
-                margin-top: 28px;
-                margin-bottom: 28px;
+                order: 3;
+                margin-top: 26px;
+                margin-bottom: 0;
+                padding: 22px 20px;
+                background: linear-gradient(135deg, rgba(0,0,0,0.62), rgba(0,0,0,0.32));
+            }
+
+            .manifesto-panel::before {
+                font-size: 0.66rem;
+                letter-spacing: 0.20em;
+            }
+
+            .manifesto-panel p {
+                font-size: 0.96rem;
+                line-height: 1.65;
             }
         }
     </style>

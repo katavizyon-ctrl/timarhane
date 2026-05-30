@@ -366,47 +366,110 @@
         }
 
         @media (max-width: 680px) {
+            body::before {
+                background-position: 20% top;
+                background-size: auto 56vh;
+                filter: brightness(0.88) contrast(1.06) saturate(0.94);
+            }
+
+            body::after {
+                background:
+                    linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.10) 34%, rgba(0,0,0,0.70) 58%, rgba(0,0,0,0.94) 100%),
+                    radial-gradient(circle at 20% 24%, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.16) 38%, rgba(0,0,0,0.68) 100%);
+            }
+
             .top-nav {
-                min-height: 88px;
+                min-height: 94px;
                 align-items: flex-start;
                 flex-direction: column;
-                gap: 14px;
-                padding-top: 18px;
-                padding-bottom: 16px;
+                gap: 13px;
+                padding: 16px 20px 14px;
+            }
+
+            .top-brand {
+                font-size: 0.68rem;
+                letter-spacing: 0.20em;
+            }
+
+            .top-brand::before {
+                width: 28px;
+                margin-right: 10px;
             }
 
             .top-links {
                 width: 100%;
-                justify-content: space-between;
-                gap: 10px;
+                justify-content: flex-start;
+                overflow-x: auto;
+                white-space: nowrap;
+                gap: 22px;
+                padding-bottom: 4px;
+                scrollbar-width: none;
+            }
+
+            .top-links::-webkit-scrollbar {
+                display: none;
             }
 
             .top-links a {
+                flex: 0 0 auto;
                 font-size: 0.64rem;
                 letter-spacing: 0.12em;
             }
 
             .archive-stage {
-                padding: 136px 20px 54px;
+                padding: 128px 18px 54px;
+            }
+
+            .archive-grid {
+                min-height: auto;
+                display: block;
             }
 
             .archive-interface {
+                margin-top: 38vh;
                 padding: 24px 20px;
-                background: linear-gradient(135deg, rgba(0,0,0,0.56), rgba(0,0,0,0.28));
+                background: linear-gradient(135deg, rgba(0,0,0,0.66), rgba(0,0,0,0.34));
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+            }
+
+            .kicker {
+                font-size: 0.62rem;
+                letter-spacing: 0.20em;
+                line-height: 1.5;
             }
 
             h1 {
-                font-size: clamp(2.2rem, 13vw, 4rem);
+                font-size: clamp(2.4rem, 15vw, 4.1rem);
+                letter-spacing: 0.12em;
+            }
+
+            .intro-copy {
+                font-size: 0.96rem;
+                line-height: 1.68;
             }
 
             .track-card {
+                min-height: 72px;
                 grid-template-columns: 40px 1fr;
                 gap: 8px 12px;
                 padding: 16px 14px;
             }
 
+            .track-title {
+                font-size: 0.86rem;
+                letter-spacing: 0.18em;
+            }
+
             .track-status {
                 grid-column: 2;
+                font-size: 0.64rem;
+            }
+
+            .archive-meta,
+            .signal-note {
+                font-size: 0.62rem;
+                letter-spacing: 0.12em;
             }
         }
     </style>
