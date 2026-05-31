@@ -45,7 +45,7 @@
             inset: 0;
             z-index: 1;
             background: url('tape_2.png') center center / 100% 100% no-repeat;
-            filter: brightness(0.72) contrast(1.06) saturate(0.85) hue-rotate(195deg);
+            filter: brightness(0.74) contrast(1.05) saturate(0.70) hue-rotate(215deg);
             animation: bgGlimmer 9s ease-in-out infinite alternate;
         }
 
@@ -536,8 +536,8 @@
 
         /* ── Animations ── */
         @keyframes bgGlimmer {
-            0%   { filter: brightness(0.68) contrast(1.06) saturate(0.82) hue-rotate(195deg); }
-            100% { filter: brightness(0.76) contrast(1.04) saturate(0.92) hue-rotate(195deg); }
+            0%   { filter: brightness(0.70) contrast(1.05) saturate(0.68) hue-rotate(215deg); }
+            100% { filter: brightness(0.78) contrast(1.03) saturate(0.76) hue-rotate(215deg); }
         }
 
         @keyframes pulseGlow {
@@ -1024,12 +1024,67 @@
                 }
             }
 
+
+            /* ── Cable neon flicker ── */
+            // The neon cables/light trails sit in the lower-right of the image
+            // roughly 58-90% x, 70-95% y — we paint an erratic glow over that region
+            let cableFlicker   = 0.6;
+            let cableHold      = 0;
+            let cableHoldMax   = Math.random() * 8 + 2;
+            let cableColorPhase = 0;
+
+            function drawCableFlicker() {
+                if (!AW || !AH) return;
+
+                // Advance flicker state
+                cableHold++;
+                if (cableHold > cableHoldMax) {
+                    cableHold    = 0;
+                    cableHoldMax = Math.random() * 10 + 1;
+                    const r = Math.random();
+                    if      (r < 0.10) cableFlicker = 0;                          // off
+                    else if (r < 0.20) cableFlicker = Math.random() * 0.25 + 0.05; // very dim
+                    else if (r < 0.28) cableFlicker = Math.random() * 0.5  + 0.7;  // bright spike
+                    else               cableFlicker = Math.random() * 0.3  + 0.5;  // normal
+                }
+
+                const alpha = cableFlicker;
+                if (alpha < 0.03) return;
+
+                // Slowly shift between warm teal and cool blue-green
+                cableColorPhase += 0.003;
+                const t   = (Math.sin(cableColorPhase) + 1) / 2; // 0..1
+                const cr  = Math.round(40  + t * 60);   // 40-100
+                const cg  = Math.round(200 + t * 40);   // 200-240
+                const cb  = Math.round(180 + t * 60);   // 180-240
+
+                // Primary glow — where the cable swirl is (lower-right)
+                const gx1 = AW * 0.72;
+                const gy1 = AH * 0.84;
+                const g1  = ax.createRadialGradient(gx1, gy1, 0, gx1, gy1, AW * 0.18);
+                g1.addColorStop(0,   `rgba(${cr},${cg},${cb},${alpha * 0.32})`);
+                g1.addColorStop(0.5, `rgba(${cr},${cg},${cb},${alpha * 0.12})`);
+                g1.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`);
+                ax.fillStyle = g1;
+                ax.fillRect(AW * 0.52, AH * 0.62, AW * 0.48, AH * 0.38);
+
+                // Secondary smaller hotspot — cable tip near bottom centre-right
+                const gx2 = AW * 0.62;
+                const gy2 = AH * 0.90;
+                const g2  = ax.createRadialGradient(gx2, gy2, 0, gx2, gy2, AW * 0.10);
+                g2.addColorStop(0,   `rgba(${cr},${cg},${cb},${alpha * 0.22})`);
+                g2.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`);
+                ax.fillStyle = g2;
+                ax.fillRect(AW * 0.50, AH * 0.78, AW * 0.24, AH * 0.22);
+            }
+
             /* ── Main loop ── */
             function animLoop() {
                 if (!AW || !AH) { requestAnimationFrame(animLoop); return; }
                 ax.clearRect(0, 0, AW, AH);
                 drawRain();
                 drawRipples();
+                drawCableFlicker();
                 requestAnimationFrame(animLoop);
             }
             requestAnimationFrame(animLoop);
