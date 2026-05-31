@@ -199,7 +199,7 @@
                 position: fixed;
                 inset: 0;
                 z-index: 1;
-                background: url('home.png') center 58px/80% auto no-repeat;
+                background: url('home.png') center 58px/96% auto no-repeat;
                 filter: brightness(0.78) contrast(1.04) saturate(0.90);
                 pointer-events: none;
             }
@@ -224,14 +224,14 @@
             .signal-marker::before { content: ''; display: inline-block; width: 22px; height: 1px; margin-right: 10px; vertical-align: middle; background: var(--red-memory); opacity: 0.7; }
 
             /* spacer pushes manifesto to lower portion of screen, over the gradient */
-            .mobile-img-spacer { display: block; height: 45vw; }
+            .mobile-img-spacer { display: block; height: 72vw; }
 
             /* manifesto */
             .manifesto-panel {
                 display: block; position: relative; z-index: 12;
                 width: calc(100% - 44px); margin: 14px auto 48px;
                 padding: 22px 18px 20px; color: var(--phosphor-soft);
-                background: rgba(3,5,4,0.82); border-left: 2px solid rgba(140,255,176,0.42);
+                background: rgba(3,5,4,0.45); border-left: 2px solid rgba(140,255,176,0.42);
                 backdrop-filter: blur(8px); opacity: 0; transform: translateY(20px);
                 transition: opacity 0.8s ease, transform 0.8s ease;
             }
