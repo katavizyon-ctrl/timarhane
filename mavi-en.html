@@ -44,8 +44,8 @@
             position: fixed;
             inset: 0;
             z-index: 1;
-            background: url('tape_2.png') center / cover no-repeat;
-            filter: brightness(0.72) contrast(1.06) saturate(0.72) hue-rotate(148deg);
+            background: url('tape_2.png') center center / 100% 100% no-repeat;
+            filter: brightness(0.72) contrast(1.06) saturate(0.85) hue-rotate(195deg);
             animation: bgGlimmer 9s ease-in-out infinite alternate;
         }
 
@@ -536,8 +536,8 @@
 
         /* ── Animations ── */
         @keyframes bgGlimmer {
-            0%   { filter: brightness(0.68) contrast(1.06) saturate(0.68) hue-rotate(148deg); }
-            100% { filter: brightness(0.76) contrast(1.04) saturate(0.78) hue-rotate(148deg); }
+            0%   { filter: brightness(0.68) contrast(1.06) saturate(0.82) hue-rotate(195deg); }
+            100% { filter: brightness(0.76) contrast(1.04) saturate(0.92) hue-rotate(195deg); }
         }
 
         @keyframes pulseGlow {
@@ -1024,81 +1024,12 @@
                 }
             }
 
-            /* ── Neon flicker around cassette ── */
-            // Cassette sits roughly right-centre in image 3
-            // We draw two elliptical arcs that flicker erratically
-            let flickerState  = 1;
-            let flickerTimer  = 0;
-            let flickerHold   = Math.random() * 8 + 2;
-            let flickerTarget = 1;
-
-            const NEON_COLORS = [
-                [80,  230, 200],  // cyan
-                [60,  255, 160],  // green
-                [100, 200, 255],  // blue-cyan
-            ];
-            let neonColorIdx = 0;
-            let neonColorTimer = 0;
-
-            function drawNeon() {
-                if (!AW || !AH) return;
-
-                // Cassette position — image 3: tape is roughly 60-85% x, 55-90% y
-                const cx = AW * 0.715;
-                const cy = AH * 0.735;
-                const rx = AW * 0.135;
-                const ry = AH * 0.165;
-
-                // Flicker logic — erratic on/off with occasional double-flash
-                flickerTimer++;
-                if (flickerTimer > flickerHold) {
-                    flickerTimer = 0;
-                    flickerHold  = Math.random() * 12 + 1;
-                    // Weighted: mostly on, brief off, rare double-flicker
-                    const r = Math.random();
-                    if (r < 0.12)       flickerState = 0;              // off
-                    else if (r < 0.22)  flickerState = Math.random() * 0.4 + 0.1; // dim
-                    else if (r < 0.28)  flickerState = Math.random() * 0.6 + 0.8; // bright spike
-                    else                flickerState = Math.random() * 0.3 + 0.7;  // normal
-                }
-
-                // Slowly cycle neon colour
-                neonColorTimer++;
-                if (neonColorTimer > 140) {
-                    neonColorTimer = 0;
-                    neonColorIdx = (neonColorIdx + 1) % NEON_COLORS.length;
-                }
-                const [nr, ng, nb] = NEON_COLORS[neonColorIdx];
-                const alpha = flickerState * 0.72;
-                if (alpha < 0.04) return;
-
-                // Outer arc
-                ax.save();
-                ax.shadowBlur  = 18 * flickerState;
-                ax.shadowColor = `rgba(${nr},${ng},${nb},0.9)`;
-                ax.strokeStyle = `rgba(${nr},${ng},${nb},${alpha})`;
-                ax.lineWidth   = 1.8;
-                ax.beginPath();
-                ax.ellipse(cx, cy, rx, ry, -0.08, 0, Math.PI * 2);
-                ax.stroke();
-
-                // Inner arc — slightly smaller, offset
-                ax.strokeStyle = `rgba(${nr},${ng},${nb},${alpha * 0.55})`;
-                ax.lineWidth   = 1.0;
-                ax.shadowBlur  = 8 * flickerState;
-                ax.beginPath();
-                ax.ellipse(cx, cy, rx * 0.78, ry * 0.72, -0.08, 0, Math.PI * 2);
-                ax.stroke();
-                ax.restore();
-            }
-
             /* ── Main loop ── */
             function animLoop() {
                 if (!AW || !AH) { requestAnimationFrame(animLoop); return; }
                 ax.clearRect(0, 0, AW, AH);
                 drawRain();
                 drawRipples();
-                drawNeon();
                 requestAnimationFrame(animLoop);
             }
             requestAnimationFrame(animLoop);
