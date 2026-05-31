@@ -221,14 +221,6 @@
            MOBILE (≤ 760px)
         ══════════════════════════════════════ */
 
-        /* ── Mobile image drift ── */
-        @keyframes mobileBgDrift {
-            0%   { transform: scale(1.06) translate(0px,    0px); }
-            33%  { transform: scale(1.08) translate(-6px,  -4px); }
-            66%  { transform: scale(1.07) translate( 5px,  -7px); }
-            100% { transform: scale(1.06) translate(-3px,   2px); }
-        }
-
         @media (max-width: 760px) {
 
             html, body { height: auto; overflow-x: hidden; overflow-y: auto; }
@@ -237,50 +229,7 @@
             #bg-photo, #grain, #fx, #proxCanvas, #glow { display: none; }
             .nav-box, .language-switch { display: none; }
 
-            /* ── Fixed image layer — completely independent of content ── */
-            #mobile-bg {
-                position: fixed;
-                top: 0; left: 0; right: 0;
-                height: 100vw;          /* square crop — image fills width */
-                z-index: 1;
-                overflow: hidden;
-            }
-
-            #mobile-bg img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: center 20%;
-                display: block;
-                transform-origin: center center;
-                animation: mobileBgDrift 18s ease-in-out infinite;
-            }
-
-            /* gradient over the fixed image */
-            #mobile-bg::after {
-                content: '';
-                position: absolute; inset: 0;
-                background: linear-gradient(
-                    180deg,
-                    rgba(0,0,0,0.18) 0%,
-                    rgba(0,0,0,0.05) 30%,
-                    rgba(0,0,0,0.55) 68%,
-                    rgba(0,0,0,0.96) 100%
-                );
-            }
-
-            /* ── Main stage — scrollable content above fixed bg ── */
-            #home-stage {
-                position: relative;
-                z-index: 10;
-                display: block;
-                width: 100%;
-                min-height: 100svh;
-                padding-top: 58px;
-                background: transparent;  /* bg handled by #mobile-bg */
-            }
-
-            /* topbar */
+            /* ── Topbar ── */
             .mobile-topbar {
                 position: fixed; z-index: 100;
                 top: 0; left: 0; right: 0; height: 58px;
@@ -340,12 +289,55 @@
             }
             .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); pointer-events: none; }
 
-            /* signal marker */
-            .signal-marker {
+            /* ── Stage: just a scrollable container, bg is transparent ── */
+            #home-stage {
+                position: relative; z-index: 10;
+                display: block; width: 100%;
+                min-height: 100svh;
+                background: transparent;
+            }
+
+            /* ── Mobile bg: absolute, sized to image natural ratio (16:9 → 56.25vw tall) ── */
+            #mobile-bg {
+                position: absolute;
+                top: 58px; left: 0; right: 0;
+                /* 16:9 image: height = width * 9/16 = 56.25vw */
+                height: 56.25vw;
+                z-index: 1;
+                overflow: hidden;
+                will-change: transform;
+            }
+
+            #mobile-bg img {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                object-fit: cover;
+                object-position: center 25%;
                 display: block;
-                position: relative; z-index: 12;
-                width: calc(100% - 44px);
-                margin: 18px auto 0;
+                will-change: transform;
+                /* JS drives the transform for iOS-safe animation */
+            }
+
+            /* gradient overlay on image */
+            #mobile-bg::after {
+                content: '';
+                position: absolute; inset: 0; z-index: 2;
+                background: linear-gradient(
+                    180deg,
+                    rgba(0,0,0,0.10) 0%,
+                    rgba(0,0,0,0.02) 35%,
+                    rgba(0,0,0,0.60) 72%,
+                    rgba(0,0,0,0.97) 100%
+                );
+            }
+
+            /* signal marker: overlaps bottom of image */
+            .signal-marker {
+                position: absolute;
+                top: calc(58px + 56.25vw - 32px);
+                left: 22px; right: 22px;
+                z-index: 12;
                 color: var(--paper-dim);
                 font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
                 opacity: 0;
@@ -358,10 +350,11 @@
                 background: var(--red-memory); opacity: 0.7;
             }
 
-            /* spacer: exactly as tall as the visible image area minus topbar */
+            /* spacer: pushes manifesto below the image */
             .mobile-img-spacer {
                 display: block;
-                height: calc(100vw - 58px);
+                /* topbar(58) + image(56.25vw) + small gap(16px) */
+                height: calc(58px + 56.25vw + 16px);
             }
 
             /* manifesto panel */
@@ -379,10 +372,7 @@
                 transform: translateY(20px);
                 transition: opacity 0.8s ease, transform 0.8s ease;
             }
-            .manifesto-panel.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            .manifesto-panel.visible { opacity: 1; transform: translateY(0); }
             .manifesto-panel::before {
                 content: "MANİFESTO / BOŞLUK KAYDI";
                 display: block; margin-bottom: 16px;
@@ -393,8 +383,7 @@
             .manifesto-panel p {
                 margin: 0 0 1rem;
                 font-size: 0.96rem; font-weight: 600;
-                line-height: 1.78;
-                min-height: 1.4em;
+                line-height: 1.78; min-height: 1.4em;
             }
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
         }
@@ -486,17 +475,14 @@
             })();
         }
 
-        /* ── reveal sequence (runs on BOTH mobile and desktop) ── */
+        /* ── reveal sequence + mobile drift animation ── */
         function runReveal() {
-            // 1. Fade out the black veil
             document.getElementById('pageVeil').style.opacity = '0';
 
-            // 2. Signal marker fades in
             setTimeout(() => {
                 document.getElementById('sigMarker').style.opacity = '1';
             }, 200);
 
-            // 3. Manifesto panel slides up + types
             setTimeout(() => {
                 const panel = document.getElementById('manifesto');
                 panel.classList.add('visible');
@@ -507,7 +493,6 @@
                 }), 400);
             }, 450);
 
-            // 4. Nav links cascade in (desktop only — hidden on mobile via CSS)
             if (!IS_MOBILE) {
                 document.querySelectorAll('.nav-link').forEach((link, i) => {
                     setTimeout(() => link.classList.add('visible'), 650 + i * 150);
@@ -516,6 +501,26 @@
                     const cap = document.getElementById('archCaption');
                     if (cap) cap.classList.add('visible');
                 }, 1300);
+            }
+        }
+
+        /* ── Mobile image drift — JS RAF, works on iOS ── */
+        if (IS_MOBILE) {
+            const bgImg = document.querySelector('#mobile-bg img');
+            if (bgImg) {
+                const PERIOD  = 18000; // ms for one full cycle
+                const MAX_X   = 8;     // px horizontal travel
+                const MAX_Y   = 6;     // px vertical travel
+                const SCALE   = 1.08;  // keep edges hidden during movement
+
+                function driftLoop(ts) {
+                    const t  = ts / PERIOD;
+                    const x  = Math.sin(t * Math.PI * 2)         * MAX_X;
+                    const y  = Math.sin(t * Math.PI * 2 * 0.618) * MAX_Y; // golden ratio offset
+                    bgImg.style.transform = `scale(${SCALE}) translate(${x}px, ${y}px)`;
+                    requestAnimationFrame(driftLoop);
+                }
+                requestAnimationFrame(driftLoop);
             }
         }
 
