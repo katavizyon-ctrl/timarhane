@@ -62,6 +62,7 @@
             /* hide mobile chrome */
             .mobile-topbar, .mobile-drawer { display: none; }
             .mobile-img-spacer { display: none; }
+            #mobile-bg { display: none; }
 
             /* photo bg */
             #bg-photo {
@@ -220,21 +221,64 @@
            MOBILE (≤ 760px)
         ══════════════════════════════════════ */
 
-        /* Drift animation — defined outside media query so it's always available */
+        /* ── Mobile image drift ── */
         @keyframes mobileBgDrift {
-            0%   { background-position: 50% 0%; }
-            33%  { background-position: 48% 2%; }
-            66%  { background-position: 52% -1%; }
-            100% { background-position: 50% 0%; }
+            0%   { transform: scale(1.06) translate(0px,    0px); }
+            33%  { transform: scale(1.08) translate(-6px,  -4px); }
+            66%  { transform: scale(1.07) translate( 5px,  -7px); }
+            100% { transform: scale(1.06) translate(-3px,   2px); }
         }
 
         @media (max-width: 760px) {
 
             html, body { height: auto; overflow-x: hidden; overflow-y: auto; }
 
-            /* hide desktop canvas elements */
+            /* hide desktop-only elements */
             #bg-photo, #grain, #fx, #proxCanvas, #glow { display: none; }
             .nav-box, .language-switch { display: none; }
+
+            /* ── Fixed image layer — completely independent of content ── */
+            #mobile-bg {
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                height: 100vw;          /* square crop — image fills width */
+                z-index: 1;
+                overflow: hidden;
+            }
+
+            #mobile-bg img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center 20%;
+                display: block;
+                transform-origin: center center;
+                animation: mobileBgDrift 18s ease-in-out infinite;
+            }
+
+            /* gradient over the fixed image */
+            #mobile-bg::after {
+                content: '';
+                position: absolute; inset: 0;
+                background: linear-gradient(
+                    180deg,
+                    rgba(0,0,0,0.18) 0%,
+                    rgba(0,0,0,0.05) 30%,
+                    rgba(0,0,0,0.55) 68%,
+                    rgba(0,0,0,0.96) 100%
+                );
+            }
+
+            /* ── Main stage — scrollable content above fixed bg ── */
+            #home-stage {
+                position: relative;
+                z-index: 10;
+                display: block;
+                width: 100%;
+                min-height: 100svh;
+                padding-top: 58px;
+                background: transparent;  /* bg handled by #mobile-bg */
+            }
 
             /* topbar */
             .mobile-topbar {
@@ -242,7 +286,7 @@
                 top: 0; left: 0; right: 0; height: 58px;
                 display: flex; align-items: center; justify-content: space-between;
                 padding: 0 18px;
-                background: rgba(0,0,0,0.92);
+                background: rgba(0,0,0,0.88);
                 border-bottom: 1px solid rgba(140,255,176,0.16);
                 backdrop-filter: blur(12px);
             }
@@ -265,9 +309,9 @@
                 width: 18px; height: 1px; background: var(--paper-dim);
                 transition: transform 220ms, opacity 220ms;
             }
-            .mobile-menu-toggle span      { transform: translateY(0); }
-            .mobile-menu-toggle::before   { transform: translateY(-6px); }
-            .mobile-menu-toggle::after    { transform: translateY(6px); }
+            .mobile-menu-toggle span    { transform: translateY(0); }
+            .mobile-menu-toggle::before { transform: translateY(-6px); }
+            .mobile-menu-toggle::after  { transform: translateY(6px); }
             body.menu-open .mobile-menu-toggle span     { opacity: 0; }
             body.menu-open .mobile-menu-toggle::before  { transform: rotate(45deg); }
             body.menu-open .mobile-menu-toggle::after   { transform: rotate(-45deg); }
@@ -278,7 +322,7 @@
                 top: 58px; left: 0; right: 0;
                 display: flex; flex-direction: column;
                 padding: 8px 22px 20px;
-                background: rgba(0,0,0,0.95);
+                background: rgba(0,0,0,0.96);
                 border-bottom: 1px solid rgba(140,255,176,0.14);
                 backdrop-filter: blur(16px);
                 transform: translateY(-110%); opacity: 0;
@@ -296,31 +340,12 @@
             }
             .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); pointer-events: none; }
 
-            /* main stage — background image + drift */
-            #home-stage {
-                display: block;
-                width: 100%;
-                min-height: 100svh;
-                padding-top: 58px;
-                background:
-                    linear-gradient(180deg,
-                        rgba(0,0,0,0.20) 0%,
-                        rgba(0,0,0,0.02) 18%,
-                        rgba(0,0,0,0.10) 42%,
-                        rgba(0,0,0,0.78) 62%,
-                        rgba(0,0,0,0.97) 100%),
-                    url('home.png') 50% 0% / 100% auto no-repeat,
-                    var(--void);
-                animation: mobileBgDrift 18s ease-in-out infinite;
-            }
-
             /* signal marker */
             .signal-marker {
                 display: block;
-                position: relative;
-                z-index: 12;
+                position: relative; z-index: 12;
                 width: calc(100% - 44px);
-                margin: 20px auto 0;
+                margin: 18px auto 0;
                 color: var(--paper-dim);
                 font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
                 opacity: 0;
@@ -333,10 +358,10 @@
                 background: var(--red-memory); opacity: 0.7;
             }
 
-            /* spacer pushes content below the image area */
+            /* spacer: exactly as tall as the visible image area minus topbar */
             .mobile-img-spacer {
                 display: block;
-                height: 55vw;
+                height: calc(100vw - 58px);
             }
 
             /* manifesto panel */
@@ -344,14 +369,14 @@
                 display: block;
                 position: relative; z-index: 12;
                 width: calc(100% - 44px);
-                margin: 0 auto 40px;
+                margin: 0 auto 48px;
                 padding: 22px 18px 20px;
                 color: var(--phosphor-soft);
-                background: rgba(0,0,0,0.68);
-                border-left: 2px solid rgba(140,255,176,0.40);
-                backdrop-filter: blur(6px);
+                background: rgba(3,5,4,0.82);
+                border-left: 2px solid rgba(140,255,176,0.42);
+                backdrop-filter: blur(8px);
                 opacity: 0;
-                transform: translateY(22px);
+                transform: translateY(20px);
                 transition: opacity 0.8s ease, transform 0.8s ease;
             }
             .manifesto-panel.visible {
@@ -368,7 +393,7 @@
             .manifesto-panel p {
                 margin: 0 0 1rem;
                 font-size: 0.96rem; font-weight: 600;
-                line-height: 1.78; letter-spacing: 0.01em;
+                line-height: 1.78;
                 min-height: 1.4em;
             }
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
@@ -404,6 +429,9 @@
     <!-- Always-on layers -->
     <div class="scanlines"></div>
     <div class="vignette"></div>
+
+    <!-- Mobile image layer — fixed, independent of scroll -->
+    <div id="mobile-bg"><img src="home.png" alt=""></div>
 
     <!-- Main content -->
     <main id="home-stage">
