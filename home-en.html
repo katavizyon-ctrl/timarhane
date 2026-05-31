@@ -230,31 +230,29 @@
             .nav-box, .language-switch { display: none; }
 
             /* ── mobile-bg: FULL SCREEN fixed, exactly like index.html bg-photo ── */
+            /* image div — exactly as tall as the image at 100vw width (16:9 = 56.25vw) */
+            /* position: absolute so it doesn't scroll with content */
             #mobile-bg {
-                position: fixed;
-                inset: 0;
+                position: absolute;
+                top: 58px; left: 0; right: 0;
+                height: 56.25vw;   /* 9/16 × 100vw = exact image height at full width */
                 z-index: 1;
-                /* auto height preserves full image, centers it horizontally */
-                background: url('home.png') center center / auto 100% no-repeat;
-                filter: brightness(0.72) contrast(1.04) saturate(0.90);
+                background: url('home.png') center center / 100% 100% no-repeat;
+                filter: brightness(0.78) contrast(1.04) saturate(0.90);
                 pointer-events: none;
                 transform-origin: center center;
-                /* JS adds scale(1.08) only to give drift headroom */
+                overflow: hidden;
             }
             #mobile-bg::after {
                 content: '';
                 position: absolute; inset: 0;
-                background:
-                    linear-gradient(180deg,
-                        rgba(0,0,0,0.52) 0%,
-                        rgba(0,0,0,0.18) 28%,
-                        rgba(0,0,0,0.28) 52%,
-                        rgba(0,0,0,0.86) 72%,
-                        rgba(0,0,0,0.98) 100%),
-                    linear-gradient(90deg,
-                        rgba(0,0,0,0.42) 0%,
-                        rgba(0,0,0,0.08) 50%,
-                        rgba(0,0,0,0.28) 100%);
+                background: linear-gradient(
+                    180deg,
+                    rgba(0,0,0,0.12) 0%,
+                    rgba(0,0,0,0.02) 40%,
+                    rgba(0,0,0,0.55) 75%,
+                    rgba(0,0,0,0.97) 100%
+                );
             }
 
             /* ── topbar ── */
@@ -317,21 +315,21 @@
             }
             .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); pointer-events: none; }
 
-            /* ── stage: scrollable, transparent, sits above fixed bg ── */
+            /* stage: relative so absolute children (signal-marker, mobile-bg) anchor to it */
             #home-stage {
                 position: relative; z-index: 10;
                 display: block; width: 100%;
                 min-height: 100svh;
                 padding-top: 58px;
-                background: transparent;
+                background: var(--void);
             }
 
-            /* signal marker: top of content, below topbar */
+            /* signal marker — overlays bottom edge of image */
             .signal-marker {
-                display: block;
-                position: relative; z-index: 12;
-                width: calc(100% - 44px);
-                margin: 22px auto 0;
+                position: absolute;
+                top: calc(58px + 56.25vw - 28px);
+                left: 22px; right: 22px;
+                z-index: 12;
                 color: var(--paper-dim);
                 font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
                 opacity: 0; transition: opacity 0.8s ease;
@@ -343,10 +341,10 @@
                 background: var(--red-memory); opacity: 0.7;
             }
 
-            /* spacer: pushes manifesto to ~65% down viewport */
+            /* spacer = topbar + image height + 12px gap */
             .mobile-img-spacer {
                 display: block;
-                height: 48svh;
+                height: calc(58px + 56.25vw + 12px);
             }
 
             /* manifesto panel */
@@ -513,7 +511,7 @@
                 }
                 newTarget();
 
-                // Set initial scale immediately so there's no flash of unscaled state
+                // Set initial transform immediately — no flash
                 mobileBg.style.transform = `scale(${SCALE}) translate(0px, 0px)`;
 
                 (function driftLoop() {
