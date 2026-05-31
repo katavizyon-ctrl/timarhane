@@ -332,11 +332,11 @@
                 );
             }
 
-            /* signal marker: overlaps bottom of image */
+            /* signal marker: top-left, just below topbar */
             .signal-marker {
-                position: absolute;
-                top: calc(58px + 56.25vw - 32px);
-                left: 22px; right: 22px;
+                position: fixed;
+                top: 68px;
+                left: 22px; right: auto;
                 z-index: 12;
                 color: var(--paper-dim);
                 font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
@@ -362,12 +362,14 @@
                 display: block;
                 position: relative; z-index: 12;
                 width: calc(100% - 44px);
-                margin: 0 auto 48px;
+                margin: 24px auto 48px;
                 padding: 22px 18px 20px;
                 color: var(--phosphor-soft);
-                background: rgba(3,5,4,0.82);
+                background: rgba(3,5,4,0.38);
                 border-left: 2px solid rgba(140,255,176,0.42);
-                backdrop-filter: blur(8px);
+                backdrop-filter: blur(6px);
+                max-height: 52svh;
+                overflow-y: auto;
                 opacity: 0;
                 transform: translateY(20px);
                 transition: opacity 0.8s ease, transform 0.8s ease;
