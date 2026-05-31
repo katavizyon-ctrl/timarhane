@@ -225,19 +225,45 @@
 
             html, body { height: auto; overflow-x: hidden; overflow-y: auto; }
 
-            /* hide desktop-only elements */
+            /* ── hide desktop-only elements ── */
             #bg-photo, #grain, #fx, #proxCanvas, #glow { display: none; }
             .nav-box, .language-switch { display: none; }
 
-            /* ── Topbar ── */
+            /* ── mobile-bg: FULL SCREEN fixed, exactly like index.html bg-photo ── */
+            #mobile-bg {
+                position: fixed;
+                inset: 0;
+                z-index: 1;
+                background: url('home.png') center 30% / cover no-repeat;
+                filter: brightness(0.72) contrast(1.04) saturate(0.90);
+                pointer-events: none;
+                /* transform driven by JS driftLoop — no will-change needed */
+            }
+            #mobile-bg::after {
+                content: '';
+                position: absolute; inset: 0;
+                background:
+                    linear-gradient(180deg,
+                        rgba(0,0,0,0.52) 0%,
+                        rgba(0,0,0,0.18) 28%,
+                        rgba(0,0,0,0.28) 52%,
+                        rgba(0,0,0,0.86) 72%,
+                        rgba(0,0,0,0.98) 100%),
+                    linear-gradient(90deg,
+                        rgba(0,0,0,0.42) 0%,
+                        rgba(0,0,0,0.08) 50%,
+                        rgba(0,0,0,0.28) 100%);
+            }
+
+            /* ── topbar ── */
             .mobile-topbar {
                 position: fixed; z-index: 100;
                 top: 0; left: 0; right: 0; height: 58px;
                 display: flex; align-items: center; justify-content: space-between;
                 padding: 0 18px;
-                background: rgba(0,0,0,0.88);
+                background: linear-gradient(180deg, rgba(0,0,0,0.90), rgba(0,0,0,0.44));
                 border-bottom: 1px solid rgba(140,255,176,0.16);
-                backdrop-filter: blur(12px);
+                backdrop-filter: blur(10px);
             }
             .mobile-brand {
                 color: var(--paper-dim); text-decoration: none;
@@ -289,50 +315,24 @@
             }
             .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); pointer-events: none; }
 
-            /* ── Stage: just a scrollable container, bg is transparent ── */
+            /* ── stage: scrollable, transparent, sits above fixed bg ── */
             #home-stage {
                 position: relative; z-index: 10;
                 display: block; width: 100%;
                 min-height: 100svh;
+                padding-top: 58px;
                 background: transparent;
             }
 
-            /* ── Mobile bg: fixed div with background-image + JS transform (same pattern as index.html) ── */
-            #mobile-bg {
-                position: fixed;
-                top: 0; left: 0; right: 0;
-                /* 16:9 ratio: 56.25vw tall, plus topbar offset */
-                height: calc(58px + 56.25vw);
-                z-index: 1;
-                background: url('home.png') center 25% / cover no-repeat;
-                will-change: transform;
-                transform: scale(1.08);
-                transform-origin: center top;
-            }
-
-            /* gradient overlay */
-            #mobile-bg::after {
-                content: '';
-                position: absolute; inset: 0;
-                background: linear-gradient(
-                    180deg,
-                    rgba(0,0,0,0.10) 0%,
-                    rgba(0,0,0,0.02) 35%,
-                    rgba(0,0,0,0.62) 72%,
-                    rgba(0,0,0,0.98) 100%
-                );
-            }
-
-            /* signal marker: overlaps bottom of image */
+            /* signal marker: top of content, below topbar */
             .signal-marker {
-                position: absolute;
-                top: calc(58px + 56.25vw - 32px);
-                left: 22px; right: 22px;
-                z-index: 12;
+                display: block;
+                position: relative; z-index: 12;
+                width: calc(100% - 44px);
+                margin: 22px auto 0;
                 color: var(--paper-dim);
                 font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
-                opacity: 0;
-                transition: opacity 0.8s ease;
+                opacity: 0; transition: opacity 0.8s ease;
             }
             .signal-marker::before {
                 content: '';
@@ -341,11 +341,10 @@
                 background: var(--red-memory); opacity: 0.7;
             }
 
-            /* spacer: pushes manifesto below the image */
+            /* spacer: pushes manifesto to ~65% down viewport */
             .mobile-img-spacer {
                 display: block;
-                /* topbar(58) + image(56.25vw) + small gap(16px) */
-                height: calc(58px + 56.25vw + 16px);
+                height: 48svh;
             }
 
             /* manifesto panel */
@@ -356,7 +355,7 @@
                 margin: 0 auto 48px;
                 padding: 22px 18px 20px;
                 color: var(--phosphor-soft);
-                background: rgba(3,5,4,0.82);
+                background: rgba(3,5,4,0.80);
                 border-left: 2px solid rgba(140,255,176,0.42);
                 backdrop-filter: blur(8px);
                 opacity: 0;
@@ -495,23 +494,29 @@
             }
         }
 
-        /* ── Mobile image drift — transforms the fixed bg div directly (same as index.html pattern) ── */
+        /* ── Mobile drift: same lerp pattern as index.html parallax ── */
         if (IS_MOBILE) {
             const mobileBg = document.getElementById('mobile-bg');
             if (mobileBg) {
-                const PERIOD = 18000;
-                const MAX_X  = 10;
-                const MAX_Y  = 7;
-                const SCALE  = 1.08;
+                let dx = 0, dy = 0;   // current position
+                let tx = 0, ty = 0;   // target position
+                const SCALE = 1.08;
+                const MAX   = 14;     // max px travel
 
-                function driftLoop(ts) {
-                    const t = ts / PERIOD;
-                    const x = Math.sin(t * Math.PI * 2)         * MAX_X;
-                    const y = Math.sin(t * Math.PI * 2 * 0.618) * MAX_Y;
-                    mobileBg.style.transform = `scale(${SCALE}) translate(${x}px, ${y}px)`;
-                    requestAnimationFrame(driftLoop);
+                // Slowly shift target every few seconds
+                function newTarget() {
+                    tx = (Math.random() - 0.5) * MAX * 2;
+                    ty = (Math.random() - 0.5) * MAX * 2;
+                    setTimeout(newTarget, 2800 + Math.random() * 2400);
                 }
-                requestAnimationFrame(driftLoop);
+                newTarget();
+
+                (function driftLoop() {
+                    dx += (tx - dx) * 0.008;  // very slow lerp — dreamy feel
+                    dy += (ty - dy) * 0.008;
+                    mobileBg.style.transform = `scale(${SCALE}) translate(${dx}px, ${dy}px)`;
+                    requestAnimationFrame(driftLoop);
+                })();
             }
         }
 
