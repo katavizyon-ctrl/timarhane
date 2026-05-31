@@ -207,7 +207,8 @@
                 box-shadow: -4px 0 18px rgba(140,255,176,0.10);
             }
             .nav-link:hover::after, .nav-link:focus-visible::after { opacity: 0.82; }
-            .nav-link.is-offline { color: rgba(140,255,176,0.36); border-color: rgba(140,255,176,0.14); pointer-events: none; }
+            .nav-link.is-offline { color: rgba(140,255,176,0.36); border-color: rgba(140,255,176,0.14); }
+            .nav-link.is-offline:hover { color: rgba(232,216,184,0.5); border-color: rgba(232,216,184,0.28); opacity: 1; transform: translateX(-6px); }
 
             .archive-caption {
                 color: rgba(232,216,184,0.36); font-size: 0.68rem; font-weight: 600;
@@ -287,7 +288,7 @@
                 border-bottom: 1px solid rgba(140,255,176,0.10);
                 display: block;
             }
-            .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); pointer-events: none; }
+            .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); }
 
             /* ── Stage: just a scrollable container, bg is transparent ── */
             #home-stage {
@@ -402,9 +403,9 @@
     <nav class="mobile-drawer" id="mobileMenu">
         <a href="home.html">Core</a>
         <a href="frekans.html">Frekans_101</a>
-        <a href="#">Sentetik Anılar</a>
-        <a href="#">Veri Mahzeni</a>
-        <a href="#" class="is-offline">Senkron: Kopuk</a>
+        <a href="sentetik.html">Sentetik Anılar</a>
+        <a href="veri.html">Veri Mahzeni</a>
+        <a href="senkron.html" class="is-offline">Senkron: Kopuk</a>
         <a href="home-en.html">EN</a>
     </nav>
 
