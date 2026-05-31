@@ -45,7 +45,7 @@
             inset: 0;
             z-index: 1;
             background: url('tape_1.png') center / cover no-repeat;
-            filter: brightness(0.46) contrast(1.08) saturate(0.28) hue-rotate(148deg);
+            filter: brightness(0.72) contrast(1.06) saturate(0.72) hue-rotate(148deg);
             animation: bgGlimmer 9s ease-in-out infinite alternate;
         }
 
@@ -55,8 +55,8 @@
             z-index: 2;
             pointer-events: none;
             background:
-                linear-gradient(90deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.10) 34%, rgba(0,0,0,0.58) 62%, rgba(0,0,0,0.90) 100%),
-                radial-gradient(circle at 22% 50%, transparent 0%, rgba(0,0,0,0.36) 52%, rgba(0,0,0,0.72) 100%);
+                linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.04) 34%, rgba(0,0,0,0.32) 62%, rgba(0,0,0,0.62) 100%),
+                radial-gradient(circle at 22% 50%, transparent 0%, rgba(0,0,0,0.14) 52%, rgba(0,0,0,0.38) 100%);
         }
 
         .bg-pulse {
@@ -536,8 +536,8 @@
 
         /* ── Animations ── */
         @keyframes bgGlimmer {
-            0%   { filter: brightness(0.42) contrast(1.08) saturate(0.24) hue-rotate(148deg); }
-            100% { filter: brightness(0.52) contrast(1.06) saturate(0.32) hue-rotate(148deg); }
+            0%   { filter: brightness(0.68) contrast(1.06) saturate(0.68) hue-rotate(148deg); }
+            100% { filter: brightness(0.76) contrast(1.04) saturate(0.78) hue-rotate(148deg); }
         }
 
         @keyframes pulseGlow {
