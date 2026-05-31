@@ -302,7 +302,7 @@
                 position: absolute;
                 top: 58px; left: 0; right: 0;
                 /* 16:9 image: height = width * 9/16 = 56.25vw */
-                height: 61vw;
+                height: 67vw;
                 z-index: 1;
                 overflow: hidden;
                 will-change: transform;
@@ -354,7 +354,7 @@
             .mobile-img-spacer {
                 display: block;
                 /* topbar(58) + image(56.25vw) + small gap(16px) */
-                height: calc(58px + 61vw + 16px);
+                height: calc(58px + 67vw + 16px);
             }
 
             /* manifesto panel — draggable bottom sheet */
@@ -372,7 +372,7 @@
                 max-height: 72svh;
                 overflow-y: auto;
                 opacity: 0;
-                transform: translateY(60%);
+                transform: translateY(35%);
                 transition: opacity 0.8s ease, transform 0.8s ease;
                 touch-action: none;
             }
@@ -385,7 +385,7 @@
                 background: rgba(140,255,176,0.38);
                 border-radius: 2px;
             }
-            .manifesto-panel.visible { opacity: 1; transform: translateY(60%); }
+            .manifesto-panel.visible { opacity: 1; transform: translateY(35%); }
             .manifesto-panel.open    { transform: translateY(0) !important; }
             .manifesto-panel::before {
                 content: "MANIFESTO / VOID RECORD";
@@ -578,7 +578,7 @@
                     currentTranslate = 0;
                 } else {
                     panel.style.transition = 'transform 0.35s cubic-bezier(0.16,1,0.3,1)';
-                    panel.style.transform = 'translateY(60%)';
+                    panel.style.transform = 'translateY(35%)';
                     currentTranslate = 60;
                 }
             }, { passive: true });
