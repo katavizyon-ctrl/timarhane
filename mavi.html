@@ -37,6 +37,7 @@
             align-items: center;
             min-height: 100vh;
             overflow: hidden;
+            padding-top: 72px;
         }
 
         /* ── Background layers ── */
@@ -45,7 +46,7 @@
             inset: 0;
             z-index: 1;
             background: url('tape_2.png') center center / 100% 100% no-repeat;
-            filter: brightness(0.74) contrast(1.05) saturate(0.70) hue-rotate(215deg);
+            filter: brightness(0.78) contrast(1.04) saturate(0.90);
             animation: bgGlimmer 9s ease-in-out infinite alternate;
         }
 
@@ -90,7 +91,7 @@
         #matrixCanvas {
             position: fixed;
             z-index: 5;
-            opacity: 0.045;
+            opacity: 0.18;
             pointer-events: none;
         }
 
@@ -536,8 +537,8 @@
 
         /* ── Animations ── */
         @keyframes bgGlimmer {
-            0%   { filter: brightness(0.70) contrast(1.05) saturate(0.68) hue-rotate(215deg); }
-            100% { filter: brightness(0.78) contrast(1.03) saturate(0.76) hue-rotate(215deg); }
+            0%   { filter: brightness(0.76) contrast(1.04) saturate(0.88); }
+            100% { filter: brightness(0.82) contrast(1.02) saturate(0.96); }
         }
 
         @keyframes pulseGlow {
@@ -558,20 +559,12 @@
             mix-blend-mode: screen;
         }
 
-        #animCanvas {
-            position: fixed;
-            inset: 0;
-            z-index: 4;
-            pointer-events: none;
-            opacity: 1;
-        }
     </style>
 </head>
 <body id="cyberBody">
     <div class="bg-image"></div>
     <div class="bg-overlay"></div>
     <div class="bg-pulse"></div>
-    <canvas id="animCanvas"></canvas>
     <div class="scanlines"></div>
     <canvas id="matrixCanvas"></canvas>
     <canvas id="grain"></canvas>
@@ -843,19 +836,19 @@
         let drops = [];
 
         function initDrops() {
-            drops = Array(Math.floor(canvas.width / 14)).fill(1);
+            drops = Array(Math.floor(canvas.width / 14)).fill(0).map(() => Math.floor(Math.random() * (canvas.height / 14)));
         }
         initDrops();
         window.addEventListener('resize', initDrops);
 
         setInterval(() => {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.06)';
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.032)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = 'rgba(140, 255, 176, 0.72)';
             ctx.font = '13px monospace';
             drops.forEach((d, i) => {
                 ctx.fillText(alphabet[Math.floor(Math.random() * alphabet.length)], i * 14, d * 14);
-                if (d * 14 > canvas.height) drops[i] = 0;
+                if (d * 14 > canvas.height) drops[i] = -Math.floor(Math.random() * 20);
                 drops[i]++;
             });
         }, 36);
@@ -927,168 +920,6 @@
             })();
         }
 
-
-        /* ══════════════════════════════════════════
-           AMBIENT ANIMATIONS: rain + ripples + neon
-        ══════════════════════════════════════════ */
-        (function() {
-            const ac  = document.getElementById('animCanvas');
-            const ax  = ac.getContext('2d');
-            let AW, AH;
-
-            function resizeAnim() {
-                AW = ac.width  = window.innerWidth;
-                AH = ac.height = window.innerHeight;
-            }
-            if (document.readyState === 'complete') resizeAnim();
-            else window.addEventListener('load', resizeAnim);
-            window.addEventListener('resize', resizeAnim);
-
-            /* ── Rain drops ── */
-            const RAIN_COUNT = 220;
-            const raindrops = [];
-            function initRain() {
-                raindrops.length = 0;
-                for (let i = 0; i < RAIN_COUNT; i++) {
-                    raindrops.push({
-                        x:     Math.random() * (AW || window.innerWidth),
-                        y:     Math.random() * (AH || window.innerHeight),
-                        len:   Math.random() * 18 + 8,
-                        speed: Math.random() * 8 + 6,
-                        alpha: Math.random() * 0.28 + 0.06,
-                        width: Math.random() * 0.5 + 0.2,
-                    });
-                }
-            }
-            initRain();
-            window.addEventListener('resize', initRain);
-
-            function drawRain() {
-                raindrops.forEach(d => {
-                    ax.beginPath();
-                    ax.strokeStyle = `rgba(160,220,255,${d.alpha})`;
-                    ax.lineWidth   = d.width;
-                    ax.moveTo(d.x, d.y);
-                    ax.lineTo(d.x - d.len * 0.18, d.y + d.len);
-                    ax.stroke();
-                    d.y += d.speed;
-                    d.x -= d.speed * 0.18;
-                    if (d.y > AH + 20) {
-                        d.y = -20;
-                        d.x = Math.random() * AW;
-                    }
-                });
-            }
-
-            /* ── Puddle ripples ── */
-            const ripples = [];
-            // Fixed puddle centres relative to viewport (bottom-left area matches image)
-            const PUDDLES = [
-                { rx: 0.18, ry: 0.82 },
-                { rx: 0.32, ry: 0.88 },
-                { rx: 0.10, ry: 0.92 },
-                { rx: 0.44, ry: 0.86 },
-            ];
-
-            function spawnRipple() {
-                const p = PUDDLES[Math.floor(Math.random() * PUDDLES.length)];
-                ripples.push({
-                    x:     p.rx * AW,
-                    y:     p.ry * AH,
-                    r:     0,
-                    maxR:  Math.random() * 28 + 14,
-                    alpha: 0.38,
-                    speed: Math.random() * 0.6 + 0.3,
-                });
-            }
-
-            // Stagger initial ripples
-            let rippleTimer = 0;
-            const RIPPLE_INTERVAL = 18; // frames between spawns
-
-            function drawRipples() {
-                rippleTimer++;
-                if (rippleTimer % RIPPLE_INTERVAL === 0) spawnRipple();
-
-                for (let i = ripples.length - 1; i >= 0; i--) {
-                    const rp = ripples[i];
-                    rp.r     += rp.speed;
-                    rp.alpha -= 0.008;
-                    if (rp.alpha <= 0 || rp.r > rp.maxR) { ripples.splice(i, 1); continue; }
-
-                    ax.beginPath();
-                    ax.ellipse(rp.x, rp.y, rp.r, rp.r * 0.38, 0, 0, Math.PI * 2);
-                    ax.strokeStyle = `rgba(100,200,255,${rp.alpha})`;
-                    ax.lineWidth   = 0.7;
-                    ax.stroke();
-                }
-            }
-
-
-            /* ── Cable neon flicker ── */
-            // The neon cables/light trails sit in the lower-right of the image
-            // roughly 58-90% x, 70-95% y — we paint an erratic glow over that region
-            let cableFlicker   = 0.6;
-            let cableHold      = 0;
-            let cableHoldMax   = Math.random() * 8 + 2;
-            let cableColorPhase = 0;
-
-            function drawCableFlicker() {
-                if (!AW || !AH) return;
-
-                // Advance flicker state
-                cableHold++;
-                if (cableHold > cableHoldMax) {
-                    cableHold    = 0;
-                    cableHoldMax = Math.random() * 10 + 1;
-                    const r = Math.random();
-                    if      (r < 0.10) cableFlicker = 0;                          // off
-                    else if (r < 0.20) cableFlicker = Math.random() * 0.25 + 0.05; // very dim
-                    else if (r < 0.28) cableFlicker = Math.random() * 0.5  + 0.7;  // bright spike
-                    else               cableFlicker = Math.random() * 0.3  + 0.5;  // normal
-                }
-
-                const alpha = cableFlicker;
-                if (alpha < 0.03) return;
-
-                // Slowly shift between warm teal and cool blue-green
-                cableColorPhase += 0.003;
-                const t   = (Math.sin(cableColorPhase) + 1) / 2; // 0..1
-                const cr  = Math.round(40  + t * 60);   // 40-100
-                const cg  = Math.round(200 + t * 40);   // 200-240
-                const cb  = Math.round(180 + t * 60);   // 180-240
-
-                // Primary glow — where the cable swirl is (lower-right)
-                const gx1 = AW * 0.72;
-                const gy1 = AH * 0.84;
-                const g1  = ax.createRadialGradient(gx1, gy1, 0, gx1, gy1, AW * 0.18);
-                g1.addColorStop(0,   `rgba(${cr},${cg},${cb},${alpha * 0.32})`);
-                g1.addColorStop(0.5, `rgba(${cr},${cg},${cb},${alpha * 0.12})`);
-                g1.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`);
-                ax.fillStyle = g1;
-                ax.fillRect(AW * 0.52, AH * 0.62, AW * 0.48, AH * 0.38);
-
-                // Secondary smaller hotspot — cable tip near bottom centre-right
-                const gx2 = AW * 0.62;
-                const gy2 = AH * 0.90;
-                const g2  = ax.createRadialGradient(gx2, gy2, 0, gx2, gy2, AW * 0.10);
-                g2.addColorStop(0,   `rgba(${cr},${cg},${cb},${alpha * 0.22})`);
-                g2.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`);
-                ax.fillStyle = g2;
-                ax.fillRect(AW * 0.50, AH * 0.78, AW * 0.24, AH * 0.22);
-            }
-
-            /* ── Main loop ── */
-            function animLoop() {
-                if (!AW || !AH) { requestAnimationFrame(animLoop); return; }
-                ax.clearRect(0, 0, AW, AH);
-                drawRain();
-                drawRipples();
-                drawCableFlicker();
-                requestAnimationFrame(animLoop);
-            }
-            requestAnimationFrame(animLoop);
-        })();
 
     </script>
 </body>
