@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" type="image/x-icon" href="favicon.ico">
     <title>TIMARHANE // CORE</title>
     <style>
         :root {
@@ -302,7 +304,7 @@
                 position: absolute;
                 top: 58px; left: 0; right: 0;
                 /* 16:9 image: height = width * 9/16 = 56.25vw */
-                height: 67vw;
+                height: 56.25vw;
                 z-index: 1;
                 overflow: hidden;
                 will-change: transform;
@@ -332,11 +334,11 @@
                 );
             }
 
-            /* signal marker: top-left, just below topbar */
+            /* signal marker: overlaps bottom of image */
             .signal-marker {
-                position: fixed;
-                top: 68px;
-                left: 22px; right: auto;
+                position: absolute;
+                top: calc(58px + 56.25vw - 32px);
+                left: 22px; right: 22px;
                 z-index: 12;
                 color: var(--paper-dim);
                 font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
@@ -354,39 +356,25 @@
             .mobile-img-spacer {
                 display: block;
                 /* topbar(58) + image(56.25vw) + small gap(16px) */
-                height: calc(58px + 67vw + 16px);
+                height: calc(58px + 56.25vw + 16px);
             }
 
-            /* manifesto panel — draggable bottom sheet */
+            /* manifesto panel */
             .manifesto-panel {
-                position: fixed;
-                left: 0; right: 0;
-                bottom: 0;
-                z-index: 20;
-                padding: 18px 22px 32px;
+                display: block;
+                position: relative; z-index: 12;
+                width: calc(100% - 44px);
+                margin: 0 auto 48px;
+                padding: 22px 18px 20px;
                 color: var(--phosphor-soft);
-                background: rgba(3,5,4,0.42);
-                border-top: 1px solid rgba(140,255,176,0.32);
-                border-left: none;
-                backdrop-filter: blur(10px);
-                max-height: 72svh;
-                overflow-y: auto;
+                background: rgba(3,5,4,0.82);
+                border-left: 2px solid rgba(140,255,176,0.42);
+                backdrop-filter: blur(8px);
                 opacity: 0;
-                transform: translateY(35%);
+                transform: translateY(20px);
                 transition: opacity 0.8s ease, transform 0.8s ease;
-                touch-action: none;
             }
-            .manifesto-panel::after {
-                content: '';
-                position: absolute;
-                top: 10px; left: 50%;
-                transform: translateX(-50%);
-                width: 36px; height: 3px;
-                background: rgba(140,255,176,0.38);
-                border-radius: 2px;
-            }
-            .manifesto-panel.visible { opacity: 1; transform: translateY(35%); }
-            .manifesto-panel.open    { transform: translateY(0) !important; }
+            .manifesto-panel.visible { opacity: 1; transform: translateY(0); }
             .manifesto-panel::before {
                 content: "MANIFESTO / VOID RECORD";
                 display: block; margin-bottom: 16px;
@@ -540,49 +528,6 @@
 
         // Run reveal after a short paint delay
         setTimeout(runReveal, 100);
-
-        /* ── Draggable manifesto panel (mobile) ── */
-        if (IS_MOBILE) {
-            const panel = document.getElementById('manifesto');
-            let startY = 0, startTranslate = 60, currentTranslate = 60;
-            const MIN_TRANSLATE = 0;    // fully open
-            const MAX_TRANSLATE = 75;   // mostly hidden
-
-            function getTranslateY() {
-                const style = window.getComputedStyle(panel);
-                const matrix = new DOMMatrix(style.transform);
-                const pct = (matrix.m42 / window.innerHeight) * 100;
-                return isNaN(pct) ? currentTranslate : pct;
-            }
-
-            panel.addEventListener('touchstart', e => {
-                startY = e.touches[0].clientY;
-                currentTranslate = getTranslateY();
-                panel.style.transition = 'opacity 0.8s ease';
-            }, { passive: true });
-
-            panel.addEventListener('touchmove', e => {
-                const dy = e.touches[0].clientY - startY;
-                const dyPct = (dy / window.innerHeight) * 100;
-                let next = currentTranslate + dyPct;
-                next = Math.max(MIN_TRANSLATE, Math.min(MAX_TRANSLATE, next));
-                panel.style.transform = `translateY(${next}%)`;
-            }, { passive: true });
-
-            panel.addEventListener('touchend', e => {
-                const finalY = getTranslateY();
-                // Snap: if dragged past midpoint, open fully; otherwise return to resting
-                if (finalY < 35) {
-                    panel.style.transition = 'transform 0.35s cubic-bezier(0.16,1,0.3,1)';
-                    panel.style.transform = 'translateY(0%)';
-                    currentTranslate = 0;
-                } else {
-                    panel.style.transition = 'transform 0.35s cubic-bezier(0.16,1,0.3,1)';
-                    panel.style.transform = 'translateY(35%)';
-                    currentTranslate = 60;
-                }
-            }, { passive: true });
-        }
 
         /* ── Mobile menu toggle ── */
         const toggle = document.getElementById('menuToggle');
