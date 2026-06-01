@@ -193,10 +193,135 @@
             .error-code { font-size: clamp(3.5rem, 20vw, 7rem); }
             .terminal-block { padding: 16px 14px; }
         }
+
+        /* ── Mouse tracking layers ── */
+        #grain { position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: 0.40; }
+        #fx    { position: fixed; inset: 0; z-index: 6; pointer-events: none; mix-blend-mode: screen; }
+        #glow  {
+            position: fixed; z-index: 5;
+            width: 380px; height: 380px; border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(140,255,176,0.07) 0%, transparent 65%);
+            transform: translate(-50%,-50%);
+            left: -999px; top: -999px;
+            mix-blend-mode: screen;
+        }
+
+        /* ══════════════════════════════
+           MOBILE HAMBURGER (≤ 760px)
+        ══════════════════════════════ */
+        @media (max-width: 760px) {
+            .top-nav { display: none; }
+
+            .mobile-topbar {
+                position: fixed; z-index: 100;
+                top: 0; left: 0; right: 0; height: 58px;
+                display: flex; align-items: center; justify-content: space-between;
+                padding: 0 18px;
+                background: rgba(0,0,0,0.88);
+                border-bottom: 1px solid rgba(140,255,176,0.16);
+                backdrop-filter: blur(12px);
+            }
+            .mobile-brand {
+                color: rgba(232,216,184,0.55); text-decoration: none;
+                font-size: 0.68rem; font-weight: 800;
+                letter-spacing: 0.20em; text-transform: uppercase;
+            }
+            .mobile-menu-toggle {
+                display: flex; align-items: center; justify-content: center;
+                width: 44px; height: 40px;
+                border: 1px solid rgba(140,255,176,0.32);
+                background: rgba(0,0,0,0.4); cursor: pointer;
+                position: relative;
+            }
+            .mobile-menu-toggle span,
+            .mobile-menu-toggle::before,
+            .mobile-menu-toggle::after {
+                content: ''; position: absolute; display: block;
+                width: 18px; height: 1px; background: rgba(232,216,184,0.6);
+                transition: transform 220ms, opacity 220ms;
+            }
+            .mobile-menu-toggle span    { transform: translateY(0); }
+            .mobile-menu-toggle::before { transform: translateY(-6px); }
+            .mobile-menu-toggle::after  { transform: translateY(6px); }
+            body.menu-open .mobile-menu-toggle span     { opacity: 0; }
+            body.menu-open .mobile-menu-toggle::before  { transform: rotate(45deg); }
+            body.menu-open .mobile-menu-toggle::after   { transform: rotate(-45deg); }
+
+            .mobile-drawer {
+                position: fixed; z-index: 95;
+                top: 58px; left: 0; right: 0;
+                display: flex; flex-direction: column;
+                padding: 8px 22px 20px;
+                background: rgba(0,0,0,0.96);
+                border-bottom: 1px solid rgba(140,255,176,0.14);
+                backdrop-filter: blur(16px);
+                transform: translateY(-110%); opacity: 0;
+                pointer-events: none;
+                transition: transform 240ms ease, opacity 200ms ease;
+            }
+            body.menu-open .mobile-drawer {
+                transform: translateY(0); opacity: 1; pointer-events: auto;
+            }
+            .mobile-drawer a {
+                color: rgba(140,255,176,0.72); text-decoration: none;
+                font-size: 0.88rem; font-weight: 800;
+                letter-spacing: 0.22em; text-transform: uppercase;
+                padding: 16px 0;
+                border-bottom: 1px solid rgba(140,255,176,0.10);
+                display: block;
+            }
+            .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); }
+            .mobile-drawer a.is-active  { color: rgba(232,216,184,0.9); }
+
+            .stage { padding-top: 80px; }
+        }
+
+        @media (min-width: 761px) {
+            .mobile-topbar, .mobile-drawer { display: none; }
+        }
     </style>
+    <!-- SEO & Social -->
+    <meta name="description" content="Sync layer currently inactive — external connection undetectable. TIMARHANE archive offline.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://onehaus.com/senkron-en.html">
+    <link rel="alternate" hreflang="en" href="https://onehaus.com/senkron-en.html">
+    <link rel="alternate" hreflang="tr" href="https://onehaus.com/senkron.html">
+    <link rel="alternate" hreflang="x-default" href="https://onehaus.com/index.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TIMARHANE">
+    <meta property="og:title" content="TIMARHANE // Sync: Offline">
+    <meta property="og:description" content="Sync layer currently inactive — external connection undetectable. TIMARHANE archive offline.">
+    <meta property="og:url" content="https://onehaus.com/senkron-en.html">
+    <meta property="og:image" content="https://onehaus.com/landing_bg.png">
+    <meta property="og:locale" content="en_US">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TIMARHANE // Sync: Offline">
+    <meta name="twitter:description" content="Sync layer currently inactive — external connection undetectable. TIMARHANE archive offline.">
+    <meta name="twitter:image" content="https://onehaus.com/landing_bg.png">
 </head>
 <body>
     <div id="pageVeil"></div>
+
+    <canvas id="grain"></canvas>
+    <canvas id="fx"></canvas>
+    <div id="glow"></div>
+
+    <header class="mobile-topbar">
+        <a class="mobile-brand" href="home-en.html">TIMARHANE // CORE</a>
+        <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
+    </header>
+    <nav class="mobile-drawer" id="mobileMenu">
+        <a href="home-en.html">Core</a>
+        <a href="frekans-en.html">Frequency_101</a>
+        <a href="sentetik-en.html">Synthetic Memories</a>
+        <a href="veri-en.html">Data Vault</a>
+        <a href="senkron-en.html" class="is-active is-offline">Sync: Offline</a>
+        <a href="senkron.html">TR</a>
+    </nav>
+
     <canvas id="noise"></canvas>
     <div class="scanlines"></div>
     <div class="vignette"></div>
@@ -291,6 +416,91 @@
         }
         drawFlatline();
     })();
+
+        /* ── Mouse tracking ── */
+        const IS_MOBILE = window.innerWidth <= 760;
+        if (!IS_MOBILE) {
+            const grainC = document.getElementById('grain');
+            const grainX = grainC.getContext('2d');
+            const fxC    = document.getElementById('fx');
+            const fxX    = fxC.getContext('2d');
+            const glow   = document.getElementById('glow');
+            let W = 0, H = 0;
+            function resize() {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                if (!w || !h) return;
+                W = grainC.width = fxC.width = w;
+                H = grainC.height = fxC.height = h;
+            }
+            if (document.readyState === 'complete') {
+                resize();
+            } else {
+                window.addEventListener('load', resize);
+            }
+            window.addEventListener('resize', resize);
+            let mx = W / 2, my = H / 2;
+            const trail = [];
+            document.addEventListener('mousemove', e => {
+                mx = e.clientX; my = e.clientY;
+                glow.style.left = mx + 'px';
+                glow.style.top  = my + 'px';
+                trail.push({ x: mx, y: my, life: 1 });
+                if (trail.length > 28) trail.shift();
+            });
+            let grainTick = 0;
+            function drawGrain() {
+                if (!W || !H) return;
+                const img = grainX.createImageData(W, H);
+                const d = img.data;
+                for (let i = 0; i < d.length; i += 4) {
+                    const v = Math.random() * 255 | 0;
+                    if (v > 210) {
+                        d[i]   = v * 0.42 | 0;
+                        d[i+1] = v;
+                        d[i+2] = v * 0.58 | 0;
+                        d[i+3] = (v - 210) * 2;
+                    }
+                }
+                grainX.putImageData(img, 0, 0);
+            }
+            let grainFrame = 0;
+            (function loop() {
+                if (++grainFrame % 3 === 0) drawGrain();
+                fxX.clearRect(0, 0, W, H);
+                for (let i = trail.length - 1; i >= 0; i--) {
+                    const p = trail[i];
+                    p.life -= 0.065;
+                    if (p.life <= 0) { trail.splice(i, 1); continue; }
+                    const r = p.life * 14;
+                    const g = fxX.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+                    g.addColorStop(0, `rgba(140,255,176,${p.life * 0.38})`);
+                    g.addColorStop(1, 'rgba(140,255,176,0)');
+                    fxX.fillStyle = g;
+                    fxX.beginPath();
+                    fxX.arc(p.x, p.y, r, 0, Math.PI * 2);
+                    fxX.fill();
+                }
+                requestAnimationFrame(loop);
+            })();
+        }
+
+
+        /* ── Mobile hamburger toggle ── */
+        const toggle = document.getElementById('menuToggle');
+        const drawer = document.getElementById('mobileMenu');
+        if (toggle && drawer) {
+            toggle.addEventListener('click', () => {
+                const open = document.body.classList.toggle('menu-open');
+                toggle.setAttribute('aria-expanded', String(open));
+                toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+            });
+            drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+                document.body.classList.remove('menu-open');
+                toggle.setAttribute('aria-expanded', 'false');
+            }));
+        }
+
     </script>
 </body>
 </html>

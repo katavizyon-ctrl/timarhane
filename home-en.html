@@ -389,6 +389,26 @@
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
         }
     </style>
+    <!-- SEO & Social -->
+    <meta name="description" content="TIMARHANE core hub — entry point to frequency archives, synthetic memories and data vaults.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://onehaus.com/home-en.html">
+    <link rel="alternate" hreflang="en" href="https://onehaus.com/home-en.html">
+    <link rel="alternate" hreflang="tr" href="https://onehaus.com/home.html">
+    <link rel="alternate" hreflang="x-default" href="https://onehaus.com/index.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TIMARHANE">
+    <meta property="og:title" content="TIMARHANE // CORE">
+    <meta property="og:description" content="TIMARHANE core hub — entry point to frequency archives, synthetic memories and data vaults.">
+    <meta property="og:url" content="https://onehaus.com/home-en.html">
+    <meta property="og:image" content="https://onehaus.com/landing_bg.png">
+    <meta property="og:locale" content="en_US">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TIMARHANE // CORE">
+    <meta name="twitter:description" content="TIMARHANE core hub — entry point to frequency archives, synthetic memories and data vaults.">
+    <meta name="twitter:image" content="https://onehaus.com/landing_bg.png">
 </head>
 <body>
 
@@ -560,7 +580,7 @@
                 W = grainC.width = fxC.width = proxC.width = window.innerWidth;
                 H = grainC.height = fxC.height = proxC.height = window.innerHeight;
             }
-            resize();
+            window.addEventListener('load', resize);
             window.addEventListener('resize', resize);
 
             let mx = W / 2, my = H / 2;

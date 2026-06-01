@@ -268,6 +268,26 @@
             .interactive-btn { width: 100%; margin-left: 0; margin-top: 8px; padding: 14px 16px; }
         }
     </style>
+    <!-- SEO & Social -->
+    <meta name="description" content="TIMARHANE — İstanbul'dan yapay zeka destekli yaratıcı bir alan. Müzik, film, karakter ve hikayeler; insan imgelem ile makine frekansının kesişiminde.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://onehaus.com/index.html">
+    <link rel="alternate" hreflang="tr" href="https://onehaus.com/index.html">
+    <link rel="alternate" hreflang="en" href="https://onehaus.com/index-en.html">
+    <link rel="alternate" hreflang="x-default" href="https://onehaus.com/index.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TIMARHANE">
+    <meta property="og:title" content="TIMARHANE // Terminal Boot">
+    <meta property="og:description" content="TIMARHANE — İstanbul'dan yapay zeka destekli yaratıcı bir alan. Müzik, film, karakter ve hikayeler; insan imgelem ile makine frekansının kesişiminde.">
+    <meta property="og:url" content="https://onehaus.com/index.html">
+    <meta property="og:image" content="https://onehaus.com/landing_bg.png">
+    <meta property="og:locale" content="tr_TR">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TIMARHANE // Terminal Boot">
+    <meta name="twitter:description" content="TIMARHANE — İstanbul'dan yapay zeka destekli yaratıcı bir alan. Müzik, film, karakter ve hikayeler; insan imgelem ile makine frekansının kesişiminde.">
+    <meta name="twitter:image" content="https://onehaus.com/landing_bg.png">
 </head>
 <body>
     <div id="pageVeil"></div>
@@ -305,7 +325,7 @@
             W = grainC.width = fxC.width = window.innerWidth;
             H = grainC.height = fxC.height = window.innerHeight;
         }
-        resize();
+        window.addEventListener('load', resize);
         window.addEventListener('resize', resize);
 
         /* ── Mouse tracking ── */
