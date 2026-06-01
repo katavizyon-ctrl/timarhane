@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <title>TIMARHANE // Blue Rendezvous</title>
+    <title>TIMARHANE // Mavi Randevu</title>
     <style>
         :root {
             --void: #050505;
@@ -560,29 +560,6 @@
         }
 
     </style>
-    <!-- SEO & Social -->
-    <meta name="description" content="Blue Rendezvous — a signal recorded from TIMARHANE's AI-assisted creative universe.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://oneheus.com/mavi-en.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/mavi-en.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/mavi.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // Blue Rendezvous">
-    <meta property="og:description" content="Blue Rendezvous — a signal recorded from TIMARHANE's AI-assisted creative universe.">
-    <meta property="og:url" content="https://oneheus.com/mavi-en.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
-    <meta property="og:locale" content="en_US">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // Blue Rendezvous">
-    <meta name="twitter:description" content="Blue Rendezvous — a signal recorded from TIMARHANE's AI-assisted creative universe.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
 </head>
 <body id="cyberBody">
     <div class="bg-image"></div>
@@ -594,40 +571,40 @@
     <canvas id="fx"></canvas>
     <div id="glow"></div>
 
-    <nav class="site-nav" aria-label="Main navigation">
-        <a class="nav-brand" href="home-en.html">OUT-OF-SYSTEM FREQUENCY</a>
-        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="songMenu"><span></span></button>
+    <nav class="site-nav" aria-label="Ana navigasyon">
+        <a class="nav-brand" href="home.html">SİSTEM DIŞI FREKANS</a>
+        <button class="menu-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="songMenu"><span></span></button>
         <div class="nav-links" id="songMenu">
-            <a class="top-nav-link" href="home-en.html">Core</a>
-            <a class="top-nav-link active" href="frekans-en.html">Frequency_101</a>
-            <a class="top-nav-link" href="sentetik-en.html">Synthetic Memories</a>
-            <a class="top-nav-link" href="veri-en.html">Data Vault</a>
-            <a class="top-nav-link disabled" href="senkron-en.html">Sync: Offline</a>
-            <div class="lang-switch" aria-label="Language switch">
-                <a href="mavi.html">TR</a><span>/</span><a href="mavi-en.html" class="lang-active">EN</a>
+            <a class="top-nav-link" href="home.html">Core</a>
+            <a class="top-nav-link active" href="frekans.html">Frekans_101</a>
+            <a class="top-nav-link" href="sentetik.html">Sentetik Anılar</a>
+            <a class="top-nav-link" href="veri.html">Veri Mahzeni</a>
+            <a class="top-nav-link disabled" href="senkron.html">Senkron: Kopuk</a>
+            <div class="lang-switch" aria-label="Dil seçimi">
+                <a href="mavi.html" class="lang-active">TR</a><span>/</span><a href="mavi-en.html">EN</a>
             </div>
         </div>
     </nav>
 
     <div class="main-interface">
-        <span class="sys-label">Frequency_101 // Recording</span>
-        <h1 class="sys-title">Blue Rendezvous</h1>
+        <span class="sys-label">Frekans_101 // Kayıt</span>
+        <h1 class="sys-title">Mavi Randevu</h1>
 
         <!-- Custom player -->
         <div class="player" id="playerUI">
             <div class="player-track-info">
-                <span class="player-track-name">ONNO — BLUE RENDEZVOUS</span>
+                <span class="player-track-name">ONNO — MAVİ RANDEVU</span>
                 <span class="player-time" id="playerTime">0:00 / 0:00</span>
             </div>
-            <div class="player-scrubber" id="scrubber" role="slider" aria-label="Progress bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="player-scrubber" id="scrubber" role="slider" aria-label="İlerleme çubuğu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
                 <div class="player-scrubber-fill" id="scrubberFill"></div>
                 <div class="player-scrubber-thumb" id="scrubberThumb"></div>
             </div>
             <div class="player-controls">
-                <button class="player-btn" id="playBtn" aria-label="Play">▶ PLAY</button>
-                <div class="player-volume" aria-label="Volume control">
-                    <span class="player-vol-label">VOL</span>
-                    <div class="player-vol-track" id="volTrack" role="slider" aria-label="Volume level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" tabindex="0">
+                <button class="player-btn" id="playBtn" aria-label="Oynat">▶ OYNAT</button>
+                <div class="player-volume" aria-label="Ses kontrolü">
+                    <span class="player-vol-label">SES</span>
+                    <div class="player-vol-track" id="volTrack" role="slider" aria-label="Ses seviyesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" tabindex="0">
                         <div class="player-vol-fill" id="volFill"></div>
                         <div class="player-vol-thumb" id="volThumb"></div>
                     </div>
@@ -652,13 +629,13 @@
             toggle.addEventListener('click', () => {
                 const open = document.body.classList.toggle('menu-open');
                 toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+                toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
             });
             drawer.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     document.body.classList.remove('menu-open');
                     toggle.setAttribute('aria-expanded', 'false');
-                    toggle.setAttribute('aria-label', 'Open menu');
+                    toggle.setAttribute('aria-label', 'Menüyü aç');
                 });
             });
         })();
@@ -773,19 +750,19 @@
         });
 
         audio.addEventListener('play', () => {
-            playBtn.textContent = '⏸ PAUSE';
+            playBtn.textContent = '⏸ DURAKLAT';
             playBtn.classList.add('is-playing');
             body.classList.add('track-playing');
         });
 
         audio.addEventListener('pause', () => {
-            playBtn.textContent = '▶ PLAY';
+            playBtn.textContent = '▶ OYNAT';
             playBtn.classList.remove('is-playing');
             body.classList.remove('track-playing');
         });
 
         audio.addEventListener('ended', () => {
-            playBtn.textContent = '▶ PLAY';
+            playBtn.textContent = '▶ OYNAT';
             playBtn.classList.remove('is-playing');
             body.classList.remove('track-playing');
         });

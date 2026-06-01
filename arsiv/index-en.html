@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -268,29 +268,6 @@
             .interactive-btn { width: 100%; margin-left: 0; margin-top: 8px; padding: 14px 16px; }
         }
     </style>
-    <!-- SEO & Social -->
-    <meta name="description" content="TIMARHANE — İstanbul'dan yapay zeka destekli yaratıcı bir alan. Müzik, film, karakter ve hikayeler; insan imgelem ile makine frekansının kesişiminde.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://oneheus.com/index.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/index.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/index-en.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // Terminal Boot">
-    <meta property="og:description" content="TIMARHANE — İstanbul'dan yapay zeka destekli yaratıcı bir alan. Müzik, film, karakter ve hikayeler; insan imgelem ile makine frekansının kesişiminde.">
-    <meta property="og:url" content="https://oneheus.com/index.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_glitch.png">
-    <meta property="og:locale" content="tr_TR">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // Terminal Boot">
-    <meta name="twitter:description" content="TIMARHANE — İstanbul'dan yapay zeka destekli yaratıcı bir alan. Müzik, film, karakter ve hikayeler; insan imgelem ile makine frekansının kesişiminde.">
-    <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
 </head>
 <body>
     <div id="pageVeil"></div>
@@ -303,14 +280,14 @@
     <canvas id="fx"></canvas>
     <div class="scanlines"></div>
 
-    <div class="language-switch" aria-label="Dil seçimi">
-        <a href="index.html" class="lang-active">TR</a>
+    <div class="language-switch" aria-label="Language switch">
+        <a href="index.html">TR</a>
         <span>/</span>
-        <a href="index-en.html">EN</a>
+        <a href="index-en.html" class="lang-active">EN</a>
     </div>
 
     <div class="terminal-container" id="terminalGrid">
-        <div class="terminal-tag">SİSTEM DIŞI FREKANS // BOOT</div>
+        <div class="terminal-tag">OUT-OF-SYSTEM FREQUENCY // BOOT</div>
     </div>
 
     <script>
@@ -328,7 +305,7 @@
             W = grainC.width = fxC.width = window.innerWidth;
             H = grainC.height = fxC.height = window.innerHeight;
         }
-        resize(); // call immediately — fixes createImageData W=0 race
+        resize();
         window.addEventListener('resize', resize);
 
         /* ── Mouse tracking ── */
@@ -450,16 +427,16 @@
         const GLITCH = '▓░▒█▄▀┼╬╪╫│─<>!?@#';
 
         const SEQ = [
-            { t: 'dim',  s: 'Karanlık alandan düşük seviyeli sinyal alınıyor...' },
-            { t: 'green',s: '✔ FREKANS_101: UYANDI' },
-            { t: 'green',s: '✔ BOŞLUK_KAYDI: AÇILDI' },
-            { t: 'blue', s: 'ℹ SENTETİK ANILAR: PARÇALI AMA ERİŞİLEBİLİR' },
-            { t: 'main', s: '>> SİSTEM DIŞI FREKANS TESPİT EDİLDİ // 99.6 MHz' },
-            { t: 'main', s: '>> GERÇEKLİK ASKIYA ALINDI // MERKEZDEN UZAKLAŞILIYOR' },
-            { t: 'pink', s: '>> UYARI: DIŞ BAĞLANTI İZLENEMİYOR // İÇERİSİ DAHA GÜVENLİ' },
-            { t: 'dim',  s: 'Duygu işleme katmanı yükleniyor...' },
+            { t: 'dim',  s: 'Receiving low-level signal from the dark field...' },
+            { t: 'green',s: '✔ FREQUENCY_101: AWAKE' },
+            { t: 'green',s: '✔ VOID_RECORD: OPENED' },
+            { t: 'blue', s: 'ℹ SYNTHETIC MEMORIES: FRAGMENTED BUT ACCESSIBLE' },
+            { t: 'main', s: '>> OUT-OF-SYSTEM FREQUENCY DETECTED // 99.6 MHz' },
+            { t: 'main', s: '>> REALITY SUSPENDED // DRIFTING AWAY FROM THE CENTER' },
+            { t: 'pink', s: '>> WARNING: EXTERNAL LINK CANNOT BE TRACED // INSIDE IS SAFER' },
+            { t: 'dim',  s: 'Loading emotional processing layer...' },
             { t: 'bar',  s: '' },
-            { t: 'green',s: '✔ TIMARHANE_OS: BOŞLUĞA GİRİŞ HAZIR.' }
+            { t: 'green',s: '✔ TIMARHANE_OS: VOID ENTRY READY.' }
         ];
 
         let idx = 0;
@@ -488,7 +465,7 @@
 
             const row = document.createElement('div');
             row.className = 'log-line';
-            const pfx = { pink:'[UYARI]', green:'[OK]', blue:'[ARŞİV]' }[d.t] || 'IST@void:~#';
+            const pfx = { pink:'[WARNING]', green:'[OK]', blue:'[ARCHIVE]' }[d.t] || 'IST@void:~#';
             const cls = { pink:'pink', green:'green', blue:'blue' }[d.t] || 'dim';
             row.innerHTML = `<span class="${cls}">${pfx}</span> `;
             const span = document.createElement('span');
@@ -506,7 +483,7 @@
         function bar() {
             const row = document.createElement('div');
             row.className = 'log-line';
-            row.innerHTML = '<span class="dim">IST@void:~#</span> <span class="dim">[EŞİK] </span><span id="pb" class="blue"></span>';
+            row.innerHTML = '<span class="dim">IST@void:~#</span> <span class="dim">[THRESHOLD] </span><span id="pb" class="blue"></span>';
             grid.appendChild(row);
             const pb = document.getElementById('pb');
             let cur = 0; const max = 28;
@@ -521,7 +498,7 @@
             const row = document.createElement('div');
             row.className = 'input-line';
             row.style.display = 'flex';
-            row.innerHTML = `<span>TIMARHANE@OS:~#</span> <span id="cmd"></span><span class="cursor"></span> <button class="interactive-btn" id="execBtn">[ FREKANSI AÇ ]</button>`;
+            row.innerHTML = `<span>TIMARHANE@OS:~#</span> <span id="cmd"></span><span class="cursor"></span> <button class="interactive-btn" id="execBtn">[ OPEN FREQUENCY ]</button>`;
             grid.appendChild(row);
             document.getElementById('execBtn').addEventListener('click', launch);
 
@@ -537,7 +514,7 @@
         function launch() {
             const btn = document.getElementById('execBtn');
             btn.style.animation = 'none';
-            btn.textContent = '[ AÇILIYOR... ]';
+            btn.textContent = '[ OPENING... ]';
             btn.style.color = 'var(--blue-dim)';
             btn.style.borderColor = 'var(--blue-dim)';
             btn.style.opacity = '1';
@@ -548,7 +525,7 @@
                 document.getElementById('pageVeil').classList.add('fading');
             }, 280);
 
-            setTimeout(() => { window.location.href = 'home.html'; }, 650);
+            setTimeout(() => { window.location.href = 'home-en.html'; }, 650);
         }
 
         setTimeout(next, 600);

@@ -5,77 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <title>TIMARHANE // Veri Mahzeni</title>
+    <title>TIMARHANE // Senkron: Kopuk</title>
     <style>
         :root {
             --void: #050505;
             --phosphor: #8CFFB0;
-            --phosphor-soft: rgba(140, 255, 176, 0.78);
-            --phosphor-dim: rgba(140, 255, 176, 0.26);
-            --paper: #E8D8B8;
-            --paper-dim: rgba(232, 216, 184, 0.62);
-            --paper-faint: rgba(232, 216, 184, 0.38);
+            --paper-dim: rgba(232, 216, 184, 0.38);
+            --paper-faint: rgba(232, 216, 184, 0.22);
             --red-memory: #B64A35;
-            --amber: rgba(255, 180, 60, 0.75);
+            --dead: rgba(140, 255, 176, 0.18);
         }
 
         * { box-sizing: border-box; }
 
         html, body {
-            width: 100%; min-height: 100%; margin: 0;
-            background: var(--void);
-            color: var(--phosphor-soft);
+            width: 100%; height: 100%; margin: 0;
+            background: #020303;
+            color: var(--dead);
             font-family: "Courier New", Courier, monospace;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
+        /* Completely black bg — no image, just void */
         body {
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            min-height: 100vh; position: relative;
-        }
-
-        body::before {
-            content: "";
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background: url("frekans_bg.png") center / cover no-repeat;
-            filter: brightness(0.46) contrast(1.10) saturate(0.4) hue-rotate(20deg);
-        }
-
-        body::after {
-            content: "";
-            position: fixed; inset: 0; z-index: 1; pointer-events: none;
-            background:
-                linear-gradient(135deg, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.42) 50%, rgba(0,0,0,0.88) 100%),
-                radial-gradient(circle at 50% 50%, rgba(255,180,60,0.03) 0%, transparent 60%);
+            position: relative;
         }
 
         .scanlines {
             position: fixed; inset: 0; z-index: 2; pointer-events: none;
             background:
-                linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-            background-size: 100% 4px, 4px 100%;
-            mix-blend-mode: soft-light; opacity: 0.26;
+                linear-gradient(rgba(255,255,255,0.014) 1px, transparent 1px);
+            background-size: 100% 4px;
+            mix-blend-mode: soft-light; opacity: 0.35;
         }
 
         .vignette {
             position: fixed; inset: -12%; z-index: 3; pointer-events: none;
-            background: radial-gradient(circle at center, transparent 38%, rgba(0,0,0,0.80) 100%);
+            background: radial-gradient(circle at center, transparent 28%, rgba(0,0,0,0.88) 100%);
         }
 
+        /* Static noise canvas */
+        #noise {
+            position: fixed; inset: 0; z-index: 1;
+            pointer-events: none; opacity: 0.028;
+        }
+
+        /* Nav — deliberately muted */
         .top-nav {
             position: fixed; z-index: 20;
             top: 0; left: 0; right: 0; min-height: 72px;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 clamp(22px, 5vw, 72px);
-            background: linear-gradient(180deg, rgba(0,0,0,0.78), rgba(0,0,0,0.22));
-            border-bottom: 1px solid rgba(140,255,176,0.14);
+            background: rgba(0,0,0,0.92);
+            border-bottom: 1px solid rgba(140,255,176,0.06);
             backdrop-filter: blur(7px);
         }
 
         .top-brand {
-            color: var(--paper-dim);
+            color: rgba(232,216,184,0.22);
             font-size: clamp(0.72rem, 1vw, 0.88rem);
             font-weight: 800; letter-spacing: 0.26em;
             text-transform: uppercase; text-decoration: none; white-space: nowrap;
@@ -84,7 +73,7 @@
             content: "";
             display: inline-block; width: 34px; height: 1px;
             margin-right: 14px; vertical-align: middle;
-            background: var(--red-memory); opacity: 0.78;
+            background: rgba(182,74,53,0.3);
         }
 
         .top-links {
@@ -92,23 +81,25 @@
             gap: clamp(14px, 2vw, 34px);
         }
         .top-links a {
-            color: rgba(140,255,176,0.62); text-decoration: none;
+            color: rgba(140,255,176,0.22); text-decoration: none;
             font-size: clamp(0.68rem, 0.8vw, 0.82rem);
             font-weight: 800; letter-spacing: 0.20em; text-transform: uppercase;
             transition: color 220ms ease;
         }
-        .top-links a:hover, .top-links a.is-active { color: var(--paper); }
+        .top-links a:hover { color: rgba(232,216,184,0.5); }
+        .top-links a.is-active { color: rgba(140,255,176,0.32); }
 
         .lang-switch {
             display: inline-flex; align-items: center; gap: 8px;
             margin-left: clamp(6px, 1vw, 14px);
-            color: rgba(232,216,184,0.32);
+            color: rgba(232,216,184,0.18);
             font-size: clamp(0.64rem, 0.75vw, 0.78rem);
             font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
         }
-        .lang-switch a { color: rgba(232,216,184,0.48); text-decoration: none; transition: color 220ms; }
-        .lang-switch a:hover, .lang-switch a.lang-active { color: var(--phosphor); }
+        .lang-switch a { color: rgba(232,216,184,0.28); text-decoration: none; transition: color 220ms; }
+        .lang-switch a:hover, .lang-switch a.lang-active { color: rgba(140,255,176,0.55); }
 
+        /* Main */
         .stage {
             position: relative; z-index: 10;
             display: flex; flex-direction: column;
@@ -116,79 +107,93 @@
             min-height: 100vh;
             padding: 100px clamp(24px, 6vw, 80px) 60px;
             text-align: center;
+            gap: 0;
         }
 
-        .sys-label {
-            color: var(--paper-faint);
-            font-size: clamp(0.62rem, 0.8vw, 0.74rem);
-            font-weight: 700; letter-spacing: 0.36em; text-transform: uppercase;
-            margin-bottom: 28px;
-            opacity: 0; animation: fadeIn 0.6s ease 0.3s forwards;
+        /* Flatline */
+        .flatline-wrap {
+            width: min(600px, 88vw);
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease 0.4s forwards;
         }
-        .sys-label::before {
-            content: "";
-            display: inline-block; width: 28px; height: 1px;
-            margin-right: 12px; vertical-align: middle;
-            background: var(--red-memory); opacity: 0.7;
+
+        #flatlineCanvas {
+            width: 100%; height: 64px; display: block;
         }
 
         .error-code {
-            font-size: clamp(4rem, 12vw, 9rem);
+            font-size: clamp(4.5rem, 13vw, 10rem);
             font-weight: 700; line-height: 1;
-            color: rgba(255,180,60,0.07); margin-bottom: 0;
-            opacity: 0; animation: fadeIn 0.6s ease 0.1s forwards;
+            color: rgba(140,255,176,0.05);
+            letter-spacing: 0.12em;
             user-select: none;
+            opacity: 0; animation: fadeIn 0.8s ease 0.1s forwards;
         }
 
         .main-title {
-            font-size: clamp(1.2rem, 2.4vw, 2rem);
-            font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--phosphor-soft); margin: -8px 0 24px;
-            opacity: 0; animation: fadeIn 0.6s ease 0.5s forwards;
+            font-size: clamp(1rem, 2vw, 1.6rem);
+            font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase;
+            color: rgba(140,255,176,0.28);
+            margin: 8px 0 36px;
+            opacity: 0; animation: fadeIn 0.6s ease 0.6s forwards;
         }
 
         .terminal-block {
-            max-width: 560px; padding: 24px 28px;
-            background: rgba(0,0,0,0.48);
-            border-left: 2px solid rgba(255,180,60,0.30);
-            backdrop-filter: blur(4px); text-align: left;
-            opacity: 0; animation: fadeIn 0.7s ease 0.8s forwards;
+            max-width: 480px; padding: 22px 26px;
+            background: rgba(0,0,0,0.60);
+            border-left: 2px solid rgba(140,255,176,0.12);
+            text-align: left;
+            opacity: 0; animation: fadeIn 0.7s ease 1.0s forwards;
         }
+
         .terminal-block::before {
-            content: "VERİ MAHZENİ // ERİŞİM GÜNLÜĞܔ;
-            display: block; margin-bottom: 16px;
-            color: var(--paper-faint);
-            font-size: 0.68rem; font-weight: 700; letter-spacing: 0.30em;
+            content: "SENKRON // BAĞLANTI GÜNLÜĞܔ;
+            display: block; margin-bottom: 14px;
+            color: rgba(232,216,184,0.20);
+            font-size: 0.66rem; font-weight: 700; letter-spacing: 0.30em;
         }
 
         .log-line {
             display: flex; gap: 10px;
-            font-size: clamp(0.82rem, 0.9vw, 0.95rem);
+            font-size: clamp(0.80rem, 0.88vw, 0.92rem);
             line-height: 1.75; margin-bottom: 4px;
             opacity: 0; animation: slideIn 0.3s ease forwards;
         }
-        .log-line:nth-child(2) { animation-delay: 1.0s; }
-        .log-line:nth-child(3) { animation-delay: 1.3s; }
-        .log-line:nth-child(4) { animation-delay: 1.6s; }
-        .log-line:nth-child(5) { animation-delay: 1.9s; }
-        .log-line:nth-child(6) { animation-delay: 2.2s; }
+        .log-line:nth-child(2) { animation-delay: 1.2s; }
+        .log-line:nth-child(3) { animation-delay: 1.5s; }
+        .log-line:nth-child(4) { animation-delay: 1.8s; }
+        .log-line:nth-child(5) { animation-delay: 2.1s; }
+        .log-line:nth-child(6) { animation-delay: 2.4s; }
 
-        .tag-dim   { color: var(--paper-faint); }
-        .tag-red   { color: var(--red-memory); font-weight: 700; }
-        .tag-green { color: var(--phosphor); font-weight: 600; }
-        .tag-amber { color: var(--amber); font-weight: 700; }
+        .tag-dim  { color: rgba(232,216,184,0.20); }
+        .tag-dead { color: rgba(140,255,176,0.28); font-weight: 700; }
+        .tag-red  { color: rgba(182,74,53,0.55); font-weight: 700; }
+
+        /* Blinking cursor that just... stops */
+        .cursor-dead {
+            display: inline-block;
+            width: 8px; height: 15px;
+            background: rgba(140,255,176,0.18);
+            vertical-align: middle; margin-left: 4px;
+            animation: blinkSlow 2.4s ease-in-out 3 forwards;
+        }
+        @keyframes blinkSlow {
+            0%,100% { opacity: 0.18; }
+            50%      { opacity: 0.55; }
+        }
 
         .back-link {
             margin-top: 40px; display: inline-block;
-            color: rgba(140,255,176,0.55);
-            font-size: 0.78rem; font-weight: 700;
+            color: rgba(140,255,176,0.28);
+            font-size: 0.76rem; font-weight: 700;
             letter-spacing: 0.22em; text-transform: uppercase;
             text-decoration: none;
-            border: 1px solid rgba(140,255,176,0.22); padding: 10px 24px;
-            transition: color 220ms, border-color 220ms, background 220ms;
-            opacity: 0; animation: fadeIn 0.6s ease 2.6s forwards;
+            border: 1px solid rgba(140,255,176,0.12); padding: 10px 24px;
+            transition: color 300ms, border-color 300ms;
+            opacity: 0; animation: fadeIn 0.6s ease 2.8s forwards;
         }
-        .back-link:hover { color: var(--paper); border-color: rgba(232,216,184,0.5); background: rgba(140,255,176,0.06); }
+        .back-link:hover { color: rgba(232,216,184,0.55); border-color: rgba(232,216,184,0.22); }
         .back-link::before { content: "← "; }
 
         @keyframes fadeIn  { to { opacity: 1; } }
@@ -197,14 +202,14 @@
         #pageVeil {
             position: fixed; inset: 0; z-index: 200;
             background: #000; opacity: 1;
-            transition: opacity 0.6s ease; pointer-events: none;
+            transition: opacity 0.8s ease; pointer-events: none;
         }
 
         @media (max-width: 760px) {
             .top-links { gap: 12px; overflow-x: auto; padding-bottom: 2px; }
             .top-links::-webkit-scrollbar { display: none; }
-            .error-code { font-size: clamp(3.5rem, 20vw, 6rem); }
-            .terminal-block { padding: 18px 16px; }
+            .error-code { font-size: clamp(3.5rem, 20vw, 7rem); }
+            .terminal-block { padding: 16px 14px; }
         }
 
         /* ── Mouse tracking layers ── */
@@ -294,29 +299,6 @@
             .mobile-topbar, .mobile-drawer { display: none; }
         }
     </style>
-    <!-- SEO & Social -->
-    <meta name="description" content="Veri Mahzeni — TIMARHANE'nin ham veri arşivi. Karakter sayfaları, storyboard'lar ve yaratıcı belgeler.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://oneheus.com/veri.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/veri.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/veri-en.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // Veri Mahzeni">
-    <meta property="og:description" content="Veri Mahzeni — TIMARHANE'nin ham veri arşivi. Karakter sayfaları, storyboard'lar ve yaratıcı belgeler.">
-    <meta property="og:url" content="https://oneheus.com/veri.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
-    <meta property="og:locale" content="tr_TR">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // Veri Mahzeni">
-    <meta name="twitter:description" content="Veri Mahzeni — TIMARHANE'nin ham veri arşivi. Karakter sayfaları, storyboard'lar ve yaratıcı belgeler.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
 </head>
 <body>
     <div id="pageVeil"></div>
@@ -333,11 +315,12 @@
         <a href="home.html">Core</a>
         <a href="frekans.html">Frekans_101</a>
         <a href="sentetik.html">Sentetik Anılar</a>
-        <a href="veri.html" class="is-active">Veri Mahzeni</a>
-        <a href="senkron.html" class="is-offline">Senkron: Kopuk</a>
-        <a href="veri-en.html">EN</a>
+        <a href="veri.html">Veri Mahzeni</a>
+        <a href="senkron.html" class="is-active is-offline">Senkron: Kopuk</a>
+        <a href="senkron-en.html">EN</a>
     </nav>
 
+    <canvas id="noise"></canvas>
     <div class="scanlines"></div>
     <div class="vignette"></div>
 
@@ -347,32 +330,100 @@
             <a href="home.html">Core</a>
             <a href="frekans.html">Frekans_101</a>
             <a href="sentetik.html">Sentetik Anılar</a>
-            <a href="veri.html" class="is-active">Veri Mahzeni</a>
+            <a href="veri.html">Veri Mahzeni</a>
             <span class="lang-switch">
-                <a href="veri.html" class="lang-active">TR</a>
+                <a href="senkron.html" class="lang-active">TR</a>
                 <span>/</span>
-                <a href="veri-en.html">EN</a>
+                <a href="senkron-en.html">EN</a>
             </span>
         </div>
     </nav>
 
     <main class="stage">
-        <div class="sys-label">Sistem Dışı Frekans // 03</div>
-        <div class="error-code">403</div>
-        <h1 class="main-title">Veri Mahzeni</h1>
+        <div class="flatline-wrap">
+            <canvas id="flatlineCanvas"></canvas>
+        </div>
+        <div class="error-code">---</div>
+        <h1 class="main-title">Senkron: Kopuk</h1>
         <div class="terminal-block">
-            <div class="log-line"><span class="tag-amber">[KİLİTLİ]</span><span>Mahzene erişim kısıtlandı.</span></div>
-            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Şifreleme katmanı aktif.</span></div>
-            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Veriler arşivleniyor —</span></div>
-            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>kataloglama devam ediyor.</span></div>
-            <div class="log-line"><span class="tag-red">[UYARI]</span><span>Dış bağlantı izlenemiyor.</span></div>
-            <div class="log-line"><span class="tag-green">[DURUM]</span><span>Mahzen yakında açılacak...</span></div>
+            <div class="log-line"><span class="tag-red">[KOPUK]</span><span>Dış bağlantı kesildi.</span></div>
+            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Son sinyal: bilinmiyor.</span></div>
+            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Yeniden bağlanma denemesi başarısız.</span></div>
+            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Yeniden bağlanma denemesi başarısız.</span></div>
+            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Yeniden bağlanma denemesi başarısız.<span class="cursor-dead"></span></span></div>
+            <div class="log-line"><span class="tag-dead">[SİSTEM]</span><span>Sessizlik devam ediyor.</span></div>
         </div>
         <a href="home.html" class="back-link">Core'a dön</a>
     </main>
 
     <script>
+    (function() {
+        // Page veil fade
         setTimeout(() => { document.getElementById('pageVeil').style.opacity = '0'; }, 80);
+
+        // Static noise
+        const nc = document.getElementById('noise');
+        const nx = nc.getContext('2d');
+        let NW, NH;
+        function resizeNoise() {
+            NW = nc.width  = window.innerWidth;
+            NH = nc.height = window.innerHeight;
+        }
+        resizeNoise();
+        window.addEventListener('resize', resizeNoise);
+
+        let nTick = 0;
+        function drawNoise() {
+            if (nTick++ % 2 === 0) {
+                const img = nx.createImageData(NW, NH);
+                const d = img.data;
+                for (let i = 0; i < d.length; i += 4) {
+                    const v = Math.random() * 255 | 0;
+                    d[i] = d[i+1] = d[i+2] = v;
+                    d[i+3] = v > 200 ? (v - 200) * 1.2 : 0;
+                }
+                nx.putImageData(img, 0, 0);
+            }
+            requestAnimationFrame(drawNoise);
+        }
+        requestAnimationFrame(drawNoise);
+
+        // Flatline canvas
+        const fc = document.getElementById('flatlineCanvas');
+        const fx = fc.getContext('2d');
+        const W = fc.offsetWidth  || 600;
+        const H = 64;
+        fc.width  = W;
+        fc.height = H;
+
+        const MID = H / 2;
+        let phase = 0;
+        // Flatline: mostly silence, occasional blip
+        function drawFlatline() {
+            fx.clearRect(0, 0, W, H);
+            fx.beginPath();
+            fx.strokeStyle = 'rgba(140,255,176,0.35)';
+            fx.lineWidth = 1.2;
+
+            const blipX  = W * 0.42;
+            const blipW  = 28;
+
+            for (let x = 0; x <= W; x++) {
+                let y = MID;
+                const dx = x - blipX + (phase % W);
+                const ndx = ((dx % W) + W) % W;
+                if (ndx < blipW) {
+                    const t = ndx / blipW;
+                    y = MID - Math.sin(t * Math.PI) * 18 * Math.exp(-t * 2.8);
+                }
+                x === 0 ? fx.moveTo(x, y) : fx.lineTo(x, y);
+            }
+            fx.stroke();
+            phase = (phase + 0.4) % W;
+            requestAnimationFrame(drawFlatline);
+        }
+        drawFlatline();
+    })();
 
         /* ── Mouse tracking ── */
         const IS_MOBILE = window.innerWidth <= 760;
@@ -393,7 +444,7 @@
             if (document.readyState === 'complete') {
                 resize();
             } else {
-                resize(); // call immediately — fixes createImageData W=0 race
+                window.addEventListener('load', resize);
             }
             window.addEventListener('resize', resize);
             let mx = W / 2, my = H / 2;

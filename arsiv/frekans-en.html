@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -142,31 +142,6 @@
         .top-links a.is-active {
             color: var(--paper);
             outline: none;
-        }
-
-
-        .lang-switch {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: clamp(6px, 1vw, 14px);
-            color: rgba(232, 216, 184, 0.32);
-            font-size: clamp(0.64rem, 0.75vw, 0.78rem);
-            font-weight: 800;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .lang-switch a {
-            color: rgba(232, 216, 184, 0.48);
-            text-decoration: none;
-            transition: color 220ms ease;
-        }
-
-        .lang-switch a:hover,
-        .lang-switch a.lang-active {
-            color: var(--phosphor);
         }
 
         .archive-stage {
@@ -365,6 +340,16 @@
             letter-spacing: 0.16em;
             text-transform: uppercase;
             text-align: right;
+        }
+
+        .signal-note a {
+            color: rgba(140, 255, 176, 0.62);
+            text-decoration: none;
+        }
+
+        .signal-note a:hover,
+        .signal-note a.lang-active {
+            color: var(--paper);
         }
 
         @media (max-width: 1040px) {
@@ -585,42 +570,19 @@
             .mobile-topbar, .mobile-drawer { display: none; }
         }
     </style>
-    <!-- SEO & Social -->
-    <meta name="description" content="FREKANS_101 — yapay zeka ile üretilmiş müzik arşivi. Suno ile yaratılan sesler, ritimler ve frekans deneyleri.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://oneheus.com/frekans.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/frekans.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/frekans-en.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // FREKANS_101">
-    <meta property="og:description" content="FREKANS_101 — yapay zeka ile üretilmiş müzik arşivi. Suno ile yaratılan sesler, ritimler ve frekans deneyleri.">
-    <meta property="og:url" content="https://oneheus.com/frekans.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
-    <meta property="og:locale" content="tr_TR">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // FREKANS_101">
-    <meta name="twitter:description" content="FREKANS_101 — yapay zeka ile üretilmiş müzik arşivi. Suno ile yaratılan sesler, ritimler ve frekans deneyleri.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
 </head>
 <body>
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home.html">TIMARHANE // CORE</a>
+        <a class="mobile-brand" href="home-en.html">TIMARHANE // CORE</a>
         <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
     </header>
     <nav class="mobile-drawer" id="mobileMenu">
-        <a href="home.html">Core</a>
-        <a href="frekans.html" class="is-active">Frekans_101</a>
-        <a href="sentetik.html">Sentetik Anılar</a>
-        <a href="veri.html">Veri Mahzeni</a>
-        <a href="senkron.html" class="is-offline">Senkron: Kopuk</a>
-        <a href="frekans-en.html">EN</a>
+        <a href="home-en.html">Core</a>
+        <a href="frekans-en.html" class="is-active">Frequency_101</a>
+        <a href="sentetik-en.html">Synthetic Memories</a>
+        <a href="veri-en.html">Data Vault</a>
+        <a href="senkron-en.html" class="is-offline">Sync: Offline</a>
+        <a href="frekans.html">TR</a>
     </nav>
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
@@ -628,66 +590,65 @@
     <div class="scanlines" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
 
-    <nav class="top-nav" aria-label="Ana navigasyon">
-        <a class="top-brand" href="home.html">TIMARHANE // CORE</a>
+    <nav class="top-nav" aria-label="Main navigation">
+        <a class="top-brand" href="home-en.html">TIMARHANE // CORE</a>
         <div class="top-links">
-            <a href="home.html">Core</a>
-            <a href="frekans.html" class="is-active">Frekans_101</a>
-            <a href="sentetik.html">Sentetik Anılar</a>
-            <a href="veri.html">Veri Mahzeni</a>
-            <span class="lang-switch"><a href="frekans.html" class="lang-active">TR</a><span>/</span><a href="frekans-en.html">EN</a></span>
+            <a href="home-en.html">Core</a>
+            <a href="frekans-en.html" class="is-active">Frekans_101</a>
+            <a href="sentetik-en.html">Memories</a>
+            <a href="veri-en.html">Vault</a>
         </div>
     </nav>
 
-    <main class="archive-stage" aria-label="Frekans 101 şarkı arşivi">
+    <main class="archive-stage" aria-label="Frekans 101 audio archive">
         <section class="archive-grid">
             <div class="left-ghost-label">
-                Arşiv katmanı pasif / analog sızıntı izleniyor<br>
-                Görsel alan korunur / kayıtlar sağ panelde açılır
+                Archive layer passive / analog leak monitored<br>
+                Visual field preserved / records open in panel
             </div>
 
             <section class="archive-interface" aria-labelledby="frekans-title">
-                <p class="kicker">Arşiv Katmanı / Ses Kayıtları</p>
+                <p class="kicker">Archive Layer / Sound Records</p>
                 <h1 id="frekans-title">Frekans<br>101</h1>
                 <p class="intro-copy">
-                    Sesler, buradan sızar; tınılar tin tin yankılanır.<br>
-                    Kayıt, hafıza ve arıza aynı frekansta buluşur.
+                    Sounds leak from here; tin-tin echoes in the dark.<br>
+                    Record, memory, and malfunction meet on one frequency.
                 </p>
 
-                <div class="track-list" aria-label="Şarkı listesi">
-                    <a class="track-card" href="mavi.html">
+                <div class="track-list" aria-label="Track list">
+                    <a class="track-card" href="mavi-en.html">
                         <span class="track-no">01</span>
                         <span class="track-title">Mavi Randevu</span>
-                        <span class="track-status">Açık</span>
+                        <span class="track-status">Open</span>
                     </a>
 
                     <a class="track-card is-offline" href="#" aria-disabled="true">
                         <span class="track-no">02</span>
-                        <span class="track-title">Sinyal Bekleniyor</span>
+                        <span class="track-title">Signal Pending</span>
                         <span class="track-status">Offline</span>
                     </a>
 
                     <a class="track-card is-offline" href="#" aria-disabled="true">
                         <span class="track-no">03</span>
-                        <span class="track-title">Kayıt Bozuk</span>
+                        <span class="track-title">Corrupt Record</span>
                         <span class="track-status">Offline</span>
                     </a>
 
                     <a class="track-card is-offline" href="#" aria-disabled="true">
                         <span class="track-no">04</span>
-                        <span class="track-title">Yeni Frekans</span>
-                        <span class="track-status">Yakında</span>
+                        <span class="track-title">New Frekans</span>
+                        <span class="track-status">Soon</span>
                     </a>
                 </div>
 
                 <div class="archive-meta">
-                    Durum: kısmi erişim<br>
-                    Protokol: his verisi / analog sızıntı<br>
-                    İlk kayıt: Mavi Randevu
+                    Status: partial access<br>
+                    Protocol: feeling data / analog leak<br>
+                    First record: Mavi Randevu
                 </div>
 
                 <div class="signal-note">
-                    Her kayıt ayrı sayfada açılır / liste genişletilebilir
+                    Each record opens separately / list can expand<br><a href="frekans.html">TR</a> / <a href="frekans-en.html" class="lang-active">EN</a>
                 </div>
             </section>
         </section>
@@ -712,7 +673,7 @@
             if (document.readyState === 'complete') {
                 resize();
             } else {
-                resize(); // call immediately — fixes createImageData W=0 race
+                window.addEventListener('load', resize);
             }
             window.addEventListener('resize', resize);
             let mx = W / 2, my = H / 2;

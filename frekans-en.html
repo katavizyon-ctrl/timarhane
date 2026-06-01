@@ -573,23 +573,26 @@
     <!-- SEO & Social -->
     <meta name="description" content="FREKANS_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://onehaus.com/frekans-en.html">
-    <link rel="alternate" hreflang="en" href="https://onehaus.com/frekans-en.html">
-    <link rel="alternate" hreflang="tr" href="https://onehaus.com/frekans.html">
-    <link rel="alternate" hreflang="x-default" href="https://onehaus.com/index.html">
+    <link rel="canonical" href="https://oneheus.com/frekans-en.html">
+    <link rel="alternate" hreflang="en" href="https://oneheus.com/frekans-en.html">
+    <link rel="alternate" hreflang="tr" href="https://oneheus.com/frekans.html">
+    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="TIMARHANE">
     <meta property="og:title" content="TIMARHANE // FREKANS_101">
     <meta property="og:description" content="FREKANS_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
-    <meta property="og:url" content="https://onehaus.com/frekans-en.html">
-    <meta property="og:image" content="https://onehaus.com/landing_bg.png">
+    <meta property="og:url" content="https://oneheus.com/frekans-en.html">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image" content="https://oneheus.com/og_standard.png">
     <meta property="og:locale" content="en_US">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@oneheus">
     <meta name="twitter:title" content="TIMARHANE // FREKANS_101">
     <meta name="twitter:description" content="FREKANS_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
-    <meta name="twitter:image" content="https://onehaus.com/landing_bg.png">
+    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
 </head>
 <body>
     <header class="mobile-topbar">
@@ -693,7 +696,7 @@
             if (document.readyState === 'complete') {
                 resize();
             } else {
-                window.addEventListener('load', resize);
+                resize(); // call immediately — fixes createImageData W=0 race
             }
             window.addEventListener('resize', resize);
             let mx = W / 2, my = H / 2;

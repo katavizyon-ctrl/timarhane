@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
     <title>TIMARHANE // CORE</title>
     <style>
         :root {
@@ -153,7 +151,7 @@
                 transform: translateY(-50%) translateX(0);
             }
             .manifesto-panel::before {
-                content: "MANİFESTO / BOŞLUK KAYDI";
+                content: "MANIFESTO / VOID RECORD";
                 display: block; margin-bottom: 18px;
                 color: var(--paper-dim);
                 font-size: 0.78rem; font-weight: 700;
@@ -377,7 +375,7 @@
             }
             .manifesto-panel.visible { opacity: 1; transform: translateY(0); }
             .manifesto-panel::before {
-                content: "MANİFESTO / BOŞLUK KAYDI";
+                content: "MANIFESTO / VOID RECORD";
                 display: block; margin-bottom: 16px;
                 color: var(--paper-dim);
                 font-size: 0.64rem; font-weight: 700;
@@ -391,29 +389,6 @@
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
         }
     </style>
-    <!-- SEO & Social -->
-    <meta name="description" content="TIMARHANE ana merkezi — frekans kayıtları, sentetik anılar ve veri arşivlerine giriş noktası.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://oneheus.com/home.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/home.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/home-en.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // CORE">
-    <meta property="og:description" content="TIMARHANE ana merkezi — frekans kayıtları, sentetik anılar ve veri arşivlerine giriş noktası.">
-    <meta property="og:url" content="https://oneheus.com/home.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
-    <meta property="og:locale" content="tr_TR">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // CORE">
-    <meta name="twitter:description" content="TIMARHANE ana merkezi — frekans kayıtları, sentetik anılar ve veri arşivlerine giriş noktası.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
 </head>
 <body>
 
@@ -421,17 +396,17 @@
 
     <!-- Mobile chrome -->
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home.html">TIMARHANE // CORE</a>
-        <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
+        <a class="mobile-brand" href="home-en.html">TIMARHANE // CORE</a>
+        <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
     </header>
 
     <nav class="mobile-drawer" id="mobileMenu">
-        <a href="home.html">Core</a>
-        <a href="frekans.html">Frekans_101</a>
-        <a href="sentetik.html">Sentetik Anılar</a>
-        <a href="veri.html">Veri Mahzeni</a>
-        <a href="senkron.html" class="is-offline">Senkron: Kopuk</a>
-        <a href="home-en.html">EN</a>
+        <a href="home-en.html">Core</a>
+        <a href="frekans-en.html">Frequency_101</a>
+        <a href="sentetik-en.html">Synthetic Memories</a>
+        <a href="veri-en.html">Data Vault</a>
+        <a href="senkron-en.html" class="is-offline">Sync: Offline</a>
+        <a href="home.html">TR</a>
     </nav>
 
     <!-- Desktop canvas layers -->
@@ -450,9 +425,9 @@
 
     <!-- Main content -->
     <main id="home-stage">
-        <div class="signal-marker" id="sigMarker">Sistem Dışı Frekans // 01</div>
+        <div class="signal-marker" id="sigMarker">Out-of-System Frequency // 01</div>
         <div class="language-switch">
-            <a href="home.html" class="lang-active">TR</a><span>/</span><a href="home-en.html">EN</a>
+            <a href="home.html">TR</a><span>/</span><a href="home-en.html" class="lang-active">EN</a>
         </div>
         <div class="mobile-img-spacer"></div>
         <section class="manifesto-panel" id="manifesto">
@@ -461,11 +436,11 @@
             <p id="mp3"></p>
         </section>
         <nav class="nav-box">
-            <a href="frekans.html" class="nav-link" data-index="01">Frekans_101</a>
-            <a href="sentetik.html" class="nav-link" data-index="02">Sentetik Anılar</a>
-            <a href="veri.html" class="nav-link" data-index="03">Veri Mahzeni</a>
-            <a href="senkron.html" class="nav-link is-offline" data-index="--">Senkron: Kopuk</a>
-            <a href="senkron.html" class="archive-caption" id="archCaption" style="text-decoration:none;">Arşiv katmanı pasif / dış bağlantı izlenemiyor</a>
+            <a href="frekans-en.html" class="nav-link" data-index="01">Frequency_101</a>
+            <a href="sentetik-en.html" class="nav-link" data-index="02">Synthetic Memories</a>
+            <a href="veri-en.html" class="nav-link" data-index="03">Data Vault</a>
+            <a href="senkron-en.html" class="nav-link is-offline" data-index="--">Sync: Offline</a>
+            <a href="senkron-en.html" class="archive-caption" id="archCaption" style="text-decoration:none;">Archive layer passive / external connection untraceable</a>
         </nav>
     </main>
 
@@ -475,9 +450,9 @@
         const IS_MOBILE = window.innerWidth <= 760;
         const GLITCH    = '▓░▒█▄▀┼╬│─<>!?@#';
         const MANIFESTO = [
-            'Sistem dışı frekans. Gerçeklik askıya alındı. Burası, sistemin hatasından doğan bir boşluk.',
-            'Burada veriler değil, hisler işleniyor. Rehabilitasyon, merkezden uzaklaştıkça başlar.',
-            'Hoş geldin; içerisi, dışarıdan daha güvenli.'
+            'Out-of-system frequency. Reality has been suspended. This is a void born from the system\'s error.',
+            'Here, data is not processed — feeling is. Rehabilitation begins as you drift away from the center.',
+            'Welcome in; inside is safer than outside.'
         ];
 
         /* ── type text with glitch scramble ── */
@@ -560,12 +535,12 @@
             toggle.addEventListener('click', () => {
                 const open = document.body.classList.toggle('menu-open');
                 toggle.setAttribute('aria-expanded', String(open));
-                toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+                toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
             });
             drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
                 document.body.classList.remove('menu-open');
                 toggle.setAttribute('aria-expanded', 'false');
-                toggle.setAttribute('aria-label', 'Menüyü aç');
+                toggle.setAttribute('aria-label', 'Open menu');
             }));
         }
 
@@ -585,7 +560,7 @@
                 W = grainC.width = fxC.width = proxC.width = window.innerWidth;
                 H = grainC.height = fxC.height = proxC.height = window.innerHeight;
             }
-            resize(); // call immediately — fixes createImageData W=0 race
+            resize();
             window.addEventListener('resize', resize);
 
             let mx = W / 2, my = H / 2;

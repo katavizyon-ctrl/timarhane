@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <title>TIMARHANE // Veri Mahzeni</title>
+    <title>TIMARHANE // Synthetic Memories</title>
     <style>
         :root {
             --void: #050505;
@@ -15,8 +15,8 @@
             --paper: #E8D8B8;
             --paper-dim: rgba(232, 216, 184, 0.62);
             --paper-faint: rgba(232, 216, 184, 0.38);
+            --glass: rgba(3, 6, 5, 0.34);
             --red-memory: #B64A35;
-            --amber: rgba(255, 180, 60, 0.75);
         }
 
         * { box-sizing: border-box; }
@@ -38,16 +38,16 @@
         body::before {
             content: "";
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background: url("frekans_bg.png") center / cover no-repeat;
-            filter: brightness(0.46) contrast(1.10) saturate(0.4) hue-rotate(20deg);
+            background: url("frekans_bg.png") left center / cover no-repeat;
+            filter: brightness(0.52) contrast(1.08) saturate(0.6) hue-rotate(200deg);
         }
 
         body::after {
             content: "";
             position: fixed; inset: 0; z-index: 1; pointer-events: none;
             background:
-                linear-gradient(135deg, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.42) 50%, rgba(0,0,0,0.88) 100%),
-                radial-gradient(circle at 50% 50%, rgba(255,180,60,0.03) 0%, transparent 60%);
+                linear-gradient(135deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.38) 50%, rgba(0,0,0,0.82) 100%),
+                radial-gradient(circle at 50% 50%, rgba(140,255,176,0.03) 0%, transparent 60%);
         }
 
         .scanlines {
@@ -61,7 +61,7 @@
 
         .vignette {
             position: fixed; inset: -12%; z-index: 3; pointer-events: none;
-            background: radial-gradient(circle at center, transparent 38%, rgba(0,0,0,0.80) 100%);
+            background: radial-gradient(circle at center, transparent 38%, rgba(0,0,0,0.72) 100%);
         }
 
         .top-nav {
@@ -135,7 +135,7 @@
         .error-code {
             font-size: clamp(4rem, 12vw, 9rem);
             font-weight: 700; line-height: 1;
-            color: rgba(255,180,60,0.07); margin-bottom: 0;
+            color: rgba(140,255,176,0.08); margin-bottom: 0;
             opacity: 0; animation: fadeIn 0.6s ease 0.1s forwards;
             user-select: none;
         }
@@ -149,13 +149,13 @@
 
         .terminal-block {
             max-width: 560px; padding: 24px 28px;
-            background: rgba(0,0,0,0.48);
-            border-left: 2px solid rgba(255,180,60,0.30);
+            background: rgba(0,0,0,0.42);
+            border-left: 2px solid rgba(140,255,176,0.38);
             backdrop-filter: blur(4px); text-align: left;
             opacity: 0; animation: fadeIn 0.7s ease 0.8s forwards;
         }
         .terminal-block::before {
-            content: "VERİ MAHZENİ // ERİŞİM GÜNLÜĞܔ;
+            content: "SYNTHETIC MEMORIES // ACCESS LOG";
             display: block; margin-bottom: 16px;
             color: var(--paper-faint);
             font-size: 0.68rem; font-weight: 700; letter-spacing: 0.30em;
@@ -176,7 +176,7 @@
         .tag-dim   { color: var(--paper-faint); }
         .tag-red   { color: var(--red-memory); font-weight: 700; }
         .tag-green { color: var(--phosphor); font-weight: 600; }
-        .tag-amber { color: var(--amber); font-weight: 700; }
+        .tag-blue  { color: rgba(143,221,227,0.85); font-weight: 600; }
 
         .back-link {
             margin-top: 40px; display: inline-block;
@@ -294,29 +294,6 @@
             .mobile-topbar, .mobile-drawer { display: none; }
         }
     </style>
-    <!-- SEO & Social -->
-    <meta name="description" content="Veri Mahzeni — TIMARHANE'nin ham veri arşivi. Karakter sayfaları, storyboard'lar ve yaratıcı belgeler.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://oneheus.com/veri.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/veri.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/veri-en.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // Veri Mahzeni">
-    <meta property="og:description" content="Veri Mahzeni — TIMARHANE'nin ham veri arşivi. Karakter sayfaları, storyboard'lar ve yaratıcı belgeler.">
-    <meta property="og:url" content="https://oneheus.com/veri.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
-    <meta property="og:locale" content="tr_TR">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // Veri Mahzeni">
-    <meta name="twitter:description" content="Veri Mahzeni — TIMARHANE'nin ham veri arşivi. Karakter sayfaları, storyboard'lar ve yaratıcı belgeler.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
 </head>
 <body>
     <div id="pageVeil"></div>
@@ -326,49 +303,49 @@
     <div id="glow"></div>
 
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home.html">TIMARHANE // CORE</a>
+        <a class="mobile-brand" href="home-en.html">TIMARHANE // CORE</a>
         <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
     </header>
     <nav class="mobile-drawer" id="mobileMenu">
-        <a href="home.html">Core</a>
-        <a href="frekans.html">Frekans_101</a>
-        <a href="sentetik.html">Sentetik Anılar</a>
-        <a href="veri.html" class="is-active">Veri Mahzeni</a>
-        <a href="senkron.html" class="is-offline">Senkron: Kopuk</a>
-        <a href="veri-en.html">EN</a>
+        <a href="home-en.html">Core</a>
+        <a href="frekans-en.html">Frequency_101</a>
+        <a href="sentetik-en.html" class="is-active">Synthetic Memories</a>
+        <a href="veri-en.html">Data Vault</a>
+        <a href="senkron-en.html" class="is-offline">Sync: Offline</a>
+        <a href="sentetik.html">TR</a>
     </nav>
 
     <div class="scanlines"></div>
     <div class="vignette"></div>
 
-    <nav class="top-nav" aria-label="Ana navigasyon">
-        <a class="top-brand" href="home.html">TIMARHANE // CORE</a>
+    <nav class="top-nav" aria-label="Main navigation">
+        <a class="top-brand" href="home-en.html">TIMARHANE // CORE</a>
         <div class="top-links">
-            <a href="home.html">Core</a>
-            <a href="frekans.html">Frekans_101</a>
-            <a href="sentetik.html">Sentetik Anılar</a>
-            <a href="veri.html" class="is-active">Veri Mahzeni</a>
+            <a href="home-en.html">Core</a>
+            <a href="frekans-en.html">Frequency_101</a>
+            <a href="sentetik-en.html" class="is-active">Synthetic Memories</a>
+            <a href="veri-en.html">Data Vault</a>
             <span class="lang-switch">
-                <a href="veri.html" class="lang-active">TR</a>
+                <a href="sentetik.html">TR</a>
                 <span>/</span>
-                <a href="veri-en.html">EN</a>
+                <a href="sentetik-en.html" class="lang-active">EN</a>
             </span>
         </div>
     </nav>
 
     <main class="stage">
-        <div class="sys-label">Sistem Dışı Frekans // 03</div>
-        <div class="error-code">403</div>
-        <h1 class="main-title">Veri Mahzeni</h1>
+        <div class="sys-label">Out-of-System Frequency // 02</div>
+        <div class="error-code">404</div>
+        <h1 class="main-title">Synthetic Memories</h1>
         <div class="terminal-block">
-            <div class="log-line"><span class="tag-amber">[KİLİTLİ]</span><span>Mahzene erişim kısıtlandı.</span></div>
-            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Şifreleme katmanı aktif.</span></div>
-            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Veriler arşivleniyor —</span></div>
-            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>kataloglama devam ediyor.</span></div>
-            <div class="log-line"><span class="tag-red">[UYARI]</span><span>Dış bağlantı izlenemiyor.</span></div>
-            <div class="log-line"><span class="tag-green">[DURUM]</span><span>Mahzen yakında açılacak...</span></div>
+            <div class="log-line"><span class="tag-red">[WARNING]</span><span>Layer access denied.</span></div>
+            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Memory block not yet compiled.</span></div>
+            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>Synthetic memories are fragmented —</span></div>
+            <div class="log-line"><span class="tag-dim">IST@void:~#</span><span>reassembly in progress.</span></div>
+            <div class="log-line"><span class="tag-blue">[ARCHIVE]</span><span>This layer will be active soon.</span></div>
+            <div class="log-line"><span class="tag-green">[STATUS]</span><span>Awaiting signal...</span></div>
         </div>
-        <a href="home.html" class="back-link">Core'a dön</a>
+        <a href="home-en.html" class="back-link">Return to Core</a>
     </main>
 
     <script>
@@ -393,7 +370,7 @@
             if (document.readyState === 'complete') {
                 resize();
             } else {
-                resize(); // call immediately — fixes createImageData W=0 race
+                window.addEventListener('load', resize);
             }
             window.addEventListener('resize', resize);
             let mx = W / 2, my = H / 2;

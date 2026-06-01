@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
     <title>TIMARHANE // CORE</title>
     <style>
         :root {
@@ -391,29 +389,6 @@
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
         }
     </style>
-    <!-- SEO & Social -->
-    <meta name="description" content="TIMARHANE ana merkezi — frekans kayıtları, sentetik anılar ve veri arşivlerine giriş noktası.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://oneheus.com/home.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/home.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/home-en.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // CORE">
-    <meta property="og:description" content="TIMARHANE ana merkezi — frekans kayıtları, sentetik anılar ve veri arşivlerine giriş noktası.">
-    <meta property="og:url" content="https://oneheus.com/home.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
-    <meta property="og:locale" content="tr_TR">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // CORE">
-    <meta name="twitter:description" content="TIMARHANE ana merkezi — frekans kayıtları, sentetik anılar ve veri arşivlerine giriş noktası.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
 </head>
 <body>
 
@@ -585,7 +560,7 @@
                 W = grainC.width = fxC.width = proxC.width = window.innerWidth;
                 H = grainC.height = fxC.height = proxC.height = window.innerHeight;
             }
-            resize(); // call immediately — fixes createImageData W=0 race
+            resize();
             window.addEventListener('resize', resize);
 
             let mx = W / 2, my = H / 2;
