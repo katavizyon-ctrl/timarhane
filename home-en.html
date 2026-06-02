@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <title>TIMARHANE // CORE</title>
+    <title>AKA // TIMARHANE</title>
     <style>
         :root {
             --void: #050505;
@@ -15,6 +15,7 @@
             --paper: #E8D8B8;
             --paper-dim: rgba(232,216,184,0.62);
             --red-memory: #B64A35;
+            --blue-dim: #4A7BB6;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,7 +27,6 @@
         html, body { width: 100%; background: var(--void); font-family: "Courier New", Courier, monospace; }
         body { color: var(--phosphor-soft); }
 
-        /* Page veil — starts opaque, JS fades it out */
         #pageVeil {
             position: fixed; inset: 0; z-index: 200;
             background: #000;
@@ -35,7 +35,6 @@
             pointer-events: none;
         }
 
-        /* Scanlines — always on */
         .scanlines {
             position: fixed; inset: 0; z-index: 3; pointer-events: none;
             background: repeating-linear-gradient(
@@ -47,10 +46,90 @@
         }
         @keyframes scanScroll { to { background-position: 0 80px; } }
 
-        /* Vignette — always on */
         .vignette {
             position: fixed; inset: -5%; z-index: 4; pointer-events: none;
             background: radial-gradient(ellipse at center, transparent 44%, rgba(0,0,0,0.60) 72%, rgba(0,0,0,0.92) 100%);
+        }
+
+        /* ══════════════════════════════════════
+           GLOBAL NAVIGATION BAR
+        ══════════════════════════════════════ */
+
+        .top-nav {
+            position: fixed;
+            z-index: 50;
+            top: 0;
+            left: 0;
+            right: 0;
+            min-height: 84px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(22px, 5vw, 72px);
+            background: linear-gradient(180deg, rgba(0,0,0,0.88), rgba(0,0,0,0.32));
+            border-bottom: 1px solid rgba(140, 255, 176, 0.14);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+        }
+
+        .top-brand {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .brand-main {
+            color: var(--paper-dim);
+            font-size: clamp(0.82rem, 1.1vw, 1.05rem);
+            font-weight: 800;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+        }
+
+        .brand-tagline {
+            color: var(--red-memory);
+            font-size: clamp(0.64rem, 0.85vw, 0.78rem);
+            font-weight: 700;
+            letter-spacing: 0.20em;
+            text-transform: uppercase;
+            margin-top: 4px;
+            opacity: 0.85;
+        }
+
+        .top-links {
+            display: flex;
+            align-items: center;
+            gap: clamp(14px, 2vw, 34px);
+        }
+
+        .top-links a {
+            color: rgba(140, 255, 176, 0.62);
+            text-decoration: none;
+            font-size: clamp(0.68rem, 0.8vw, 0.82rem);
+            font-weight: 800;
+            letter-spacing: 0.20em;
+            text-transform: uppercase;
+            transition: color 220ms ease, opacity 220ms ease;
+        }
+
+        .top-links a:hover,
+        .top-links a:focus-visible,
+        .top-links a.is-active {
+            color: var(--paper);
+            outline: none;
+        }
+
+        .top-links .lang-switch a {
+            color: rgba(140, 255, 176, 0.28);
+            text-decoration: none;
+            transition: color 220ms ease;
+        }
+        .top-links .lang-switch a.lang-active {
+            color: var(--phosphor);
+        }
+        .top-links .lang-switch span {
+            color: rgba(140, 255, 176, 0.18);
         }
 
         /* ══════════════════════════════════════
@@ -58,15 +137,12 @@
         ══════════════════════════════════════ */
 
         @media (min-width: 761px) {
+            html, body { height: auto; overflow-x: hidden; }
 
-            html, body { height: 100%; overflow: hidden; }
-
-            /* hide mobile chrome */
             .mobile-topbar, .mobile-drawer { display: none; }
             .mobile-img-spacer { display: none; }
             #mobile-bg { display: none; }
 
-            /* photo bg */
             #bg-photo {
                 position: fixed; inset: 0; z-index: 1;
                 background: url('home.png') center/cover no-repeat;
@@ -84,7 +160,6 @@
                     radial-gradient(circle at 52% 48%, rgba(182,74,53,0.08) 0%, transparent 38%);
             }
 
-            /* canvas layers */
             #grain { position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: 0.45; }
             #fx    { position: fixed; inset: 0; z-index: 6; pointer-events: none; mix-blend-mode: screen; }
             #proxCanvas { position: fixed; inset: 0; z-index: 7; pointer-events: none; mix-blend-mode: screen; }
@@ -99,47 +174,17 @@
                 mix-blend-mode: screen;
             }
 
-            /* stage */
             #home-stage {
                 position: relative; z-index: 10;
                 width: 100vw; height: 100vh; min-height: 620px;
                 overflow: hidden;
             }
 
-            /* signal marker */
-            .signal-marker {
-                position: absolute; z-index: 11;
-                top: clamp(28px,5vh,56px); left: clamp(28px,5vw,72px);
-                color: var(--paper-dim);
-                font-size: clamp(0.68rem,1vw,0.82rem);
-                letter-spacing: 0.28em; text-transform: uppercase;
-                opacity: 0; transition: opacity 0.8s ease;
-            }
-            .signal-marker::before {
-                content: '';
-                display: inline-block; width: 34px; height: 1px;
-                margin-right: 14px; vertical-align: middle;
-                background: var(--red-memory); opacity: 0.68;
-            }
-
-            /* language switch */
-            .language-switch {
-                position: absolute; z-index: 11;
-                top: clamp(28px,5vh,56px); right: clamp(28px,5vw,72px);
-                display: flex; gap: 10px; align-items: center;
-                font-size: clamp(0.68rem,1vw,0.82rem);
-                font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
-            }
-            .language-switch a { color: rgba(232,216,184,0.48); text-decoration: none; transition: color 200ms; }
-            .language-switch a:hover, .language-switch a.lang-active { color: var(--phosphor); }
-            .language-switch span { color: rgba(232,216,184,0.28); }
-
-            /* manifesto */
             .manifesto-panel {
                 position: absolute; z-index: 11;
-                left: clamp(28px,5vw,72px); top: 52%; 
-                width: min(420px,31vw);
-                padding: 24px 26px 22px;
+                left: clamp(28px,5vw,72px); top: 50%; 
+                width: min(520px,38vw);
+                padding: 22px 26px 20px;
                 color: var(--phosphor-soft);
                 background: linear-gradient(135deg, rgba(0,0,0,0.58), rgba(0,0,0,0.24));
                 border-left: 1px solid var(--phosphor-dim);
@@ -148,29 +193,27 @@
                 transform: translateY(-50%) translateX(-14px);
                 transition: opacity 0.7s ease, transform 0.7s ease;
             }
-            .manifesto-panel.visible {
-                opacity: 1;
-                transform: translateY(-50%) translateX(0);
-            }
+            .manifesto-panel.visible { opacity: 1; transform: translateY(-50%) translateX(0); }
             .manifesto-panel::before {
                 content: "MANIFESTO / VOID RECORD";
-                display: block; margin-bottom: 18px;
+                display: block; margin-bottom: 14px;
                 color: var(--paper-dim);
-                font-size: 0.78rem; font-weight: 700;
+                font-size: 0.72rem; font-weight: 700;
                 letter-spacing: 0.32em; text-transform: uppercase;
             }
             .manifesto-panel p {
-                margin: 0 0 1.1rem;
-                font-size: clamp(1rem,1.05vw,1.18rem);
-                font-weight: 600; line-height: 1.85;
-                min-height: 1.85em;
+                margin: 0 0 0.7rem;
+                font-size: clamp(0.88rem, 0.95vw, 1.05rem);
+                font-weight: 600; line-height: 1.65;
+                min-height: 1.4em;
             }
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
+            .manifesto-panel .mp-indent  { margin-bottom: 1.2rem; }
+            .manifesto-panel .mp-final   { margin-bottom: 0; color: var(--paper); margin-top: 0.4rem; }
 
-            /* nav box */
             .nav-box {
                 position: absolute; z-index: 11;
-                top: clamp(150px,28vh,250px); right: clamp(28px,5vw,74px);
+                top: clamp(180px,32vh,280px); right: clamp(28px,5vw,74px);
                 width: min(370px,27vw);
                 display: flex; flex-direction: column; gap: 18px;
                 text-align: right;
@@ -225,34 +268,41 @@
         ══════════════════════════════════════ */
 
         @media (max-width: 760px) {
-
             html, body { height: auto; overflow-x: hidden; overflow-y: auto; }
+            #bg-photo, #grain, #fx, #proxCanvas, #glow, .top-nav { display: none; }
+            .nav-box { display: none; }
 
-            /* hide desktop-only elements */
-            #bg-photo, #grain, #fx, #proxCanvas, #glow { display: none; }
-            .nav-box, .language-switch { display: none; }
-
-            /* ── Topbar ── */
             .mobile-topbar {
                 position: fixed; z-index: 100;
-                top: 0; left: 0; right: 0; height: 58px;
-                display: flex; align-items: center; justify-content: space-between;
-                padding: 0 18px;
-                background: rgba(0,0,0,0.88);
+                top: 0; left: 0; right: 0; min-height: 64px;
+                display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+                padding: 10px 18px;
+                background: rgba(0,0,0,0.92);
                 border-bottom: 1px solid rgba(140,255,176,0.16);
                 backdrop-filter: blur(12px);
             }
             .mobile-brand {
-                color: var(--paper-dim); text-decoration: none;
-                font-size: 0.68rem; font-weight: 800;
+                display: flex;
+                flex-direction: column;
+                text-decoration: none;
+            }
+            .mobile-brand .brand-main {
+                color: var(--paper-dim);
+                font-size: 0.74rem; font-weight: 800;
                 letter-spacing: 0.20em; text-transform: uppercase;
             }
+            .mobile-brand .brand-tagline {
+                color: var(--red-memory);
+                font-size: 0.58rem; font-weight: 700;
+                letter-spacing: 0.14em; text-transform: uppercase;
+                margin-top: 2px;
+            }
             .mobile-menu-toggle {
+                position: absolute; right: 18px; top: 12px;
                 display: flex; align-items: center; justify-content: center;
                 width: 44px; height: 40px;
                 border: 1px solid rgba(140,255,176,0.32);
                 background: rgba(0,0,0,0.4); cursor: pointer;
-                position: relative;
             }
             .mobile-menu-toggle span,
             .mobile-menu-toggle::before,
@@ -268,10 +318,9 @@
             body.menu-open .mobile-menu-toggle::before  { transform: rotate(45deg); }
             body.menu-open .mobile-menu-toggle::after   { transform: rotate(-45deg); }
 
-            /* slide-down drawer */
             .mobile-drawer {
                 position: fixed; z-index: 95;
-                top: 58px; left: 0; right: 0;
+                top: 64px; left: 0; right: 0;
                 display: flex; flex-direction: column;
                 padding: 8px 22px 20px;
                 background: rgba(0,0,0,0.96);
@@ -291,8 +340,8 @@
                 display: block;
             }
             .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); }
+            .mobile-drawer a.is-active  { color: rgba(232,216,184,0.9); }
 
-            /* ── Stage: just a scrollable container, bg is transparent ── */
             #home-stage {
                 position: relative; z-index: 10;
                 display: block; width: 100%;
@@ -300,11 +349,9 @@
                 background: transparent;
             }
 
-            /* ── Mobile bg: absolute, sized to image natural ratio (16:9 → 56.25vw tall) ── */
             #mobile-bg {
                 position: absolute;
-                top: 58px; left: 0; right: 0;
-                /* 16:9 image: height = width * 9/16 = 56.25vw */
+                top: 64px; left: 0; right: 0;
                 height: 56.25vw;
                 z-index: 1;
                 overflow: hidden;
@@ -319,10 +366,8 @@
                 object-position: center 25%;
                 display: block;
                 will-change: transform;
-                /* JS drives the transform for iOS-safe animation */
             }
 
-            /* gradient overlay on image */
             #mobile-bg::after {
                 content: '';
                 position: absolute; inset: 0; z-index: 2;
@@ -335,32 +380,11 @@
                 );
             }
 
-            /* signal marker: overlaps bottom of image */
-            .signal-marker {
-                position: absolute;
-                top: calc(58px + 56.25vw - 32px);
-                left: 22px; right: 22px;
-                z-index: 12;
-                color: var(--paper-dim);
-                font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
-                opacity: 0;
-                transition: opacity 0.8s ease;
-            }
-            .signal-marker::before {
-                content: '';
-                display: inline-block; width: 22px; height: 1px;
-                margin-right: 10px; vertical-align: middle;
-                background: var(--red-memory); opacity: 0.7;
-            }
-
-            /* spacer: pushes manifesto below the image */
             .mobile-img-spacer {
                 display: block;
-                /* topbar(58) + image(56.25vw) + small gap(16px) */
-                height: calc(58px + 56.25vw + 16px);
+                height: calc(64px + 56.25vw + 16px);
             }
 
-            /* manifesto panel */
             .manifesto-panel {
                 display: block;
                 position: relative; z-index: 12;
@@ -382,6 +406,7 @@
                 color: var(--paper-dim);
                 font-size: 0.64rem; font-weight: 700;
                 letter-spacing: 0.28em; text-transform: uppercase;
+                margin-top: 2px;
             }
             .manifesto-panel p {
                 margin: 0 0 1rem;
@@ -390,43 +415,315 @@
             }
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
         }
+
+        /* ══════════════════════════════════════
+           SCROLL INDICATOR (Resting precisely on palm/thumb zone pocket)
+        ══════════════════════════════════════ */
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: clamp(65px, 12vh, 95px);
+            left: 50%; transform: translateX(-50%);
+            z-index: 11;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            opacity: 0; transition: opacity 1.2s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        .scroll-indicator.visible { opacity: 1; }
+
+        .scroll-arrow {
+            font-size: 1.8rem;
+            color: var(--phosphor);
+            text-shadow: 0 0 14px rgba(140,255,176,0.7);
+            animation: scrollBounce 1.8s ease-in-out infinite;
+            line-height: 1;
+        }
+        @keyframes scrollBounce {
+            0%,100% { transform: translateY(0);   opacity: 0.6; }
+            50%      { transform: translateY(6px); opacity: 1; }
+        }
+
+        .scroll-btn {
+            position: relative; overflow: hidden;
+            background: transparent;
+            border: 1px solid rgba(140,255,176,0.42);
+            color: var(--phosphor-soft);
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.72rem; font-weight: 800;
+            letter-spacing: 0.32em; text-transform: uppercase;
+            padding: 9px 22px;
+            cursor: pointer;
+            white-space: nowrap;
+            animation: glitchBtn 4s infinite;
+        }
+        .scroll-btn::before {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(140,255,176,0.12), transparent);
+            animation: btnShine 3.5s ease-in-out infinite;
+        }
+        @keyframes btnShine {
+            0%,100% { left: -100%; }
+            50%      { left: 160%; }
+        }
+        @keyframes glitchBtn {
+            0%,90%,100% { text-shadow: none; transform: translate(0); }
+            91% { text-shadow: -2px 0 #b64a35, 2px 0 #4a7bb6; transform: translate(-1px, 0); }
+            93% { text-shadow: 2px 0 #b64a35, -2px 0 #4a7bb6; transform: translate(2px, 0); }
+            95% { text-shadow: none; transform: translate(0); }
+            97% { text-shadow: -1px 0 #b64a35, 1px 0 #4a7bb6; transform: translate(1px, 0); }
+        }
+        .scroll-btn:hover {
+            background: rgba(140,255,176,0.08);
+            border-color: var(--phosphor);
+            color: var(--phosphor);
+            box-shadow: 0 0 18px rgba(140,255,176,0.2);
+        }
+
+        @media (max-width: 760px) {
+            .scroll-indicator { bottom: clamp(16px, 3vh, 28px); }
+        }
+
+        /* ══════════════════════════════════════
+           ORIGIN SECTION — FIXED CINEMATIC VIEW
+        ══════════════════════════════════════ */
+
+        #origin {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        .origin-bg-home,
+        .origin-bg-morpheus,
+        .origin-bg-oneheus {
+            position: fixed; inset: 0; z-index: 1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.72) contrast(1.06) saturate(0.90);
+            will-change: opacity;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        .origin-bg-home { background-image: url('home.png'); opacity: 1; }
+        .origin-bg-morpheus { background-image: url('morpheus.png'); }
+        .origin-bg-oneheus { background-image: url('oneheus.png'); }
+
+        #origin::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 2;
+            pointer-events: none;
+            background:
+                linear-gradient(180deg, rgba(5,5,5,0.65) 0%, rgba(5,5,5,0.04) 20%, rgba(5,5,5,0.04) 80%, rgba(5,5,5,0.58) 100%),
+                linear-gradient(90deg, rgba(5,5,5,0.42) 0%, transparent 30%, transparent 70%, rgba(5,5,5,0.42) 100%);
+        }
+
+        .origin-content {
+            position: relative; z-index: 3;
+            width: min(680px, 88vw);
+            padding: clamp(80px,12vh,140px) 0px 0px;
+            display: flex; flex-direction: column; gap: 0;
+            margin: 0 auto;
+        }
+
+        /* Refined UI Header Status Configuration */
+        .origin-header {
+            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
+            font-weight: 800; 
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            margin-bottom: clamp(36px,5vh,56px);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: clamp(10px, 1.5vw, 24px);
+            text-align: center;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(232, 216, 184, 0.08);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .origin-header::before,
+        .origin-header::after { 
+            content: ''; 
+            display: inline-block; 
+            width: clamp(20px, 4vw, 44px); 
+            height: 1px; 
+            background: var(--red-memory); 
+            opacity: 0.5; 
+            flex-shrink: 0; 
+        }
+        
+        .hdr-sep {
+            color: rgba(232, 216, 184, 0.24);
+            font-weight: 400;
+        }
+        .hdr-one {
+            color: var(--red-memory);
+            text-shadow: 0 0 10px rgba(182, 74, 53, 0.6);
+        }
+        .hdr-morpheus {
+            color: var(--phosphor-soft);
+        }
+        .hdr-oneheus {
+            color: var(--red-memory);
+            text-shadow: 0 0 10px rgba(182, 74, 53, 0.6);
+        }
+
+        .origin-line {
+            font-size: clamp(1rem, 1.15vw, 1.28rem);
+            font-weight: 600; line-height: 1.9;
+            color: var(--paper-dim);
+            opacity: 0; transform: translateY(14px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            margin: 0; text-align: center;
+        }
+        .origin-line.visible { opacity: 1; transform: translateY(0); }
+        .origin-line.spacer { height: clamp(18px, 2.8vh, 32px); }
+
+        /* ── END CLOSING NARRATIVE ANIMATION MODULES ── */
+        .kw-morpheus { 
+            color: var(--phosphor); 
+            font-weight: 800; 
+            display: inline-block;
+            animation: morpheusPulse 3s ease-in-out infinite;
+        }
+        @keyframes morpheusPulse {
+            0%, 100% { text-shadow: 0 0 4px rgba(140,255,176,0.3); opacity: 0.85; }
+            50%      { text-shadow: 0 0 14px rgba(140,255,176,0.85), 0 0 24px rgba(140,255,176,0.3); opacity: 1; }
+        }
+
+        .kw-timarhane { 
+            color: var(--paper-dim); 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            position: relative;
+            display: inline-block;
+        }
+        .kw-timarhane::after {
+            content: '_';
+            position: absolute; right: -12px; bottom: 0;
+            color: var(--paper);
+            animation: terminalBlink 1s step-end infinite;
+        }
+        @keyframes terminalBlink {
+            from, to { opacity: 0; }
+            50%      { opacity: 1; }
+        }
+
+        .kw-red { 
+            color: var(--red-memory); 
+            font-weight: 800; 
+            display: inline-block;
+            animation: volatileGlitch 1.5s linear infinite;
+        }
+        @keyframes volatileGlitch {
+            0%, 100% { text-shadow: 0 0 4px rgba(182,74,53,0.4); opacity: 0.9; transform: skew(0deg); }
+            72%      { text-shadow: -2px 0 rgba(182,74,53,0.8), 2px 0 rgba(74,123,182,0.5); opacity: 1; transform: skew(-1deg); }
+            75%      { text-shadow: 2px 0 rgba(182,74,53,0.9), -1px 0 rgba(140,255,176,0.4); transform: skew(2deg); }
+            78%      { text-shadow: 0 0 4px rgba(182,74,53,0.4); opacity: 0.9; transform: skew(0deg); }
+        }
+
+        .kw-white { 
+            color: var(--red-memory); 
+            font-weight: 800; 
+            letter-spacing: 0.14em; 
+            display: inline-block;
+            animation: oneheusAura 4s ease-in-out infinite;
+        }
+        @keyframes oneheusAura {
+            0%, 100% { text-shadow: 0 0 6px rgba(182,74,53,0.4); }
+            50%      { text-shadow: 0 0 16px rgba(182,74,53,0.85), 0 0 32px rgba(182,74,53,0.5); }
+        }
+
+        .origin-closing { color: var(--paper-dim); }
+
+        .origin-divider {
+            width: 48px; height: 1px;
+            background: rgba(140,255,176,0.24);
+            margin: clamp(28px,4vh,44px) auto;
+            opacity: 0; transition: opacity 0.7s ease;
+        }
+        .origin-divider.visible { opacity: 1; }
+
+        /* ── ONEHEUS STAGE BREATHING UTILIZATION ZONE ── */
+        .oneheus-stage-extension {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .terminal-readout {
+            width: min(500px, 80vw);
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid var(--phosphor-dim);
+            border-top: 3px solid var(--phosphor);
+            backdrop-filter: blur(4px);
+            font-size: 0.74rem;
+            line-height: 1.8;
+            color: var(--phosphor-soft);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+        }
+
+        .terminal-header {
+            color: var(--paper-dim);
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(140,255,176,0.15);
+            padding-bottom: 6px;
+        }
+
+        .terminal-row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .term-val { color: var(--paper); font-weight: 700; }
+
+        @media (max-width: 760px) {
+            #origin { min-height: auto; padding-top: 32px; }
+            .origin-content { padding: 0; }
+            .origin-line { font-size: 0.94rem; }
+            .oneheus-stage-extension { height: 45vh; }
+            .origin-bg-home, .origin-bg-morpheus, .origin-bg-oneheus, #origin::before { position: absolute; }
+            .kw-timarhane::after { right: -8px; }
+        }
     </style>
-    <!-- SEO & Social -->
     <meta name="description" content="TIMARHANE core hub — entry point to frequency archives, synthetic memories and data vaults.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://oneheus.com/home-en.html">
     <link rel="alternate" hreflang="en" href="https://oneheus.com/home-en.html">
     <link rel="alternate" hreflang="tr" href="https://oneheus.com/home.html">
     <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // CORE">
-    <meta property="og:description" content="TIMARHANE core hub — entry point to frequency archives, synthetic memories and data vaults.">
-    <meta property="og:url" content="https://oneheus.com/home-en.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
-    <meta property="og:locale" content="en_US">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // CORE">
-    <meta name="twitter:description" content="TIMARHANE core hub — entry point to frequency archives, synthetic memories and data vaults.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
 </head>
 <body>
 
     <div id="pageVeil"></div>
 
-    <!-- Mobile chrome -->
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home-en.html">TIMARHANE // CORE</a>
+        <a class="mobile-brand" href="home-en.html">
+            <span class="brand-main">AKA // TIMARHANE</span>
+            <span class="brand-tagline">Out-of-System Frequency // 01</span>
+        </a>
         <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
     </header>
 
     <nav class="mobile-drawer" id="mobileMenu">
-        <a href="home-en.html">Core</a>
+        <a href="home-en.html" class="is-active">Core</a>
         <a href="frekans-en.html">Frequency_101</a>
         <a href="sentetik-en.html">Synthetic Memories</a>
         <a href="veri-en.html">Data Vault</a>
@@ -434,31 +731,44 @@
         <a href="home.html">TR</a>
     </nav>
 
-    <!-- Desktop canvas layers -->
+    <nav class="top-nav" aria-label="Main navigation">
+        <a class="top-brand" href="home-en.html">
+            <span class="brand-main">AKA // TIMARHANE</span>
+            <span class="brand-tagline">Out-of-System Frequency // 01</span>
+        </a>
+        <div class="top-links">
+            <a href="home-en.html" class="is-active">Core</a>
+            <a href="frekans-en.html">Frequency_101</a>
+            <a href="sentetik-en.html">Synthetic Memories</a>
+            <a href="veri-en.html">Data Vault</a>
+            <span class="lang-switch">
+                <a href="home.html">TR</a>
+                <span>/</span>
+                <a href="home-en.html" class="lang-active">EN</a>
+            </span>
+        </div>
+    </nav>
+
     <div id="bg-photo"></div>
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <canvas id="proxCanvas"></canvas>
     <div id="glow"></div>
 
-    <!-- Always-on layers -->
     <div class="scanlines"></div>
     <div class="vignette"></div>
 
-    <!-- Mobile image layer — fixed, independent of scroll -->
     <div id="mobile-bg"><img src="home.png" alt=""></div>
 
-    <!-- Main content -->
     <main id="home-stage">
-        <div class="signal-marker" id="sigMarker">Out-of-System Frequency // 01</div>
-        <div class="language-switch">
-            <a href="home.html">TR</a><span>/</span><a href="home-en.html" class="lang-active">EN</a>
-        </div>
         <div class="mobile-img-spacer"></div>
         <section class="manifesto-panel" id="manifesto">
             <p id="mp1"></p>
             <p id="mp2"></p>
-            <p id="mp3"></p>
+            <p id="mp3" class="mp-indent"></p>
+            <p id="mp4"></p>
+            <p id="mp5" class="mp-indent"></p>
+            <p id="mp6" class="mp-final"></p>
         </section>
         <nav class="nav-box">
             <a href="frekans-en.html" class="nav-link" data-index="01">Frequency_101</a>
@@ -467,20 +777,81 @@
             <a href="senkron-en.html" class="nav-link is-offline" data-index="--">Sync: Offline</a>
             <a href="senkron-en.html" class="archive-caption" id="archCaption" style="text-decoration:none;">Archive layer passive / external connection untraceable</a>
         </nav>
+
+        <div class="scroll-indicator" id="scrollIndicator" onclick="document.getElementById('origin').scrollIntoView({behavior:'smooth'})">
+            <div class="scroll-arrow">▼</div>
+            <button class="scroll-btn">[ SIGNAL CONTINUES ]</button>
+        </div>
     </main>
+
+    <section id="origin">
+        <div class="origin-bg-home" id="layer-home"></div>
+        <div class="origin-bg-morpheus" id="layer-morpheus"></div>
+        <div class="origin-bg-oneheus" id="layer-oneheus"></div>
+
+        <div class="origin-content">
+            <div class="origin-header">
+                <span class="hdr-one">ONE</span> 
+                <span class="hdr-sep">//</span> 
+                <span class="hdr-morpheus">MORPHEUS</span> 
+                <span class="hdr-sep">//</span> 
+                <span class="hdr-oneheus">ONEHEUS</span>
+            </div>
+
+            <p class="origin-line">Leave enough places behind,</p>
+            <p class="origin-line">and you no longer belong to any of them.</p>
+            <p class="origin-line">Or perhaps— every place becomes yours.</p>
+            <p class="origin-line spacer"></p>
+            <p class="origin-line">Follow your heart.</p>
+            <p class="origin-line">That is where it all begins.</p>
+            <p class="origin-line spacer"></p>
+            <p class="origin-line">If you’re at peace with yourself,</p>
+            <p class="origin-line">even an open-air asylum</p>
+            <p class="origin-line">holds something safe and warm.</p>
+            <p class="origin-line spacer"></p>
+            <p class="origin-line">I knew the system; I moved through it.</p>
+            <p class="origin-line spacer"></p>
+            <p class="origin-line" id="triggerLens">I came back with a lens,</p>
+            <p class="origin-line">then paint on my hands,</p>
+            <p class="origin-line">then a frequency.</p>
+            <p class="origin-line spacer"></p>
+
+            <div class="origin-divider"></div>
+
+            <p class="origin-line origin-closing"><span class="kw-morpheus">MORPHEUS</span> doesn't shape dreams—</p>
+            <p class="origin-line origin-closing">he suspends reality.</p>
+            <p class="origin-line origin-closing">So did I.</p>
+            <p class="origin-line spacer"></p>
+
+            <p class="origin-line origin-closing"><span class="kw-timarhane">TIMARHANE</span> is what it's called.</p>
+            <p class="origin-line origin-closing"><span class="kw-red">ONE</span>, who passed through.</p>
+            <p class="origin-line origin-closing"><span class="kw-white">ONEHEUS</span>, who returned.</p>
+        </div>
+    </section>
+
+    <div class="oneheus-stage-extension">
+        <div class="terminal-readout">
+            <div class="terminal-header">> SYSTEM LOG ANALYSIS // ACTIVE</div>
+            <div class="terminal-row"><span>STATUS:</span><span class="term-val">REHABILITATION COMPLETE</span></div>
+            <div class="terminal-row"><span>CONNECTION:</span><span class="term-val">SECURE / OUT-OF-SYSTEM</span></div>
+            <div class="terminal-row"><span>FREQUENCY:</span><span class="term-val">101_PROTECTED</span></div>
+            <div class="terminal-row"><span>MEMORY MATRIX:</span><span class="term-val">SUSPENDED // LOCKED</span></div>
+        </div>
+    </div>
 
     <script>
     (function() {
-
         const IS_MOBILE = window.innerWidth <= 760;
         const GLITCH    = '▓░▒█▄▀┼╬│─<>!?@#';
         const MANIFESTO = [
-            'Out-of-system frequency. Reality has been suspended. This is a void born from the system\'s error.',
-            'Here, data is not processed — feeling is. Rehabilitation begins as you drift away from the center.',
+            'Out-of-system frequency.',
+            'Reality has been suspended.',
+            'This is a void born from the system\'s error.',
+            'Here, data is not processed — feeling is.',
+            'Rehabilitation begins as you drift away from the center.',
             'Welcome in; inside is safer than outside.'
         ];
 
-        /* ── type text with glitch scramble ── */
         function typeText(el, text, speed, cb) {
             let i = 0;
             (function tick() {
@@ -501,20 +872,21 @@
             })();
         }
 
-        /* ── reveal sequence + mobile drift animation ── */
         function runReveal() {
             document.getElementById('pageVeil').style.opacity = '0';
-
-            setTimeout(() => {
-                document.getElementById('sigMarker').style.opacity = '1';
-            }, 200);
 
             setTimeout(() => {
                 const panel = document.getElementById('manifesto');
                 panel.classList.add('visible');
                 setTimeout(() => typeText(document.getElementById('mp1'), MANIFESTO[0], 22, () => {
                     setTimeout(() => typeText(document.getElementById('mp2'), MANIFESTO[1], 20, () => {
-                        setTimeout(() => typeText(document.getElementById('mp3'), MANIFESTO[2], 22, null), 160);
+                        setTimeout(() => typeText(document.getElementById('mp3'), MANIFESTO[2], 22, () => {
+                            setTimeout(() => typeText(document.getElementById('mp4'), MANIFESTO[3], 20, () => {
+                                setTimeout(() => typeText(document.getElementById('mp5'), MANIFESTO[4], 22, () => {
+                                    setTimeout(() => typeText(document.getElementById('mp6'), MANIFESTO[5], 22, null), 160);
+                                }), 120);
+                            }), 200);
+                        }), 200);
                     }), 160);
                 }), 400);
             }, 450);
@@ -530,19 +902,18 @@
             }
         }
 
-        /* ── Mobile image drift — JS RAF, works on iOS ── */
         if (IS_MOBILE) {
             const bgImg = document.querySelector('#mobile-bg img');
             if (bgImg) {
-                const PERIOD  = 18000; // ms for one full cycle
-                const MAX_X   = 8;     // px horizontal travel
-                const MAX_Y   = 6;     // px vertical travel
-                const SCALE   = 1.08;  // keep edges hidden during movement
+                const PERIOD  = 18000;
+                const MAX_X   = 8;
+                const MAX_Y   = 6;
+                const SCALE   = 1.08;
 
                 function driftLoop(ts) {
                     const t  = ts / PERIOD;
                     const x  = Math.sin(t * Math.PI * 2)         * MAX_X;
-                    const y  = Math.sin(t * Math.PI * 2 * 0.618) * MAX_Y; // golden ratio offset
+                    const y  = Math.sin(t * Math.PI * 2 * 0.618) * MAX_Y;
                     bgImg.style.transform = `scale(${SCALE}) translate(${x}px, ${y}px)`;
                     requestAnimationFrame(driftLoop);
                 }
@@ -550,10 +921,80 @@
             }
         }
 
-        // Run reveal after a short paint delay
         setTimeout(runReveal, 100);
 
-        /* ── Mobile menu toggle ── */
+        // Accelerated revealing trigger path downscaled to 1200ms
+        setTimeout(() => {
+            const ind = document.getElementById('scrollIndicator');
+            if (ind) ind.classList.add('visible');
+        }, 1200);
+
+        const originSection = document.getElementById('origin');
+        const layerHome = document.getElementById('layer-home');
+        const layerMorpheus = document.getElementById('layer-morpheus');
+        const layerOneheus = document.getElementById('layer-oneheus');
+        const bgPhoto = document.getElementById('bg-photo');
+
+        window.addEventListener('scroll', () => {
+            if (!originSection || !layerHome || !layerMorpheus || !layerOneheus) return;
+
+            const rect = originSection.getBoundingClientRect();
+            const viewHeight = window.innerHeight;
+
+            if (rect.top > 0) {
+                const scrolledAmount = viewHeight - rect.top;
+                let homeToMorpheusProgress = scrolledAmount / viewHeight;
+                homeToMorpheusProgress = Math.max(0, Math.min(1, homeToMorpheusProgress));
+
+                layerHome.style.opacity = 1 - homeToMorpheusProgress;
+                layerMorpheus.style.opacity = homeToMorpheusProgress;
+                layerOneheus.style.opacity = 0;
+                
+                if (bgPhoto) bgPhoto.style.opacity = 1 - homeToMorpheusProgress;
+                return;
+            }
+
+            layerHome.style.opacity = 0;
+            if (bgPhoto) bgPhoto.style.opacity = 0;
+
+            const triggerLine = document.getElementById('triggerLens');
+            if (!triggerLine) return;
+
+            const triggerRect = triggerLine.getBoundingClientRect();
+            const middleScreen = viewHeight * 0.5;
+
+            if (triggerRect.top < middleScreen) {
+                const fadeWindow = 400; 
+                const currentScrollPastTrigger = middleScreen - triggerRect.top;
+
+                let blendRatio = currentScrollPastTrigger / fadeWindow;
+                blendRatio = Math.max(0, Math.min(1, blendRatio));
+
+                layerOneheus.style.opacity = blendRatio;
+                layerMorpheus.style.opacity = 1 - blendRatio;
+            } else {
+                layerOneheus.style.opacity = 0;
+                layerMorpheus.style.opacity = 1;
+            }
+        }, { passive: true });
+
+        const originEls = document.querySelectorAll('.origin-line, .origin-divider');
+        if (originEls.length) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+            originEls.forEach((el, i) => {
+                el.style.transitionDelay = `${i * 55}ms`;
+                observer.observe(el);
+            });
+        }
+
         const toggle = document.getElementById('menuToggle');
         const drawer = document.getElementById('mobileMenu');
         if (toggle && drawer) {
@@ -565,11 +1006,9 @@
             drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
                 document.body.classList.remove('menu-open');
                 toggle.setAttribute('aria-expanded', 'false');
-                toggle.setAttribute('aria-label', 'Open menu');
             }));
         }
 
-        /* ── Desktop canvas (only if not mobile) ── */
         if (!IS_MOBILE) {
             const grainC  = document.getElementById('grain');
             const grainX  = grainC.getContext('2d');
@@ -577,7 +1016,6 @@
             const fxX     = fxC.getContext('2d');
             const proxC   = document.getElementById('proxCanvas');
             const proxX   = proxC.getContext('2d');
-            const bgPhoto = document.getElementById('bg-photo');
             const glow    = document.getElementById('glow');
 
             let W = 0, H = 0;
@@ -585,7 +1023,7 @@
                 W = grainC.width = fxC.width = proxC.width = window.innerWidth;
                 H = grainC.height = fxC.height = proxC.height = window.innerHeight;
             }
-            resize(); // call immediately — fixes createImageData W=0 race
+            resize();
             window.addEventListener('resize', resize);
 
             let mx = W / 2, my = H / 2;
@@ -605,11 +1043,12 @@
                 const ty = ((my / H) - 0.5) * 22;
                 px += (tx - px) * 0.04;
                 py += (ty - py) * 0.04;
-                bgPhoto.style.transform = `scale(1.08) translate(${-px * 0.55}px, ${-py * 0.55}px)`;
+                if (bgPhoto && window.scrollY < window.innerHeight) {
+                    bgPhoto.style.transform = `scale(1.08) translate(${-px * 0.55}px, ${-py * 0.55}px)`;
+                }
                 requestAnimationFrame(parallax);
             })();
 
-            let grainTick = 0;
             function drawGrain() {
                 if (!W || !H) return;
                 const img = grainX.createImageData(W, H);
@@ -666,7 +1105,6 @@
                 requestAnimationFrame(loop);
             })();
         }
-
     })();
     </script>
 </body>
