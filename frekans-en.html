@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <title>TIMARHANE // FREKANS_101</title>
+    <title>TIMARHANE // FREQUENCY_101</title>
     <style>
         :root {
             --void: #050505;
@@ -142,6 +142,16 @@
         .top-links a.is-active {
             color: var(--paper);
             outline: none;
+        }
+
+        .top-links .lang-switch a {
+            color: rgba(140, 255, 176, 0.28);
+        }
+        .top-links .lang-switch a.lang-active {
+            color: var(--phosphor);
+        }
+        .top-links .lang-switch span {
+            color: rgba(140, 255, 176, 0.18);
         }
 
         .archive-stage {
@@ -571,7 +581,7 @@
         }
     </style>
     <!-- SEO & Social -->
-    <meta name="description" content="FREKANS_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
+    <meta name="description" content="FREQUENCY_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://oneheus.com/frekans-en.html">
     <link rel="alternate" hreflang="en" href="https://oneheus.com/frekans-en.html">
@@ -580,23 +590,20 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // FREKANS_101">
-    <meta property="og:description" content="FREKANS_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
+    <meta property="og:title" content="TIMARHANE // FREQUENCY_101">
+    <meta property="og:description" content="FREQUENCY_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
     <meta property="og:url" content="https://oneheus.com/frekans-en.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
+    <meta property="og:image" content="https://oneheus.com/og_glitch.png">
     <meta property="og:locale" content="en_US">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
-    <meta name="twitter:title" content="TIMARHANE // FREKANS_101">
-    <meta name="twitter:description" content="FREKANS_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
+    <meta name="twitter:title" content="TIMARHANE // FREQUENCY_101">
+    <meta name="twitter:description" content="FREQUENCY_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
+    <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
 </head>
 <body>
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home-en.html">TIMARHANE // CORE</a>
+        <a class="mobile-brand" href="home-en.html">AKA // TIMARHANE</a>
         <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
     </header>
     <nav class="mobile-drawer" id="mobileMenu">
@@ -604,7 +611,6 @@
         <a href="frekans-en.html" class="is-active">Frequency_101</a>
         <a href="sentetik-en.html">Synthetic Memories</a>
         <a href="veri-en.html">Data Vault</a>
-        <a href="senkron-en.html" class="is-offline">Sync: Offline</a>
         <a href="frekans.html">TR</a>
     </nav>
     <canvas id="grain"></canvas>
@@ -614,12 +620,17 @@
     <div class="vignette" aria-hidden="true"></div>
 
     <nav class="top-nav" aria-label="Main navigation">
-        <a class="top-brand" href="home-en.html">TIMARHANE // CORE</a>
+        <a class="top-brand" href="home-en.html">AKA // TIMARHANE</a>
         <div class="top-links">
             <a href="home-en.html">Core</a>
-            <a href="frekans-en.html" class="is-active">Frekans_101</a>
-            <a href="sentetik-en.html">Memories</a>
-            <a href="veri-en.html">Vault</a>
+            <a href="frekans-en.html" class="is-active">Frequency_101</a>
+            <a href="sentetik-en.html">Synthetic Memories</a>
+            <a href="veri-en.html">Data Vault</a>
+            <span class="lang-switch">
+                <a href="frekans.html">TR</a>
+                <span>/</span>
+                <a href="frekans-en.html" class="lang-active">EN</a>
+            </span>
         </div>
     </nav>
 
@@ -632,7 +643,7 @@
 
             <section class="archive-interface" aria-labelledby="frekans-title">
                 <p class="kicker">Archive Layer / Sound Records</p>
-                <h1 id="frekans-title">Frekans<br>101</h1>
+                <h1 id="frekans-title">Frequency<br>101</h1>
                 <p class="intro-copy">
                     Sounds leak from here; tin-tin echoes in the dark.<br>
                     Record, memory, and malfunction meet on one frequency.
@@ -696,7 +707,7 @@
             if (document.readyState === 'complete') {
                 resize();
             } else {
-                resize(); // call immediately — fixes createImageData W=0 race
+                window.addEventListener('load', resize);
             }
             window.addEventListener('resize', resize);
             let mx = W / 2, my = H / 2;

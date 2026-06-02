@@ -294,16 +294,13 @@
     <meta property="og:title" content="TIMARHANE // Sync: Offline">
     <meta property="og:description" content="Sync layer currently inactive — external connection undetectable. TIMARHANE archive offline.">
     <meta property="og:url" content="https://oneheus.com/senkron-en.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
+    <meta property="og:image" content="https://oneheus.com/og_glitch.png">
     <meta property="og:locale" content="en_US">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
     <meta name="twitter:title" content="TIMARHANE // Sync: Offline">
     <meta name="twitter:description" content="Sync layer currently inactive — external connection undetectable. TIMARHANE archive offline.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
+    <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
 </head>
 <body>
     <div id="pageVeil"></div>
@@ -313,7 +310,7 @@
     <div id="glow"></div>
 
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home-en.html">TIMARHANE // CORE</a>
+        <a class="mobile-brand" href="home-en.html">AKA // TIMARHANE</a>
         <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
     </header>
     <nav class="mobile-drawer" id="mobileMenu">
@@ -321,7 +318,6 @@
         <a href="frekans-en.html">Frequency_101</a>
         <a href="sentetik-en.html">Synthetic Memories</a>
         <a href="veri-en.html">Data Vault</a>
-        <a href="senkron-en.html" class="is-active is-offline">Sync: Offline</a>
         <a href="senkron.html">TR</a>
     </nav>
 
@@ -330,7 +326,7 @@
     <div class="vignette"></div>
 
     <nav class="top-nav" aria-label="Main navigation">
-        <a class="top-brand" href="home-en.html">TIMARHANE // CORE</a>
+        <a class="top-brand" href="home-en.html">AKA // TIMARHANE</a>
         <div class="top-links">
             <a href="home-en.html">Core</a>
             <a href="frekans-en.html">Frequency_101</a>
@@ -439,7 +435,7 @@
             if (document.readyState === 'complete') {
                 resize();
             } else {
-                resize(); // call immediately — fixes createImageData W=0 race
+                window.addEventListener('load', resize);
             }
             window.addEventListener('resize', resize);
             let mx = W / 2, my = H / 2;

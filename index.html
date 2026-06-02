@@ -281,13 +281,10 @@
     <meta property="og:title" content="TIMARHANE // Terminal Boot">
     <meta property="og:description" content="TIMARHANE — İstanbul'dan yapay zeka destekli yaratıcı bir alan. Müzik, film, karakter ve hikayeler; insan imgelem ile makine frekansının kesişiminde.">
     <meta property="og:url" content="https://oneheus.com/index.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
     <meta property="og:image" content="https://oneheus.com/og_glitch.png">
     <meta property="og:locale" content="tr_TR">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
     <meta name="twitter:title" content="TIMARHANE // Terminal Boot">
     <meta name="twitter:description" content="TIMARHANE — İstanbul'dan yapay zeka destekli yaratıcı bir alan. Müzik, film, karakter ve hikayeler; insan imgelem ile makine frekansının kesişiminde.">
     <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
@@ -328,7 +325,7 @@
             W = grainC.width = fxC.width = window.innerWidth;
             H = grainC.height = fxC.height = window.innerHeight;
         }
-        resize(); // call immediately — fixes createImageData W=0 race
+        window.addEventListener('load', resize);
         window.addEventListener('resize', resize);
 
         /* ── Mouse tracking ── */

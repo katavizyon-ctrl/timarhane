@@ -312,16 +312,13 @@
     <meta property="og:title" content="TIMARHANE // Senkron: Kopuk">
     <meta property="og:description" content="Senkron katmanı şu an pasif — dış bağlantı izlenemiyor. TIMARHANE arşivi çevrimdışı.">
     <meta property="og:url" content="https://oneheus.com/senkron.html">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image" content="https://oneheus.com/og_standard.png">
+    <meta property="og:image" content="https://oneheus.com/og_glitch.png">
     <meta property="og:locale" content="tr_TR">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@oneheus">
     <meta name="twitter:title" content="TIMARHANE // Senkron: Kopuk">
     <meta name="twitter:description" content="Senkron katmanı şu an pasif — dış bağlantı izlenemiyor. TIMARHANE arşivi çevrimdışı.">
-    <meta name="twitter:image" content="https://oneheus.com/og_standard.png">
+    <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
 </head>
 <body>
     <div id="pageVeil"></div>
@@ -331,7 +328,7 @@
     <div id="glow"></div>
 
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home.html">TIMARHANE // CORE</a>
+        <a class="mobile-brand" href="home.html">AKA // TIMARHANE</a>
         <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
     </header>
     <nav class="mobile-drawer" id="mobileMenu">
@@ -348,7 +345,7 @@
     <div class="vignette"></div>
 
     <nav class="top-nav" aria-label="Ana navigasyon">
-        <a class="top-brand" href="home.html">TIMARHANE // CORE</a>
+        <a class="top-brand" href="home.html">AKA // TIMARHANE</a>
         <div class="top-links">
             <a href="home.html">Core</a>
             <a href="frekans.html">Frekans_101</a>
@@ -467,7 +464,7 @@
             if (document.readyState === 'complete') {
                 resize();
             } else {
-                resize(); // call immediately — fixes createImageData W=0 race
+                window.addEventListener('load', resize);
             }
             window.addEventListener('resize', resize);
             let mx = W / 2, my = H / 2;
