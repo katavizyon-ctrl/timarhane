@@ -717,6 +717,9 @@
             .origin-line { font-size: 0.94rem; }
             .oneheus-stage-extension { height: 45vh; }
             /* origin backgrounds stay position:fixed on mobile for fixed-bg scroll effect */
+            .origin-bg-home, .origin-bg-morpheus, .origin-bg-oneheus {
+                will-change: transform, opacity;
+            }
             .kw-timarhane::after { right: -8px; }
         }
     </style>
@@ -920,22 +923,85 @@
         }
 
         if (IS_MOBILE) {
-            const bgImg = document.querySelector('#mobile-bg img');
-            if (bgImg) {
-                const PERIOD  = 18000;
-                const MAX_X   = 8;
-                const MAX_Y   = 6;
-                const SCALE   = 1.08;
+            /* ═══════════════════════════════════════════════════════
+               MOBILE BACKGROUND ANIMATION
+               Three layers stacked:
+               1) Ken Burns  — slow sinusoidal drift + zoom
+               2) Breathe    — gentle scale pulse on top
+               3) Gyroscope  — tilt shifts the image (iOS+Android)
+            ═══════════════════════════════════════════════════════ */
+            const bgLayers = [
+                document.getElementById('layer-home'),
+                document.getElementById('layer-morpheus'),
+                document.getElementById('layer-oneheus')
+            ].filter(Boolean);
 
-                function driftLoop(ts) {
-                    const t  = ts / PERIOD;
-                    const x  = Math.sin(t * Math.PI * 2)         * MAX_X;
-                    const y  = Math.sin(t * Math.PI * 2 * 0.618) * MAX_Y;
-                    bgImg.style.transform = `scale(${SCALE}) translate(${x}px, ${y}px)`;
-                    requestAnimationFrame(driftLoop);
-                }
-                requestAnimationFrame(driftLoop);
+            // ── Ken Burns ──
+            const KB_PERIOD = 26000;   // ms per full drift cycle
+            const KB_MAX_X  = 12;      // px horizontal drift
+            const KB_MAX_Y  = 9;       // px vertical drift
+            const KB_SCALE  = 1.14;    // base scale — must leave edge buffer
+
+            // ── Breathe ──
+            const BR_PERIOD = 8000;    // ms per breathe cycle
+            const BR_EXTRA  = 0.04;    // scale added at peak breath
+
+            // ── Gyroscope ──
+            const GY_MAX    = 12;      // max px shift from tilt
+            let gyroX = 0, gyroY = 0;
+            let rawGyroX = 0, rawGyroY = 0;
+            let gyroActive = false;
+
+            function onOrientation(e) {
+                const gamma = Math.max(-40, Math.min(40, e.gamma || 0));
+                const beta  = Math.max(-40, Math.min(40, (e.beta  || 0) - 30));
+                rawGyroX = (gamma / 40) * GY_MAX;
+                rawGyroY = (beta  / 40) * GY_MAX;
+                gyroActive = true;
             }
+
+            function startGyro() {
+                if (typeof DeviceOrientationEvent !== 'undefined' &&
+                    typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    // iOS 13+ — request permission silently on first touch
+                    DeviceOrientationEvent.requestPermission()
+                        .then(s => { if (s === 'granted') window.addEventListener('deviceorientation', onOrientation, { passive: true }); })
+                        .catch(() => {});
+                } else {
+                    // Android + older iOS — no permission needed
+                    window.addEventListener('deviceorientation', onOrientation, { passive: true });
+                }
+            }
+
+            // Trigger gyro init on first touch (required for iOS permission)
+            document.addEventListener('touchstart', startGyro, { once: true });
+
+            // ── Main animation loop ──
+            function bgAnimate(ts) {
+                // Ken Burns
+                const kbT  = ts / KB_PERIOD;
+                const kbX  = Math.sin(kbT * Math.PI * 2)         * KB_MAX_X;
+                const kbY  = Math.sin(kbT * Math.PI * 2 * 0.618) * KB_MAX_Y;
+
+                // Breathe — 0→1→0 oscillation
+                const brT     = ts / BR_PERIOD;
+                const breath  = (Math.sin(brT * Math.PI * 2) * 0.5 + 0.5); // 0..1
+                const scale   = KB_SCALE + breath * BR_EXTRA;
+
+                // Gyro — smooth with lerp
+                gyroX += (rawGyroX - gyroX) * 0.05;
+                gyroY += (rawGyroY - gyroY) * 0.05;
+
+                // Apply combined transform to all layers
+                const tx = (kbX + gyroX).toFixed(2);
+                const ty = (kbY + gyroY).toFixed(2);
+                const tf = `scale(${scale.toFixed(4)}) translate(${tx}px,${ty}px)`;
+                bgLayers.forEach(l => { l.style.transform = tf; });
+
+                requestAnimationFrame(bgAnimate);
+            }
+
+            requestAnimationFrame(bgAnimate);
         }
 
         setTimeout(runReveal, 100);
@@ -1054,15 +1120,48 @@
                 if (trail.length > 28) trail.shift();
             });
 
+            // ── Ken Burns + Breathe (desktop) ──
+            const D_KB_PERIOD = 30000;   // ms per drift cycle
+            const D_KB_MAX_X  = 14;      // px horizontal drift
+            const D_KB_MAX_Y  = 10;      // px vertical drift
+            const D_KB_SCALE  = 1.10;    // base scale
+            const D_BR_PERIOD = 9000;    // ms per breathe cycle
+            const D_BR_EXTRA  = 0.03;    // extra scale at peak breath
+
+            const deskBgLayers = [
+                document.getElementById('layer-home'),
+                document.getElementById('layer-morpheus'),
+                document.getElementById('layer-oneheus')
+            ].filter(Boolean);
+
             let px = 0, py = 0;
             (function parallax() {
+                // Mouse parallax
                 const tx = ((mx / W) - 0.5) * 22;
                 const ty = ((my / H) - 0.5) * 22;
                 px += (tx - px) * 0.04;
                 py += (ty - py) * 0.04;
+
+                // Ken Burns drift
+                const now   = performance.now();
+                const kbT   = now / D_KB_PERIOD;
+                const kbX   = Math.sin(kbT * Math.PI * 2)         * D_KB_MAX_X;
+                const kbY   = Math.sin(kbT * Math.PI * 2 * 0.618) * D_KB_MAX_Y;
+
+                // Breathe
+                const breath = Math.sin((now / D_BR_PERIOD) * Math.PI * 2) * 0.5 + 0.5;
+                const scale  = (D_KB_SCALE + breath * D_BR_EXTRA).toFixed(4);
+
+                // bg-photo: KB + Breathe + mouse parallax combined
                 if (bgPhoto && window.scrollY < window.innerHeight) {
-                    bgPhoto.style.transform = `scale(1.08) translate(${-px * 0.55}px, ${-py * 0.55}px)`;
+                    bgPhoto.style.transform = `scale(${scale}) translate(${(kbX - px * 0.55).toFixed(2)}px,${(kbY - py * 0.55).toFixed(2)}px)`;
                 }
+
+                // Origin layers: KB + Breathe (no mouse parallax on these)
+                deskBgLayers.forEach(l => {
+                    if (l) l.style.transform = `scale(${scale}) translate(${kbX.toFixed(2)}px,${kbY.toFixed(2)}px)`;
+                });
+
                 requestAnimationFrame(parallax);
             })();
 
