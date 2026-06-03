@@ -38,11 +38,14 @@
         body::before {
             content: "";
             position: fixed;
-            inset: 0;
+            inset: -6%;
             z-index: 0;
             pointer-events: none;
             background: url("frekans2_bg.webp") left center / cover no-repeat;
             filter: brightness(0.78) contrast(1.08) saturate(0.92);
+            animation: frekBreathe 7s ease-in-out infinite, frekKenBurns 30s ease-in-out infinite alternate;
+            transform-origin: center center;
+            will-change: transform, filter;
         }
 
         body::after {
@@ -636,6 +639,39 @@
         </div>
     </nav>
 
+
+    <!-- PLAYLIST PLAYER -->
+    <div class="fp-station">
+      <div class="frekans-player" id="frekansPlayer">
+        <div class="fp-header">
+          <span class="fp-label">FREKANS ARŞİVİ // ÇALMA LİSTESİ</span>
+        </div>
+        <div class="fp-header" style="margin-top:-8px;margin-bottom:12px;">
+          <span class="fp-track-name" id="fpTrackName">AKA — TIMARHANE</span>
+          <span class="fp-time" id="fpTime">—</span>
+        </div>
+        <div class="fp-scrubber-wrap">
+          <div class="fp-scrubber" id="fpScrubber">
+            <div class="fp-scrubber-fill" id="fpFill"></div>
+            <div class="fp-scrubber-thumb" id="fpThumb"></div>
+          </div>
+        </div>
+        <div class="fp-controls">
+          <button class="fp-btn" id="fpPlayAll">▶  TÜMÜNÜ OYNAT</button>
+          <button class="fp-btn" id="fpShuffle">⇄  KARIŞIK</button>
+          <button class="fp-btn fp-icon-btn" id="fpPrev" title="Previous">◀◀</button>
+          <button class="fp-btn fp-icon-btn" id="fpNext" title="Next">▶▶</button>
+          <div class="fp-vol">
+            <span class="fp-vol-label">VOL</span>
+            <div class="fp-vol-track" id="fpVolTrack">
+              <div class="fp-vol-fill" id="fpVolFill"></div>
+              <div class="fp-vol-thumb" id="fpVolThumb"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <audio id="fpAudio" preload="none"></audio>
     <main class="archive-stage" aria-label="Frekans 101 şarkı arşivi">
         <section class="archive-grid">
             <div class="left-ghost-label">
@@ -693,6 +729,7 @@
                     Her kayıt ayrı sayfada açılır / liste genişletilebilir
                 </div>
             </section>
+
         </section>
     </main>
     <script>
@@ -778,6 +815,152 @@
                 toggle.setAttribute('aria-expanded', 'false');
             }));
         }
+
+    
+    /* ── FREKANS PLAYLIST PLAYER ── */
+    (function () {
+        const TRACKS = [
+            { title: 'AKA — MAVİ RANDEVU',        src: 'mavi.mp3',               dur: '7:59' },
+            { title: 'AKA — WORLD OF ILLUSIONS',   src: 'world-of-illusions.mp3', dur: '5:26' },
+            { title: 'AKA — AHTAPOT',              src: 'ahtapot.mp3',            dur: '2:11' },
+        ];
+
+        let queue = [...TRACKS];
+        let idx = 0;
+        let isPlaying = false;
+        let isShuffle = false;
+        let scrubDown = false;
+        let volDown = false;
+
+        const audio      = document.getElementById('fpAudio');
+        const trackName  = document.getElementById('fpTrackName');
+        const timeEl     = document.getElementById('fpTime');
+        const fill       = document.getElementById('fpFill');
+        const thumb      = document.getElementById('fpThumb');
+        const scrubber   = document.getElementById('fpScrubber');
+        const volTrack   = document.getElementById('fpVolTrack');
+        const volFill    = document.getElementById('fpVolFill');
+        const volThumb   = document.getElementById('fpVolThumb');
+        const playAllBtn = document.getElementById('fpPlayAll');
+        const shuffleBtn = document.getElementById('fpShuffle');
+        const prevBtn    = document.getElementById('fpPrev');
+        const nextBtn    = document.getElementById('fpNext');
+
+        function fmt(s) {
+            if (isNaN(s) || s < 0) return '0:00';
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return m + ':' + (sec < 10 ? '0' : '') + sec;
+        }
+
+        function loadTrack(i) {
+            idx = i;
+            const t = queue[idx];
+            audio.src = t.src;
+            audio.load();
+            trackName.textContent = t.title;
+            timeEl.textContent = '0:00 / ' + t.dur;
+            fill.style.width = '0%';
+            thumb.style.left = '0%';
+        }
+
+        function play() {
+            audio.play();
+            isPlaying = true;
+            playAllBtn.textContent = '⏸ PAUSE';
+            playAllBtn.classList.add('active');
+        }
+
+        function pause() {
+            audio.pause();
+            isPlaying = false;
+            playAllBtn.textContent = '▶ PLAY ALL';
+            playAllBtn.classList.remove('active');
+        }
+
+        function playNext() {
+            if (idx < queue.length - 1) { loadTrack(idx + 1); play(); }
+            else { pause(); loadTrack(0); }
+        }
+
+        function playPrev() {
+            if (audio.currentTime > 3) { audio.currentTime = 0; return; }
+            if (idx > 0) { loadTrack(idx - 1); play(); }
+        }
+
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            if (!audio.duration) return;
+            const pct = (audio.currentTime / audio.duration) * 100;
+            fill.style.width = pct + '%';
+            thumb.style.left = pct + '%';
+            timeEl.textContent = fmt(audio.currentTime) + ' / ' + queue[idx].dur;
+        });
+
+        audio.addEventListener('ended', playNext);
+
+        playAllBtn.addEventListener('click', () => {
+            if (!audio.src || audio.src === window.location.href) {
+                loadTrack(0); play();
+            } else if (isPlaying) {
+                pause();
+            } else {
+                play();
+            }
+        });
+
+        shuffleBtn.addEventListener('click', () => {
+            isShuffle = !isShuffle;
+            shuffleBtn.classList.toggle('active', isShuffle);
+            if (isShuffle) {
+                const current = queue[idx];
+                queue = shuffle([...TRACKS]);
+                idx = queue.findIndex(t => t.src === current.src);
+                if (idx < 0) idx = 0;
+            } else {
+                const current = queue[idx];
+                queue = [...TRACKS];
+                idx = queue.findIndex(t => t.src === current.src);
+                if (idx < 0) idx = 0;
+            }
+        });
+
+        prevBtn.addEventListener('click', playPrev);
+        nextBtn.addEventListener('click', () => { loadTrack((idx + 1) % queue.length); if (isPlaying) play(); });
+
+        // Scrubber
+        function seekTo(e) {
+            const r = scrubber.getBoundingClientRect();
+            const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+            if (audio.duration) audio.currentTime = pct * audio.duration;
+        }
+        scrubber.addEventListener('mousedown', e => { scrubDown = true; seekTo(e); });
+        document.addEventListener('mousemove', e => { if (scrubDown) seekTo(e); });
+        document.addEventListener('mouseup', () => { scrubDown = false; });
+        scrubber.addEventListener('touchstart', e => { scrubDown = true; seekTo(e.touches[0]); }, { passive: true });
+        document.addEventListener('touchmove', e => { if (scrubDown) seekTo(e.touches[0]); }, { passive: true });
+        document.addEventListener('touchend', () => { scrubDown = false; });
+
+        // Volume
+        audio.volume = 0.8;
+        function seekVol(e) {
+            const r = volTrack.getBoundingClientRect();
+            const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+            audio.volume = pct;
+            volFill.style.width = (pct * 100) + '%';
+            volThumb.style.left = (pct * 100) + '%';
+        }
+        volTrack.addEventListener('mousedown', e => { volDown = true; seekVol(e); });
+        document.addEventListener('mousemove', e => { if (volDown) seekVol(e); });
+        document.addEventListener('mouseup', () => { volDown = false; });
+    })();
 
     </script>
 </body>
