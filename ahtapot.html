@@ -18,6 +18,8 @@
 <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://oneheus.com/ahtapot.html">
+<link rel="alternate" hreflang="tr" href="https://oneheus.com/ahtapot.html">
+<link rel="alternate" hreflang="en" href="https://oneheus.com/ahtapot-en.html">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,14 +46,18 @@
     font-family: 'Share Tech Mono', monospace;
     overflow-x: hidden;
     min-height: 100vh;
+    padding-top: 72px;
   }
 
   .bg-image {
     position: fixed;
-    inset: 0;
+    inset: -8%;
     z-index: 0;
     background: url('ahtapot.webp') center center / cover no-repeat;
     filter: brightness(0.72) contrast(1.08) saturate(0.88);
+    animation: kenBurns 24s ease-in-out infinite alternate, bgGlitch 12s step-end infinite;
+    transform-origin: center center;
+    will-change: transform;
   }
 
   .bg-overlay {
@@ -62,6 +68,44 @@
     background:
       linear-gradient(90deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.72) 75%, rgba(0,0,0,0.88) 100%),
       radial-gradient(circle at 50% 100%, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.55) 100%);
+  }
+
+  /* colour pulse overlay */
+  .bg-color-shift {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: color;
+    animation: colorShift 16s ease-in-out infinite;
+    opacity: 0.22;
+  }
+
+  @keyframes kenBurns {
+    0%   { transform: scale(1.00) translate(0%, 0%); }
+    25%  { transform: scale(1.05) translate(-1%, 0.5%); }
+    50%  { transform: scale(1.08) translate(0.5%, -1%); }
+    75%  { transform: scale(1.04) translate(1%, 0.5%); }
+    100% { transform: scale(1.00) translate(0%, 0%); }
+  }
+
+  @keyframes bgGlitch {
+    0%,  88%  { transform: scale(1.04) translate(0, 0); filter: brightness(0.72) contrast(1.08) saturate(0.88); }
+    89%        { transform: scale(1.04) translate(-3px, 1px); filter: brightness(0.9) contrast(1.4) saturate(0.5) hue-rotate(15deg); }
+    90%        { transform: scale(1.04) translate(3px, -2px); filter: brightness(0.6) contrast(1.6) saturate(1.2) hue-rotate(-10deg); }
+    91%        { transform: scale(1.04) translate(-2px, 2px); filter: brightness(0.72) contrast(1.08) saturate(0.88); }
+    92%  { transform: scale(1.04) translate(0, 0); filter: brightness(0.72) contrast(1.08) saturate(0.88); }
+    96%        { transform: scale(1.04) translate(2px, -1px); filter: brightness(0.85) contrast(1.3) saturate(0.6) hue-rotate(8deg); }
+    97%        { transform: scale(1.04) translate(0, 0); filter: brightness(0.72) contrast(1.08) saturate(0.88); }
+    100% { transform: scale(1.04) translate(0, 0); filter: brightness(0.72) contrast(1.08) saturate(0.88); }
+  }
+
+  @keyframes colorShift {
+    0%   { background: rgba(14, 207, 176, 1); }
+    25%  { background: rgba(192, 21, 42, 1);  }
+    50%  { background: rgba(14, 207, 176, 1); }
+    75%  { background: rgba(80, 0, 20, 1);    }
+    100% { background: rgba(14, 207, 176, 1); }
   }
 
   /* ── CANVAS BACKGROUND ── */
@@ -76,8 +120,11 @@
 
   /* ── NAV ── */
   nav {
-    position: relative;
-    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
     display: flex;
     flex-wrap: wrap;
     gap: 0 2rem;
@@ -86,6 +133,9 @@
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    background: rgba(6,9,16,0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   nav a {
@@ -220,17 +270,19 @@
     margin-bottom: 1rem;
   }
 
-  .player-song-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.15em;
+  .player-artist {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
     color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
-  .player-artist {
+  .player-time-in-title {
     font-size: 0.65rem;
     color: var(--text-muted);
     letter-spacing: 0.1em;
+    font-family: 'Share Tech Mono', monospace;
   }
 
   .player-scrubber {
@@ -257,6 +309,7 @@
     transition: left 0.25s linear;
   }
   .player-controls { display: flex; align-items: center; gap: 12px; }
+  .player-controls .player-vol { margin-left: auto; }
   .player-btn {
     background: none;
     border: 1px solid var(--teal-dim);
@@ -272,7 +325,6 @@
   }
   .player-btn:hover { background: rgba(14,207,176,0.1); border-color: var(--teal); color: #fff; }
   .player-btn.is-playing { background: rgba(14,207,176,0.08); border-color: var(--teal); color: var(--teal); }
-  .player-time-display { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; margin-left: auto; }
   .player-vol { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
   .vol-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase; }
   .vol-track { position: relative; width: 58px; height: 3px; background: rgba(14,207,176,0.15); cursor: pointer; }
@@ -285,18 +337,6 @@
     transform: translate(-50%,-50%);
     pointer-events: none;
   }
-  .dl-link {
-    display: inline-block;
-    margin-top: 0.8rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: var(--blood);
-    text-decoration: none;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--blood-dim);
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .dl-link:hover { color: var(--neon); border-color: var(--neon); }
 
   /* ── SYNCED LYRICS ── */
   .lyrics-section {
@@ -353,16 +393,6 @@
   }
 
   /* ── HORON SVG FIGURE (foreground) ── */
-  #horon-figure {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    pointer-events: none;
-    opacity: 0.18;
-    width: 260px;
-  }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
@@ -376,8 +406,6 @@
     100% { d: path("M0,0 C30,-20 60,20 90,0 C120,-20 150,10 180,0"); }
   }
 
-  @keyframes horonBounce {
-    0%, 100% { transform: translateY(0) rotate(-2deg); }
     50%       { transform: translateY(-8px) rotate(2deg); }
   }
 
@@ -443,31 +471,9 @@
 <canvas id="bg-canvas"></canvas>
 <div class="bg-image"></div>
 <div class="bg-overlay"></div>
+<div class="bg-color-shift"></div>
 <div class="scanlines"></div>
 
-<!-- Horon figure SVG (foreground decoration) -->
-<svg id="horon-figure" viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <style>
-    .horon-g { animation: horonBounce 1.6s ease-in-out infinite; transform-origin: 100px 280px; }
-  </style>
-  <g class="horon-g">
-    <!-- body -->
-    <ellipse cx="100" cy="200" rx="18" ry="28" fill="#0ecfb0" opacity="0.9"/>
-    <!-- head -->
-    <circle cx="100" cy="165" r="14" fill="#0ecfb0" opacity="0.9"/>
-    <!-- left arm raised -->
-    <line x1="82" y1="188" x2="52" y2="162" stroke="#0ecfb0" stroke-width="4" stroke-linecap="round"/>
-    <line x1="52" y1="162" x2="30" y2="150" stroke="#0ecfb0" stroke-width="3" stroke-linecap="round"/>
-    <!-- right arm raised -->
-    <line x1="118" y1="188" x2="148" y2="162" stroke="#0ecfb0" stroke-width="4" stroke-linecap="round"/>
-    <line x1="148" y1="162" x2="170" y2="150" stroke="#0ecfb0" stroke-width="3" stroke-linecap="round"/>
-    <!-- legs -->
-    <line x1="92" y1="228" x2="78" y2="265" stroke="#0ecfb0" stroke-width="4" stroke-linecap="round"/>
-    <line x1="78" y1="265" x2="68" y2="285" stroke="#0ecfb0" stroke-width="3" stroke-linecap="round"/>
-    <line x1="108" y1="228" x2="122" y2="265" stroke="#0ecfb0" stroke-width="4" stroke-linecap="round"/>
-    <line x1="122" y1="265" x2="132" y2="285" stroke="#0ecfb0" stroke-width="3" stroke-linecap="round"/>
-  </g>
-</svg>
 
 <!-- NAV -->
 <nav>
@@ -480,7 +486,7 @@
 </nav>
 
 <div class="lang-toggle">
-  <span>TR</span> / <a href="#">EN</a>
+  <span>TR</span> / <a href="https://oneheus.com/ahtapot-en.html">EN</a>
 </div>
 
 <div class="breadcrumb">
@@ -498,8 +504,8 @@
   <p class="player-label">// ses kaydı</p>
   <div class="player-box">
     <div class="player-title-row">
-      <span class="player-song-name">AHTAPOT</span>
-      <span class="player-artist">ONNO — AHTAPOT</span>
+      <span class="player-artist">AKA — AHTAPOT</span>
+      <span class="player-time-in-title" id="playerTime">0:00 / 2:11</span>
     </div>
     <div class="player-scrubber" id="scrubber" role="slider" aria-label="İlerleme çubuğu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
       <div class="player-scrubber-fill" id="scrubberFill"></div>
@@ -508,15 +514,13 @@
     <div class="player-controls">
       <button class="player-btn" id="playBtn" aria-label="Oynat">▶ OYNAT</button>
       <div class="player-vol">
-        <span class="vol-label">SES</span>
+        <span class="vol-label">VOL</span>
         <div class="vol-track" id="volTrack" role="slider" aria-label="Ses seviyesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" tabindex="0">
           <div class="vol-fill" id="volFill"></div>
           <div class="vol-thumb" id="volThumb"></div>
         </div>
       </div>
-      <span class="player-time-display" id="playerTime">0:00 / 0:00</span>
     </div>
-    <a class="dl-link" href="ahtapot.mp3" download>↓ indir</a>
   </div>
 </div>
 
@@ -738,7 +742,7 @@ function updateProgress() {
   sFill.style.width = pct + '%';
   sThumb.style.left = pct + '%';
   scrubber.setAttribute('aria-valuenow', Math.round(pct));
-  timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  timeEl.textContent = fmt(audio.currentTime) + " / 2:11";
 }
 
 function setVolume(pct) {
@@ -817,6 +821,59 @@ audio.addEventListener('timeupdate', () => {
     sc.style.transform = 'translateY(-' + sc.children[activeIdx].offsetTop + 'px)';
   }
 });
+
+/* ── MOUSE TRAIL ── */
+const trailCanvas = document.createElement('canvas');
+trailCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;';
+document.body.appendChild(trailCanvas);
+const tCtx = trailCanvas.getContext('2d');
+trailCanvas.width = window.innerWidth;
+trailCanvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  trailCanvas.width = window.innerWidth;
+  trailCanvas.height = window.innerHeight;
+});
+
+const trailParticles = [];
+let mouseX = -999, mouseY = -999;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  for (let i = 0; i < 3; i++) {
+    trailParticles.push({
+      x: mouseX + (Math.random() - 0.5) * 6,
+      y: mouseY + (Math.random() - 0.5) * 6,
+      r: 1.5 + Math.random() * 2.5,
+      alpha: 0.7 + Math.random() * 0.3,
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: -0.5 - Math.random() * 1.2,
+      decay: 0.022 + Math.random() * 0.015,
+      color: Math.random() > 0.35 ? '#c0152a' : '#8b0000'
+    });
+  }
+});
+
+function animateTrail() {
+  tCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+  for (let i = trailParticles.length - 1; i >= 0; i--) {
+    const p = trailParticles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.alpha -= p.decay;
+    p.r *= 0.97;
+    if (p.alpha <= 0) { trailParticles.splice(i, 1); continue; }
+    tCtx.beginPath();
+    tCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    tCtx.fillStyle = p.color;
+    tCtx.globalAlpha = p.alpha;
+    tCtx.fill();
+  }
+  tCtx.globalAlpha = 1;
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
+
 </script>
 </body>
 </html>

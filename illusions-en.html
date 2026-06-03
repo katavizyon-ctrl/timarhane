@@ -654,7 +654,7 @@
         <div class="player" id="playerUI">
             <div class="player-track-info">
                 <span class="player-track-name">AKA — WORLD OF ILLUSIONS</span>
-                <span class="player-time" id="playerTime">0:00 / 0:00</span>
+                <span class="player-time" id="playerTime">0:00 / 5:26</span>
             </div>
             <div class="player-scrubber" id="scrubber" role="slider" aria-label="Seek bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
                 <div class="player-scrubber-fill" id="scrubberFill"></div>
@@ -765,7 +765,7 @@
             sFill.style.width = pct + '%';
             sThumb.style.left = pct + '%';
             scrubber.setAttribute('aria-valuenow', Math.round(pct));
-            timeEl.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+            timeEl.textContent = fmt(audio.currentTime) + " / 5:26";
         }
 
         function setVolume(pct) {
