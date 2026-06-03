@@ -119,51 +119,169 @@
   }
 
   /* ── NAV ── */
-  nav {
+  .site-nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
+    height: 72px;
     z-index: 100;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0 2rem;
-    padding: 1.2rem 2rem;
-    border-bottom: 1px solid var(--teal-dim);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(18px, 5vw, 72px);
     background: rgba(6,9,16,0.85);
+    border-bottom: 1px solid var(--teal-dim);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
 
-  nav a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  nav a:hover { color: var(--teal); }
-  nav a.brand {
+  .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
     color: var(--teal);
+    text-decoration: none;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0.2em;
-    margin-right: 1rem;
+    font-size: clamp(0.8rem, 1vw, 1rem);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
-  /* ── LANG ── */
-  .lang-toggle {
-    position: relative;
-    z-index: 10;
-    text-align: right;
-    padding: 0.5rem 2rem 0;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
+  .nav-brand::before {
+    content: "";
+    flex-shrink: 0;
+    width: 36px;
+    height: 1px;
+    background: var(--blood);
+    opacity: 0.82;
   }
-  .lang-toggle a { color: var(--teal-dim); text-decoration: none; }
-  .lang-toggle a:hover { color: var(--teal); }
-  .lang-toggle span { color: var(--teal); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 2vw, 32px);
+  }
+
+  .top-nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: clamp(0.62rem, 0.8vw, 0.75rem);
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.72;
+    padding: 8px 0;
+    border-bottom: 1px solid transparent;
+    transition: color 220ms ease, opacity 220ms ease, border-color 220ms ease;
+    white-space: nowrap;
+  }
+
+  .top-nav-link:hover,
+  .top-nav-link.active {
+    color: var(--teal);
+    opacity: 1;
+    border-color: var(--teal-dim);
+  }
+
+  .top-nav-link.disabled {
+    opacity: 0.28;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.70rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .lang-switch a {
+    color: var(--teal-dim);
+    text-decoration: none;
+    transition: color 220ms ease;
+  }
+
+  .lang-switch a:hover,
+  .lang-switch a.lang-active { color: var(--teal); }
+
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 40px;
+    border: 1px solid var(--teal-dim);
+    background: rgba(0,0,0,0.42);
+    color: var(--teal);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .menu-toggle span,
+  .menu-toggle::before,
+  .menu-toggle::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 18px;
+    height: 1px;
+    background: currentColor;
+    transition: transform 220ms ease, opacity 220ms ease;
+  }
+
+  .menu-toggle span { transform: translateY(0); }
+  .menu-toggle::before { transform: translateY(-6px); }
+  .menu-toggle::after { transform: translateY(6px); }
+
+  body.menu-open .menu-toggle span { opacity: 0; }
+  body.menu-open .menu-toggle::before { transform: rotate(45deg); }
+  body.menu-open .menu-toggle::after { transform: rotate(-45deg); }
+
+  @media (min-width: 761px) {
+    .menu-toggle { display: none; }
+  }
+
+  @media (max-width: 760px) {
+    .site-nav { height: 66px; padding: 0 18px; }
+    .nav-brand { max-width: calc(100vw - 88px); overflow: hidden; text-overflow: ellipsis; }
+    .nav-brand::before { width: 22px; }
+    .menu-toggle { display: inline-flex; }
+    .nav-links {
+      position: fixed;
+      z-index: 99;
+      top: 66px; left: 0; right: 0;
+      flex-direction: column;
+      padding: 8px 22px 22px;
+      background: rgba(6,9,16,0.96);
+      border-bottom: 1px solid var(--teal-dim);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transform: translateY(-115%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 260ms ease, opacity 220ms ease;
+    }
+    body.menu-open .nav-links {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .top-nav-link {
+      display: block;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--teal-dim);
+      font-size: 0.86rem;
+      opacity: 1;
+    }
+    .lang-switch { padding: 16px 0 4px; font-size: 0.80rem; }
+  }
 
   /* ── BREADCRUMB ── */
   .breadcrumb {
@@ -466,20 +584,22 @@
 
 
 <!-- NAV -->
-<nav>
-  <a href="https://oneheus.com/home-en.html" class="brand">AKA // TIMARHANE</a>
-  <a href="https://oneheus.com/home-en.html">Core</a>
-  <a href="https://oneheus.com/frekans-en.html">Frekans_101</a>
-  <a href="https://oneheus.com/sentetik.html">Synthetic Memories</a>
-  <a href="https://oneheus.com/veri.html">Data Vault</a>
-  <a href="https://oneheus.com/senkron.html">Sync: Disconnected</a>
+<nav class="site-nav" aria-label="Main navigation">
+  <a class="nav-brand" href="https://oneheus.com/home-en.html">AKA // TIMARHANE</a>
+  <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="songMenu"><span></span></button>
+  <div class="nav-links" id="songMenu">
+    <a class="top-nav-link" href="https://oneheus.com/home-en.html">Core</a>
+    <a class="top-nav-link active" href="https://oneheus.com/frekans-en.html">Frekans_101</a>
+    <a class="top-nav-link" href="https://oneheus.com/sentetik.html">Synthetic Memories</a>
+    <a class="top-nav-link" href="https://oneheus.com/veri.html">Data Vault</a>
+    <a class="top-nav-link disabled" href="https://oneheus.com/senkron.html">Sync: Disconnected</a>
+    <div class="lang-switch" aria-label="Language">
+      <a href="https://oneheus.com/ahtapot.html">TR</a><span>/</span><a href="https://oneheus.com/ahtapot-en.html" class="lang-active">EN</a>
+    </div>
+  </div>
 </nav>
 
-<div class="lang-toggle">
-  <a href="ahtapot.html">TR</a> / <span>EN</span>
-</div>
-
-<div class="breadcrumb">
+<div class="breadcrumb"><div class="breadcrumb">
   <a href="https://oneheus.com/frekans-en.html">Frekans_101</a> // Record
 </div>
 
@@ -849,6 +969,26 @@ function animateTrail() {
   requestAnimationFrame(animateTrail);
 }
 animateTrail();
+
+
+  /* ── Hamburger menu ── */
+  (function () {
+    const toggle = document.querySelector('.menu-toggle');
+    const drawer = document.getElementById('songMenu');
+    if (!toggle || !drawer) return;
+    toggle.addEventListener('click', () => {
+      const open = document.body.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.body.classList.remove('menu-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Open menu');
+      });
+    });
+  })();
 
 </script>
 </body>
