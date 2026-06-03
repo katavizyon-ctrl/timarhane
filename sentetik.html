@@ -40,10 +40,15 @@
 
         body::before {
             content: "";
-            position: fixed; inset: 0; z-index: 0;
+            position: fixed; inset: -3%; z-index: 0;
             pointer-events: none;
-            background: url("frekans_bg.png") left center / cover no-repeat;
-            filter: brightness(0.52) contrast(1.08) saturate(0.6) hue-rotate(200deg);
+            background: url("morpheus.webp") center / cover no-repeat;
+            filter: brightness(0.58) contrast(1.10) saturate(0.45) hue-rotate(195deg);
+            animation: pageBreathe 5s ease-in-out infinite, pageKenBurns 15s ease-in-out infinite alternate;
+            transform-origin: center center;
+            will-change: transform, filter;
+            --bg-filter: brightness(0.58) contrast(1.10) saturate(0.45) hue-rotate(195deg);
+            --bg-filter-bright: brightness(0.68) contrast(1.08) saturate(0.50) hue-rotate(195deg);
         }
 
         body::after {
@@ -312,6 +317,34 @@
         @media (min-width: 761px) {
             .mobile-topbar, .mobile-drawer { display: none; }
         }
+
+        /* ── Ken Burns + Breathe + Gyro mobile div ── */
+        @keyframes pageBreathe {
+            0%,100% { filter: var(--bg-filter); }
+            50%      { filter: var(--bg-filter-bright); }
+        }
+        @keyframes pageKenBurns {
+            0%   { transform: scale(1.00) translate(0px,   0px);  }
+            33%  { transform: scale(1.01) translate(8px,  -4px);  }
+            66%  { transform: scale(1.00) translate(14px,  3px);  }
+            100% { transform: scale(1.01) translate(10px, -3px);  }
+        }
+        @media (max-width: 760px) {
+            body::before { animation: none; display: none; }
+            #pageBg {
+                display: block;
+                position: fixed; inset: -3%;
+                z-index: 0; pointer-events: none;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                will-change: transform;
+                transform-origin: center center;
+            }
+        }
+        @media (min-width: 761px) {
+            #pageBg { display: none; }
+        }
     </style>
     <!-- SEO & Social -->
     <meta name="description" content="Sentetik Anılar — yapay zeka ile yeniden inşa edilmiş fragmanlar, imgeler ve bellek katmanları.">
@@ -337,16 +370,17 @@
 <body>
     <div id="pageVeil"></div>
 
+    <div id="pageBg" style="background-image:url('morpheus.webp'); filter:brightness(0.58) contrast(1.10) saturate(0.45) hue-rotate(195deg);"></div>
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <div id="glow"></div>
 
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home.html">AKA // TIMARHANE</a>
+        <a class="mobile-brand" href="about.html">AKA // TIMARHANE</a>
         <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
     </header>
     <nav class="mobile-drawer" id="mobileMenu">
-        <a href="home.html">Core</a>
+        <a href="about.html">Core</a>
         <a href="frekans.html">Frekans_101</a>
         <a href="sentetik.html" class="is-active">Sentetik Anılar</a>
         <a href="veri.html">Veri Mahzeni</a>
@@ -358,9 +392,9 @@
     <div class="vignette"></div>
 
     <nav class="top-nav" aria-label="Ana navigasyon">
-        <a class="top-brand" href="home.html">AKA // TIMARHANE</a>
+        <a class="top-brand" href="about.html">AKA // TIMARHANE</a>
         <div class="top-links">
-            <a href="home.html">Core</a>
+            <a href="about.html">Core</a>
             <a href="frekans.html">Frekans_101</a>
             <a href="sentetik.html" class="is-active">Sentetik Anılar</a>
             <a href="veri.html">Veri Mahzeni</a>
@@ -384,7 +418,7 @@
             <div class="log-line"><span class="tag-blue">[ARŞİV]</span><span>Bu katman yakında aktif olacak.</span></div>
             <div class="log-line"><span class="tag-green">[DURUM]</span><span>Sinyal bekleniyor...</span></div>
         </div>
-        <a href="home.html" class="back-link">Core'a dön</a>
+        <a href="about.html" class="back-link">Core'a dön</a>
     </main>
 
     <script>
@@ -460,6 +494,50 @@
             })();
         }
 
+
+
+        /* ── Mobile: Ken Burns + Breathe + Gyroscope ── */
+        if (window.innerWidth <= 760) {
+            const pageBg = document.getElementById('pageBg');
+            if (pageBg) {
+                const KB_PERIOD = 13000, KB_MAX_X = 10, KB_MAX_Y = 8, KB_SCALE = 1.08;
+                const BR_PERIOD = 5000,  BR_EXTRA  = 0.03;
+                const GY_MAX = 20;
+                let gyroX = 0, gyroY = 0, rawGyroX = 0, rawGyroY = 0;
+
+                function onOrientation(e) {
+                    if (e.gamma === null || e.beta === null) return;
+                    rawGyroX = (Math.max(-45, Math.min(45, e.gamma)) / 45) * GY_MAX;
+                    rawGyroY = (Math.max(-45, Math.min(45, e.beta - 90)) / 45) * GY_MAX;
+                }
+                function startGyro() {
+                    if (typeof DeviceOrientationEvent !== 'undefined' &&
+                        typeof DeviceOrientationEvent.requestPermission === 'function') {
+                        DeviceOrientationEvent.requestPermission()
+                            .then(s => { if (s === 'granted') window.addEventListener('deviceorientation', onOrientation, { passive: true }); })
+                            .catch(() => {});
+                    } else {
+                        window.addEventListener('deviceorientation', onOrientation, { passive: true });
+                    }
+                }
+                let gyroStarted = false;
+                function tryStartGyro() { if (!gyroStarted) { gyroStarted = true; startGyro(); } }
+                document.addEventListener('touchstart', tryStartGyro, { once: true, passive: true });
+                document.addEventListener('touchend',   tryStartGyro, { once: true, passive: true });
+                window.addEventListener('scroll',       tryStartGyro, { once: true, passive: true });
+
+                (function bgAnimate(ts) {
+                    const kbX   = Math.sin((ts/KB_PERIOD)*Math.PI*2)         * KB_MAX_X;
+                    const kbY   = Math.sin((ts/KB_PERIOD)*Math.PI*2*0.618)   * KB_MAX_Y;
+                    const breath = Math.sin((ts/BR_PERIOD)*Math.PI*2)*0.5+0.5;
+                    const scale  = (KB_SCALE + breath * BR_EXTRA).toFixed(4);
+                    gyroX += (rawGyroX - gyroX) * 0.08;
+                    gyroY += (rawGyroY - gyroY) * 0.08;
+                    pageBg.style.transform = `scale(${scale}) translate(${(kbX+gyroX).toFixed(2)}px,${(kbY+gyroY).toFixed(2)}px)`;
+                    requestAnimationFrame(bgAnimate);
+                })(0);
+            }
+        }
 
         /* ── Mobile hamburger toggle ── */
         const toggle = document.getElementById('menuToggle');
