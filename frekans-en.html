@@ -43,7 +43,7 @@
             pointer-events: none;
             background: url("frekans2_bg.webp") left center / cover no-repeat;
             filter: brightness(0.78) contrast(1.08) saturate(0.92);
-            animation: frekBreathe 7s ease-in-out infinite, frekKenBurns 30s ease-in-out infinite alternate;
+            animation: frekBreathe 5s ease-in-out infinite, frekKenBurns 15s ease-in-out infinite alternate;
             transform-origin: center center;
             will-change: transform, filter;
         }
@@ -747,6 +747,38 @@
         @media (max-width: 760px) {
             .fp-vol { margin-left: 0; margin-top: 10px; }
         }
+
+        @keyframes frekBreathe {
+            0%,100% { filter: brightness(0.78) contrast(1.08) saturate(0.92); }
+            50%      { filter: brightness(0.88) contrast(1.05) saturate(0.96); }
+        }
+
+        @keyframes frekKenBurns {
+            0%   { transform: scale(1.06) translate(0px,   0px);   }
+            25%  { transform: scale(1.10) translate(-12px, -8px);  }
+            50%  { transform: scale(1.08) translate(10px,   6px);  }
+            75%  { transform: scale(1.11) translate(-8px,  10px);  }
+            100% { transform: scale(1.09) translate(12px,  -6px);  }
+        }
+
+        /* ── Mobile: override CSS anim, use JS-driven div instead ── */
+        @media (max-width: 760px) {
+            body::before { animation: none; display: none; }
+            #frekBg {
+                display: block;
+                position: fixed;
+                inset: -8%;
+                z-index: 0;
+                pointer-events: none;
+                background: url("frekans2_bg.webp") center / cover no-repeat;
+                filter: brightness(0.80) contrast(1.06) saturate(0.92);
+                will-change: transform;
+                transform-origin: center center;
+            }
+        }
+        @media (min-width: 761px) {
+            #frekBg { display: none; }
+        }
     </style>
     <!-- SEO & Social -->
     <meta name="description" content="FREQUENCY_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
@@ -771,16 +803,17 @@
 </head>
 <body>
     <header class="mobile-topbar">
-        <a class="mobile-brand" href="home-en.html">AKA // TIMARHANE</a>
+        <a class="mobile-brand" href="about-en.html">AKA // TIMARHANE</a>
         <button class="mobile-menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span></button>
     </header>
     <nav class="mobile-drawer" id="mobileMenu">
-        <a href="home-en.html">Core</a>
+        <a href="about-en.html">Core</a>
         <a href="frekans-en.html" class="is-active">Frequency_101</a>
         <a href="sentetik-en.html">Synthetic Memories</a>
         <a href="veri-en.html">Data Vault</a>
         <a href="frekans.html">TR</a>
     </nav>
+    <div id="frekBg"></div>
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <div id="glow"></div>
@@ -788,9 +821,9 @@
     <div class="vignette" aria-hidden="true"></div>
 
     <nav class="top-nav" aria-label="Main navigation">
-        <a class="top-brand" href="home-en.html">AKA // TIMARHANE</a>
+        <a class="top-brand" href="about-en.html">AKA // TIMARHANE</a>
         <div class="top-links">
-            <a href="home-en.html">Core</a>
+            <a href="about-en.html">Core</a>
             <a href="frekans-en.html" class="is-active">Frequency_101</a>
             <a href="sentetik-en.html">Synthetic Memories</a>
             <a href="veri-en.html">Data Vault</a>
@@ -953,6 +986,62 @@
             })();
         }
     })();
+
+
+        /* ── Mobile: Ken Burns + Breathe + Gyroscope on #frekBg ── */
+        if (window.innerWidth <= 760) {
+            const frekBg = document.getElementById('frekBg');
+            if (frekBg) {
+                const KB_PERIOD = 13000;
+                const KB_MAX_X  = 12;
+                const KB_MAX_Y  = 9;
+                const KB_SCALE  = 1.10;
+                const BR_PERIOD = 5000;
+                const BR_EXTRA  = 0.04;
+                const GY_MAX    = 22;
+
+                let gyroX = 0, gyroY = 0;
+                let rawGyroX = 0, rawGyroY = 0;
+
+                function onOrientation(e) {
+                    if (e.gamma === null || e.beta === null) return;
+                    const gamma = Math.max(-45, Math.min(45, e.gamma));
+                    const beta  = Math.max(-45, Math.min(45, e.beta - 90));
+                    rawGyroX = (gamma / 45) * GY_MAX;
+                    rawGyroY = (beta  / 45) * GY_MAX;
+                }
+
+                function startGyro() {
+                    if (typeof DeviceOrientationEvent !== 'undefined' &&
+                        typeof DeviceOrientationEvent.requestPermission === 'function') {
+                        DeviceOrientationEvent.requestPermission()
+                            .then(s => { if (s === 'granted') window.addEventListener('deviceorientation', onOrientation, { passive: true }); })
+                            .catch(() => {});
+                    } else {
+                        window.addEventListener('deviceorientation', onOrientation, { passive: true });
+                    }
+                }
+
+                let gyroStarted = false;
+                function tryStartGyro() {
+                    if (gyroStarted) return; gyroStarted = true; startGyro();
+                }
+                document.addEventListener('touchstart', tryStartGyro, { once: true, passive: true });
+                document.addEventListener('touchend',   tryStartGyro, { once: true, passive: true });
+                window.addEventListener('scroll',       tryStartGyro, { once: true, passive: true });
+
+                (function bgAnimate(ts) {
+                    const kbX   = Math.sin((ts / KB_PERIOD) * Math.PI * 2)         * KB_MAX_X;
+                    const kbY   = Math.sin((ts / KB_PERIOD) * Math.PI * 2 * 0.618) * KB_MAX_Y;
+                    const breath = Math.sin((ts / BR_PERIOD) * Math.PI * 2) * 0.5 + 0.5;
+                    const scale  = (KB_SCALE + breath * BR_EXTRA).toFixed(4);
+                    gyroX += (rawGyroX - gyroX) * 0.08;
+                    gyroY += (rawGyroY - gyroY) * 0.08;
+                    frekBg.style.transform = `scale(${scale}) translate(${(kbX + gyroX).toFixed(2)}px,${(kbY + gyroY).toFixed(2)}px)`;
+                    requestAnimationFrame(bgAnimate);
+                })(0);
+            }
+        }
 
         /* ── Mobile hamburger toggle ── */
         const toggle = document.getElementById('menuToggle');
