@@ -622,10 +622,10 @@
 
 <!-- NAV -->
 <nav class="site-nav" aria-label="Main navigation">
-  <a class="nav-brand" href="https://oneheus.com/home.html">AKA // TIMARHANE</a>
+  <a class="nav-brand" href="about.html">AKA // TIMARHANE</a>
   <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="songMenu"><span></span></button>
   <div class="nav-links" id="songMenu">
-    <a class="top-nav-link" href="https://oneheus.com/home.html">Core</a>
+    <a class="top-nav-link" href="about.html">Core</a>
     <a class="top-nav-link active" href="https://oneheus.com/frekans.html">Frekans_101</a>
     <a class="top-nav-link" href="https://oneheus.com/sentetik.html">Sentetik Anılar</a>
     <a class="top-nav-link" href="https://oneheus.com/veri.html">Veri Mahzeni</a>
@@ -1042,5 +1042,79 @@ animateTrail();
   })();
 
 </script>
+
+    <script>
+    /* ── Ken Burns + Breathe + Parallax / Gyroscope on .bg-image ── */
+    (function() {
+        const bgImg = document.querySelector('.bg-image');
+        if (!bgImg) return;
+
+        const IS_MOB   = window.innerWidth <= 760;
+        const KB_PERIOD = IS_MOB ? 13000 : 15000;
+        const KB_MAX_X  = IS_MOB ? 10 : 12;
+        const KB_MAX_Y  = IS_MOB ? 7  : 9;
+        const KB_SCALE  = 1.08;
+        const BR_PERIOD = 5000;
+        const BR_EXTRA  = 0.03;
+
+        if (!IS_MOB) {
+            /* Desktop: KB + Breathe + mouse parallax */
+            let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+            let px = 0, py = 0;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+            (function animLoop() {
+                const W = window.innerWidth, H = window.innerHeight;
+                const tx = ((mx / W) - 0.5) * 16;
+                const ty = ((my / H) - 0.5) * 16;
+                px += (tx - px) * 0.04;
+                py += (ty - py) * 0.04;
+                const now    = performance.now();
+                const kbX    = Math.sin((now / KB_PERIOD) * Math.PI * 2)         * KB_MAX_X;
+                const kbY    = Math.sin((now / KB_PERIOD) * Math.PI * 2 * 0.618) * KB_MAX_Y;
+                const breath = Math.sin((now / BR_PERIOD) * Math.PI * 2) * 0.5 + 0.5;
+                const scale  = (KB_SCALE + breath * BR_EXTRA).toFixed(4);
+                bgImg.style.transform = `scale(${scale}) translate(${(kbX - px * 0.5).toFixed(2)}px,${(kbY - py * 0.5).toFixed(2)}px)`;
+                requestAnimationFrame(animLoop);
+            })();
+        } else {
+            /* Mobile: KB + Breathe + Gyroscope */
+            let gyroX = 0, gyroY = 0, rawGyroX = 0, rawGyroY = 0;
+
+            function onOrientation(e) {
+                if (e.gamma === null || e.beta === null) return;
+                rawGyroX = (Math.max(-45, Math.min(45, e.gamma)) / 45) * 22;
+                rawGyroY = (Math.max(-45, Math.min(45, e.beta - 90)) / 45) * 22;
+            }
+            function startGyro() {
+                if (typeof DeviceOrientationEvent !== 'undefined' &&
+                    typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(s => { if (s === 'granted') window.addEventListener('deviceorientation', onOrientation, { passive: true }); })
+                        .catch(() => {});
+                } else {
+                    window.addEventListener('deviceorientation', onOrientation, { passive: true });
+                }
+            }
+            let gyroStarted = false;
+            function tryStartGyro() { if (!gyroStarted) { gyroStarted = true; startGyro(); } }
+            document.addEventListener('touchstart', tryStartGyro, { once: true, passive: true });
+            document.addEventListener('touchend',   tryStartGyro, { once: true, passive: true });
+            window.addEventListener('scroll',       tryStartGyro, { once: true, passive: true });
+
+            (function bgAnimate(ts) {
+                const kbX    = Math.sin((ts / KB_PERIOD) * Math.PI * 2)         * KB_MAX_X;
+                const kbY    = Math.sin((ts / KB_PERIOD) * Math.PI * 2 * 0.618) * KB_MAX_Y;
+                const breath = Math.sin((ts / BR_PERIOD) * Math.PI * 2) * 0.5 + 0.5;
+                const scale  = (KB_SCALE + breath * BR_EXTRA).toFixed(4);
+                gyroX += (rawGyroX - gyroX) * 0.08;
+                gyroY += (rawGyroY - gyroY) * 0.08;
+                bgImg.style.transform = `scale(${scale}) translate(${(kbX + gyroX).toFixed(2)}px,${(kbY + gyroY).toFixed(2)}px)`;
+                requestAnimationFrame(bgAnimate);
+            })(0);
+        }
+    })();
+    </script>
+
 </body>
 </html>
