@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <title>TIMARHANE // Mavi Randevu</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preload" as="image" href="tape_2.webp">
+    <title>TIMARHANE // World of Illusions</title>
     <style>
         :root {
             --void: #050505;
@@ -16,6 +17,8 @@
             --paper-dim: rgba(232, 216, 184, 0.64);
             --paper-faint: rgba(232, 216, 184, 0.38);
             --red-memory: #B64A35;
+            --amber: rgba(255, 180, 80, 0.72);
+            --amber-dim: rgba(255, 180, 80, 0.28);
             --glass: rgba(3, 6, 5, 0.52);
             --glass-deep: rgba(0, 0, 0, 0.72);
         }
@@ -45,9 +48,10 @@
             position: fixed;
             inset: 0;
             z-index: 1;
-            background: url('tape_2.png') center center / 100% 100% no-repeat;
-            filter: brightness(0.78) contrast(1.04) saturate(0.90);
-            animation: bgGlimmer 9s ease-in-out infinite alternate;
+            background: url('world_of_illusion.webp') center center / cover no-repeat;
+            filter: brightness(0.72) contrast(1.08) saturate(0.88);
+            animation: bgGlimmer 11s ease-in-out infinite alternate;
+            will-change: transform;
         }
 
         .bg-overlay {
@@ -56,23 +60,24 @@
             z-index: 2;
             pointer-events: none;
             background:
-                linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.04) 34%, rgba(0,0,0,0.32) 62%, rgba(0,0,0,0.62) 100%),
-                radial-gradient(circle at 22% 50%, transparent 0%, rgba(0,0,0,0.14) 52%, rgba(0,0,0,0.38) 100%);
+                linear-gradient(90deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.04) 34%, rgba(0,0,0,0.36) 62%, rgba(0,0,0,0.68) 100%),
+                radial-gradient(circle at 22% 50%, transparent 0%, rgba(0,0,0,0.18) 52%, rgba(0,0,0,0.44) 100%);
         }
 
+        /* warm amber pulse instead of green — suits the jazz mood */
         .bg-pulse {
             position: fixed;
             inset: 0;
             z-index: 3;
             pointer-events: none;
-            background: radial-gradient(circle at 72% 44%, rgba(140, 255, 176, 0.14) 0%, transparent 60%);
+            background: radial-gradient(circle at 72% 44%, rgba(255, 160, 60, 0.10) 0%, transparent 60%);
             opacity: 0;
             transition: opacity 0.6s ease;
         }
 
         body.track-playing .bg-pulse {
             opacity: 1;
-            animation: pulseGlow 3s ease-in-out infinite;
+            animation: pulseGlow 4s ease-in-out infinite;
         }
 
         .scanlines {
@@ -81,17 +86,17 @@
             z-index: 4;
             pointer-events: none;
             background:
-                linear-gradient(rgba(255,255,255,0.020) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.014) 1px, transparent 1px);
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
             background-size: 100% 4px, 4px 100%;
             mix-blend-mode: soft-light;
-            opacity: 0.22;
+            opacity: 0.20;
         }
 
         #matrixCanvas {
             position: fixed;
             z-index: 5;
-            opacity: 0.18;
+            opacity: 0.12;
             pointer-events: none;
         }
 
@@ -105,8 +110,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 clamp(18px, 5vw, 72px);
-            background: linear-gradient(180deg, rgba(0,0,0,0.82), rgba(0,0,0,0.32) 68%, transparent);
-            border-bottom: 1px solid rgba(140, 255, 176, 0.12);
+            background: linear-gradient(180deg, rgba(0,0,0,0.84), rgba(0,0,0,0.32) 68%, transparent);
+            border-bottom: 1px solid rgba(140, 255, 176, 0.10);
             backdrop-filter: blur(7px);
             -webkit-backdrop-filter: blur(7px);
         }
@@ -229,12 +234,12 @@
             width: min(520px, 90vw);
             margin-left: clamp(24px, 5vw, 80px);
             padding: 28px 26px 24px;
-            background: rgba(3, 5, 4, 0.72);
-            border-left: 1px solid var(--phosphor-dim);
-            border-top: 1px solid rgba(140, 255, 176, 0.10);
+            background: rgba(3, 5, 4, 0.74);
+            border-left: 1px solid rgba(255, 180, 80, 0.28);
+            border-top: 1px solid rgba(255, 180, 80, 0.10);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 28px 90px rgba(0,0,0,0.62);
+            box-shadow: 0 28px 90px rgba(0,0,0,0.64);
         }
 
         .sys-label {
@@ -264,7 +269,7 @@
             font-size: clamp(0.96rem, 1.1vw, 1.18rem);
             font-weight: 700;
             letter-spacing: 0.08em;
-            text-shadow: 0 0 18px rgba(140, 255, 176, 0.18);
+            text-shadow: 0 0 18px rgba(255, 180, 80, 0.16);
             line-height: 1.3;
         }
 
@@ -273,7 +278,7 @@
             margin: 0 0 20px;
             padding: 16px 18px;
             background: rgba(0, 0, 0, 0.52);
-            border: 1px solid var(--phosphor-dim);
+            border: 1px solid rgba(255, 180, 80, 0.22);
         }
 
         .player-track-info {
@@ -285,7 +290,7 @@
         }
 
         .player-track-name {
-            color: var(--phosphor);
+            color: var(--amber);
             font-size: 0.76rem;
             font-weight: 700;
             letter-spacing: 0.18em;
@@ -307,7 +312,7 @@
         .player-scrubber {
             position: relative;
             height: 3px;
-            background: rgba(140, 255, 176, 0.14);
+            background: rgba(255, 180, 80, 0.14);
             margin-bottom: 16px;
             cursor: pointer;
         }
@@ -315,10 +320,10 @@
         .player-scrubber-fill {
             height: 100%;
             width: 0%;
-            background: var(--phosphor);
+            background: var(--amber);
             pointer-events: none;
             transition: width 0.25s linear;
-            box-shadow: 0 0 6px rgba(140, 255, 176, 0.48);
+            box-shadow: 0 0 6px rgba(255, 180, 80, 0.48);
         }
 
         .player-scrubber-thumb {
@@ -328,15 +333,11 @@
             width: 10px;
             height: 10px;
             background: var(--paper);
-            border: 1px solid var(--phosphor);
+            border: 1px solid var(--amber);
             transform: translate(-50%, -50%);
             pointer-events: none;
             transition: left 0.25s linear;
-            box-shadow: 0 0 8px rgba(140, 255, 176, 0.42);
-        }
-
-        .player-scrubber:hover .player-scrubber-fill {
-            box-shadow: 0 0 10px rgba(140, 255, 176, 0.72);
+            box-shadow: 0 0 8px rgba(255, 180, 80, 0.42);
         }
 
         /* Controls row */
@@ -348,8 +349,8 @@
 
         .player-btn {
             background: none;
-            border: 1px solid var(--phosphor-dim);
-            color: var(--phosphor-soft);
+            border: 1px solid var(--amber-dim);
+            color: var(--amber);
             font-family: inherit;
             font-size: 0.72rem;
             font-weight: 700;
@@ -362,15 +363,15 @@
         }
 
         .player-btn:hover {
-            background: rgba(140, 255, 176, 0.12);
-            border-color: var(--phosphor);
+            background: rgba(255, 180, 80, 0.10);
+            border-color: var(--amber);
             color: var(--paper);
         }
 
         .player-btn.is-playing {
-            background: rgba(140, 255, 176, 0.10);
-            border-color: rgba(140, 255, 176, 0.52);
-            color: var(--phosphor);
+            background: rgba(255, 180, 80, 0.10);
+            border-color: rgba(255, 180, 80, 0.52);
+            color: var(--amber);
         }
 
         /* Volume */
@@ -394,7 +395,7 @@
             position: relative;
             width: 64px;
             height: 3px;
-            background: rgba(140, 255, 176, 0.14);
+            background: rgba(255, 180, 80, 0.14);
             cursor: pointer;
             flex-shrink: 0;
         }
@@ -402,7 +403,7 @@
         .player-vol-fill {
             height: 100%;
             width: 80%;
-            background: rgba(140, 255, 176, 0.52);
+            background: rgba(255, 180, 80, 0.52);
             pointer-events: none;
         }
 
@@ -413,7 +414,7 @@
             width: 8px;
             height: 8px;
             background: var(--paper-dim);
-            border: 1px solid rgba(140, 255, 176, 0.52);
+            border: 1px solid rgba(255, 180, 80, 0.52);
             transform: translate(-50%, -50%);
             pointer-events: none;
         }
@@ -432,7 +433,7 @@
             left: 0;
             right: 0;
             height: 56px;
-            background: linear-gradient(transparent, rgba(3, 5, 4, 0.88));
+            background: linear-gradient(transparent, rgba(3, 5, 4, 0.90));
             pointer-events: none;
             z-index: 1;
         }
@@ -454,9 +455,9 @@
 
         .lyrics-block.active {
             opacity: 1;
-            color: var(--phosphor);
+            color: var(--amber);
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(140, 255, 176, 0.38);
+            text-shadow: 0 0 10px rgba(255, 180, 80, 0.32);
         }
 
         /* ── Mobile ── */
@@ -537,90 +538,133 @@
 
         /* ── Animations ── */
         @keyframes bgGlimmer {
-            0%   { filter: brightness(0.76) contrast(1.04) saturate(0.88); }
-            100% { filter: brightness(0.82) contrast(1.02) saturate(0.96); }
+            0%   { filter: brightness(0.70) contrast(1.08) saturate(0.86); }
+            100% { filter: brightness(0.76) contrast(1.05) saturate(0.94); }
         }
 
         @keyframes pulseGlow {
-            0%, 100% { opacity: 0.7; }
+            0%, 100% { opacity: 0.6; }
             50%       { opacity: 1; }
         }
 
+        /* ── Rain canvas ── */
+        #rainCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 8;
+            pointer-events: none;
+            opacity: 0.38;
+        }
+
+        /* ── Fog layer ── */
+        .fog-layer {
+            position: fixed;
+            inset: -20%;
+            z-index: 3;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 40% at 20% 80%, rgba(180,100,40,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 30% at 75% 60%, rgba(120,80,40,0.06) 0%, transparent 55%);
+            animation: fogDrift 18s ease-in-out infinite alternate;
+            mix-blend-mode: screen;
+        }
+
+        /* ── Train rumble ── */
+        @keyframes trainRumble {
+            0%   { transform: translate(0, 0); }
+            20%  { transform: translate(-1px, 0.5px); }
+            40%  { transform: translate(1px, -0.5px); }
+            60%  { transform: translate(-0.5px, 1px); }
+            80%  { transform: translate(0.5px, -1px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        @keyframes fogDrift {
+            0%   { transform: translate(0%, 0%) scale(1); opacity: 0.8; }
+            33%  { transform: translate(3%, -2%) scale(1.04); opacity: 1; }
+            66%  { transform: translate(-2%, 3%) scale(0.97); opacity: 0.7; }
+            100% { transform: translate(1%, -1%) scale(1.02); opacity: 0.9; }
+        }
+
+        body.train-passing .bg-image {
+            animation: bgGlimmer 11s ease-in-out infinite alternate, trainRumble 0.12s linear infinite;
+        }
+
         /* ── Mouse tracking layers ── */
-        #grain { position: fixed; inset: 0; z-index: 6; pointer-events: none; opacity: 0.38; }
+        #grain { position: fixed; inset: 0; z-index: 6; pointer-events: none; opacity: 0.36; }
         #fx    { position: fixed; inset: 0; z-index: 7; pointer-events: none; mix-blend-mode: screen; }
         #glow  {
             position: fixed; z-index: 6;
             width: 380px; height: 380px; border-radius: 50%;
             pointer-events: none;
-            background: radial-gradient(circle, rgba(140,255,176,0.07) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(255,180,80,0.06) 0%, transparent 65%);
             transform: translate(-50%,-50%);
             left: -999px; top: -999px;
             mix-blend-mode: screen;
         }
-
     </style>
-    <meta name="description" content="Mavi Randevu — TIMARHANE'nin yapay zeka destekli yaratıcı evreninden bir sinyal kaydı.">
+    <meta name="description" content="World of Illusions — a signal from TIMARHANE's AI-assisted creative universe. Neo-jazz, Anatolian soul, late-night smoke.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://oneheus.com/mavi.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/mavi.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/mavi-en.html">
+    <link rel="canonical" href="https://oneheus.com/illusions.html">
+    <link rel="alternate" hreflang="en" href="https://oneheus.com/illusions.html">
     <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // Mavi Randevu">
-    <meta property="og:description" content="Mavi Randevu — TIMARHANE'nin yapay zeka destekli yaratıcı evreninden bir sinyal kaydı.">
-    <meta property="og:url" content="https://oneheus.com/mavi.html">
-    <meta property="og:image" content="https://oneheus.com/og_glitch.png">
-    <meta property="og:locale" content="tr_TR">
+    <meta property="og:title" content="TIMARHANE // World of Illusions">
+    <meta property="og:description" content="World of Illusions — neo-jazz, Anatolian soul, late-night smoke. A TIMARHANE signal.">
+    <meta property="og:url" content="https://oneheus.com/illusions.html">
+    <meta property="og:image" content="https://oneheus.com/og_glitch.webp">
+    <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="TIMARHANE // Mavi Randevu">
-    <meta name="twitter:description" content="Mavi Randevu — TIMARHANE'nin yapay zeka destekli yaratıcı evreninden bir sinyal kaydı.">
-    <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
+    <meta name="twitter:title" content="TIMARHANE // World of Illusions">
+    <meta name="twitter:description" content="World of Illusions — neo-jazz, Anatolian soul, late-night smoke. A TIMARHANE signal.">
+    <meta name="twitter:image" content="https://oneheus.com/og_glitch.webp">
 </head>
 <body id="cyberBody">
     <div class="bg-image"></div>
     <div class="bg-overlay"></div>
     <div class="bg-pulse"></div>
+    <div class="fog-layer"></div>
     <div class="scanlines"></div>
     <canvas id="matrixCanvas"></canvas>
+    <canvas id="rainCanvas"></canvas>
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <div id="glow"></div>
 
-    <nav class="site-nav" aria-label="Ana navigasyon">
+    <nav class="site-nav" aria-label="Main navigation">
         <a class="nav-brand" href="home.html">AKA // TIMARHANE</a>
-        <button class="menu-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="songMenu"><span></span></button>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="songMenu"><span></span></button>
         <div class="nav-links" id="songMenu">
             <a class="top-nav-link" href="home.html">Core</a>
             <a class="top-nav-link active" href="frekans.html">Frekans_101</a>
             <a class="top-nav-link" href="sentetik.html">Sentetik Anılar</a>
             <a class="top-nav-link" href="veri.html">Veri Mahzeni</a>
             <a class="top-nav-link disabled" href="senkron.html">Senkron: Kopuk</a>
-            <div class="lang-switch" aria-label="Dil seçimi">
-                <a href="mavi.html" class="lang-active">TR</a><span>/</span><a href="mavi-en.html">EN</a>
+            <div class="lang-switch" aria-label="Language">
+                <a href="illusions.html" class="lang-active">TR</a><span>/</span><a href="illusions-en.html">EN</a>
             </div>
         </div>
     </nav>
 
     <div class="main-interface">
-        <span class="sys-label">Frekans_101 // Kayıt</span>
-        <h1 class="sys-title">Mavi Randevu</h1>
+        <span class="sys-label">Frekans_101 // Signal 02</span>
+        <h1 class="sys-title">World of Illusions</h1>
 
         <div class="player" id="playerUI">
             <div class="player-track-info">
-                <span class="player-track-name">ONNO — MAVİ RANDEVU</span>
+                <span class="player-track-name">AKA — WORLD OF ILLUSIONS</span>
                 <span class="player-time" id="playerTime">0:00 / 0:00</span>
             </div>
-            <div class="player-scrubber" id="scrubber" role="slider" aria-label="İlerleme çubuğu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="player-scrubber" id="scrubber" role="slider" aria-label="Seek bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
                 <div class="player-scrubber-fill" id="scrubberFill"></div>
                 <div class="player-scrubber-thumb" id="scrubberThumb"></div>
             </div>
             <div class="player-controls">
-                <button class="player-btn" id="playBtn" aria-label="Oynat">▶ OYNAT</button>
-                <div class="player-volume" aria-label="Ses kontrolü">
-                    <span class="player-vol-label">SES</span>
-                    <div class="player-vol-track" id="volTrack" role="slider" aria-label="Ses seviyesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" tabindex="0">
+                <button class="player-btn" id="playBtn" aria-label="Play">▶ PLAY</button>
+                <div class="player-volume" aria-label="Volume control">
+                    <span class="player-vol-label">VOL</span>
+                    <div class="player-vol-track" id="volTrack" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" tabindex="0">
                         <div class="player-vol-fill" id="volFill"></div>
                         <div class="player-vol-thumb" id="volThumb"></div>
                     </div>
@@ -633,7 +677,8 @@
         </div>
     </div>
 
-    <audio id="cyberPlayer" src="Onno v3.mp3" preload="metadata"></audio>
+    <!-- Replace "world-of-illusions.mp3" with your actual Suno file name -->
+    <audio id="cyberPlayer" src="world-of-illusions.mp3" preload="metadata"></audio>
 
     <script>
         /* ── Hamburger menu ── */
@@ -644,73 +689,46 @@
             toggle.addEventListener('click', () => {
                 const open = document.body.classList.toggle('menu-open');
                 toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+                toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
             });
             drawer.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     document.body.classList.remove('menu-open');
                     toggle.setAttribute('aria-expanded', 'false');
-                    toggle.setAttribute('aria-label', 'Menüyü aç');
+                    toggle.setAttribute('aria-label', 'Open menu');
                 });
             });
         })();
 
-        /* ── Lyrics data ── */
+        /* ── Lyrics data ──
+           Timestamps are approximate section markers.
+           Once you have the Suno file, fine-tune the `t` values (seconds).
+        ── */
         const lyrics = [
-            { t: 32,  text: "Sabah erkenden kalktık yine," },
-            { t: 36,  text: "Cebimiz dar ama gülümsemek bedava." },
-            { t: 40,  text: "Trafik çıldırmış, ekmek pahalanmış," },
-            { t: 45,  text: "Bu açık hava tımarhanesinde..." },
-            { t: 47,  text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
-            { t: 55,  text: "Aşk bu be güzelim, siber dinler mi hiç?" },
-            { t: 62,  text: "Din! Din! Din!" },
-            { t: 70,  text: "Dinlemez dinler!" },
-            { t: 73,  text: "Şehirleri dar etseler de," },
-            { t: 77,  text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 81,  text: "Yine daldık o muzip bilmeceye..." },
-            { t: 85,  text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 92,  text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
-            { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!" },
-            { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!" },
-            { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller." },
-            { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler." },
-            { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana." },
-            { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun..." },
-            { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne." },
-            { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
-            { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!" },
-            { t: 227, text: "Hadi gel... Kodları kıralım..." },
-            { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da..." },
-            { t: 236, text: "Aaaah-yaaa... Çınlarız biz!" },
-            { t: 248, text: "Gülümse şimdi... Tam da böyle..." },
-            { t: 288, text: "Sabah erkenden kalktık yine," },
-            { t: 290, text: "Cebimiz dar ama gülümsemek bedava." },
-            { t: 294, text: "Trafik çıldırmış, ekmek pahalanmış," },
-            { t: 300, text: "Bu açık hava tımarhanesinde..." },
-            { t: 306, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
-            { t: 311, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
-            { t: 318, text: "Din! Din! Din!" },
-            { t: 320, text: "Dinlemez dinler!" },
-            { t: 323, text: "Şehirleri dar etseler de," },
-            { t: 326, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 330, text: "Yine daldık o muzip bilmeceye..." },
-            { t: 332, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 338, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 348, text: "Dinlemez dinler!" },
-            { t: 350, text: "Şehirleri dar etseler de," },
-            { t: 356, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 360, text: "Yine daldık o muzip bilmeceye..." },
-            { t: 368, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 371, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 384, text: "Dinler ah dinler!" },
-            { t: 386, text: "Şehirleri dar etseler de," },
-            { t: 389, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
-            { t: 392, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
-            { t: 394, text: "Yine daldık o muzip bilmeceye..." },
-            { t: 398, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
-            { t: 479, text: "Sistem kapanıyor..." }
+            { t: 0,   text: "I wander slow through these midnight alleys" },
+            { t: 5,   text: "City lights flicker soft, like they're keeping tally" },
+            { t: 10,  text: "Every smile feels borrowed, every truth walks lightly" },
+            { t: 15,  text: "Still I keep drifting through this world of illusions" },
+            { t: 22,  text: "I gave my trust like a tune in daylight" },
+            { t: 27,  text: "Thinking love would hold steady, thinking I'd be alright" },
+            { t: 32,  text: "But every truth bends under moonlight" },
+            { t: 37,  text: "And I'm still standing in this world of illusions" },
+            { t: 44,  text: "In this world of illusions, I keep on moving" },
+            { t: 49,  text: "Every dream reshapes, every truth keeps losing" },
+            { t: 54,  text: "Still I rise, even through the confusion" },
+            { t: 59,  text: "Trying to find something real in this world of illusions" },
+            { t: 70,  text: "I learned to laugh with a heart still aching" },
+            { t: 75,  text: "Life keeps spinning slow, like a record breaking" },
+            { t: 80,  text: "Every loss feels strangely awakening" },
+            { t: 85,  text: "'Cause I'm still learning in this world of illusions" },
+            { t: 96,  text: "Maybe the lies are part of the rhythm" },
+            { t: 101, text: "Maybe the pain is a note we're given" },
+            { t: 106, text: "But I'll keep walking till truth cuts the distance" },
+            { t: 111, text: "Even in this world of illusions" },
+            { t: 118, text: "In this world of illusions, I keep on moving" },
+            { t: 123, text: "Every dream reshapes, every truth keeps losing" },
+            { t: 128, text: "Still I rise, even through the confusion" },
+            { t: 133, text: "Trying to find something real in this world of illusions" },
         ];
 
         /* ── Build lyrics DOM ── */
@@ -724,16 +742,16 @@
         });
 
         /* ── Custom player logic ── */
-        const audio     = document.getElementById('cyberPlayer');
-        const playBtn   = document.getElementById('playBtn');
-        const timeEl    = document.getElementById('playerTime');
-        const scrubber  = document.getElementById('scrubber');
-        const sFill     = document.getElementById('scrubberFill');
-        const sThumb    = document.getElementById('scrubberThumb');
-        const volTrack  = document.getElementById('volTrack');
-        const vFill     = document.getElementById('volFill');
-        const vThumb    = document.getElementById('volThumb');
-        const body      = document.getElementById('cyberBody');
+        const audio    = document.getElementById('cyberPlayer');
+        const playBtn  = document.getElementById('playBtn');
+        const timeEl   = document.getElementById('playerTime');
+        const scrubber = document.getElementById('scrubber');
+        const sFill    = document.getElementById('scrubberFill');
+        const sThumb   = document.getElementById('scrubberThumb');
+        const volTrack = document.getElementById('volTrack');
+        const vFill    = document.getElementById('volFill');
+        const vThumb   = document.getElementById('volThumb');
+        const body     = document.getElementById('cyberBody');
 
         function fmt(s) {
             const m = Math.floor(s / 60);
@@ -758,42 +776,33 @@
             volTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
         }
 
-        // Global key tracking attached natively inside instance block
         window.addEventListener('keydown', function(e) {
             if (e.code === 'Space' || e.keyCode === 32) {
                 const activeEl = document.activeElement;
-                if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
-                    return;
-                }
+                if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) return;
                 e.preventDefault();
-                if (audio.paused) {
-                    audio.play();
-                } else {
-                    audio.pause();
-                }
+                audio.paused ? audio.play() : audio.pause();
             }
         }, true);
 
-        // Play / pause
         playBtn.addEventListener('click', () => {
-            if (audio.paused) { audio.play(); }
-            else { audio.pause(); }
+            audio.paused ? audio.play() : audio.pause();
         });
 
         audio.addEventListener('play', () => {
-            playBtn.textContent = '⏸ DURAKLAT';
+            playBtn.textContent = '⏸ PAUSE';
             playBtn.classList.add('is-playing');
             body.classList.add('track-playing');
         });
 
         audio.addEventListener('pause', () => {
-            playBtn.textContent = '▶ OYNAT';
+            playBtn.textContent = '▶ PLAY';
             playBtn.classList.remove('is-playing');
             body.classList.remove('track-playing');
         });
 
         audio.addEventListener('ended', () => {
-            playBtn.textContent = '▶ OYNAT';
+            playBtn.textContent = '▶ PLAY';
             playBtn.classList.remove('is-playing');
             body.classList.remove('track-playing');
         });
@@ -801,36 +810,30 @@
         audio.addEventListener('timeupdate', updateProgress);
         audio.addEventListener('loadedmetadata', updateProgress);
 
-        // Scrubber drag
+        /* Scrubber drag */
         let scrubbingDown = false;
-
         function seekTo(e) {
             const rect = scrubber.getBoundingClientRect();
             const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
             if (audio.duration) audio.currentTime = pct * audio.duration;
         }
-
         scrubber.addEventListener('mousedown', e => { scrubbingDown = true; seekTo(e); });
         document.addEventListener('mousemove', e => { if (scrubbingDown) seekTo(e); });
         document.addEventListener('mouseup', () => { scrubbingDown = false; });
-
         scrubber.addEventListener('touchstart', e => { scrubbingDown = true; seekTo(e.touches[0]); }, { passive: true });
         document.addEventListener('touchmove', e => { if (scrubbingDown) seekTo(e.touches[0]); }, { passive: true });
         document.addEventListener('touchend', () => { scrubbingDown = false; });
 
-        // Volume drag
+        /* Volume drag */
         let volDown = false;
-
         function seekVol(e) {
             const rect = volTrack.getBoundingClientRect();
             const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
             setVolume(pct);
         }
-
         volTrack.addEventListener('mousedown', e => { volDown = true; seekVol(e); });
         document.addEventListener('mousemove', e => { if (volDown) seekVol(e); });
         document.addEventListener('mouseup', () => { volDown = false; });
-
         volTrack.addEventListener('touchstart', e => { volDown = true; seekVol(e.touches[0]); }, { passive: true });
         document.addEventListener('touchmove', e => { if (volDown) seekVol(e.touches[0]); }, { passive: true });
         document.addEventListener('touchend', () => { volDown = false; });
@@ -852,10 +855,62 @@
             }
         });
 
+        /* ── Rain effect ── */
+        (function() {
+            const rc = document.getElementById('rainCanvas');
+            const rx = rc.getContext('2d');
+            let rW, rH;
+
+            function resizeRain() {
+                rW = rc.width  = window.innerWidth;
+                rH = rc.height = window.innerHeight;
+            }
+            resizeRain();
+            window.addEventListener('resize', resizeRain);
+
+            // Each drop: x, y, speed, length, opacity
+            const drops = Array.from({ length: 120 }, () => ({
+                x:   Math.random() * window.innerWidth,
+                y:   Math.random() * window.innerHeight,
+                spd: 6 + Math.random() * 8,
+                len: 14 + Math.random() * 24,
+                op:  0.08 + Math.random() * 0.22,
+            }));
+
+            function drawRain() {
+                rx.clearRect(0, 0, rW, rH);
+                drops.forEach(d => {
+                    rx.beginPath();
+                    rx.moveTo(d.x, d.y);
+                    rx.lineTo(d.x - d.len * 0.18, d.y + d.len);
+                    rx.strokeStyle = `rgba(255, 210, 140, ${d.op})`;
+                    rx.lineWidth = 0.7;
+                    rx.stroke();
+                    d.y += d.spd;
+                    d.x -= d.spd * 0.18;
+                    if (d.y > rH + 20) {
+                        d.y = -20;
+                        d.x = Math.random() * rW;
+                    }
+                });
+                requestAnimationFrame(drawRain);
+            }
+            drawRain();
+        })();
+
+        /* ── Train rumble — fires randomly every 25-55s ── */
+        (function() {
+            function rumble() {
+                document.body.classList.add('train-passing');
+                setTimeout(() => document.body.classList.remove('train-passing'), 2200);
+                setTimeout(rumble, 25000 + Math.random() * 30000);
+            }
+            setTimeout(rumble, 8000 + Math.random() * 12000);
+        })();
+
         /* ── Matrix rain ── */
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -865,7 +920,6 @@
 
         const alphabet = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ1023456789".split("");
         let drops = [];
-
         function initDrops() {
             drops = Array(Math.floor(canvas.width / 14)).fill(0).map(() => Math.floor(Math.random() * (canvas.height / 14)));
         }
@@ -873,9 +927,9 @@
         window.addEventListener('resize', initDrops);
 
         setInterval(() => {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.032)';
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.028)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(140, 255, 176, 0.72)';
+            ctx.fillStyle = 'rgba(255, 180, 80, 0.58)';
             ctx.font = '13px monospace';
             drops.forEach((d, i) => {
                 ctx.fillText(alphabet[Math.floor(Math.random() * alphabet.length)], i * 14, d * 14);
@@ -900,11 +954,8 @@
                 W = grainC.width = fxC.width = w;
                 H = grainC.height = fxC.height = h;
             }
-            if (document.readyState === 'complete') {
-                resizeMouseCanvas();
-            } else {
-                window.addEventListener('load', resizeMouseCanvas);
-            }
+            if (document.readyState === 'complete') resizeMouseCanvas();
+            else window.addEventListener('load', resizeMouseCanvas);
             window.addEventListener('resize', resizeMouseCanvas);
             let mx = 0, my = 0;
             const trail = [];
@@ -923,9 +974,9 @@
                 for (let i = 0; i < d.length; i += 4) {
                     const v = Math.random() * 255 | 0;
                     if (v > 210) {
-                        d[i]   = v * 0.42 | 0;
-                        d[i+1] = v;
-                        d[i+2] = v * 0.58 | 0;
+                        d[i]   = v;
+                        d[i+1] = v * 0.72 | 0;
+                        d[i+2] = v * 0.32 | 0;
                         d[i+3] = (v - 210) * 2;
                     }
                 }
@@ -940,8 +991,8 @@
                     if (p.life <= 0) { trail.splice(i, 1); continue; }
                     const r = p.life * 14;
                     const g = fxX.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
-                    g.addColorStop(0, `rgba(140,255,176,${p.life * 0.38})`);
-                    g.addColorStop(1, 'rgba(140,255,176,0)');
+                    g.addColorStop(0, `rgba(255,180,80,${p.life * 0.32})`);
+                    g.addColorStop(1, 'rgba(255,180,80,0)');
                     fxX.fillStyle = g;
                     fxX.beginPath();
                     fxX.arc(p.x, p.y, r, 0, Math.PI * 2);
