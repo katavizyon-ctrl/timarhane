@@ -41,7 +41,7 @@
             inset: -6%;
             z-index: 0;
             pointer-events: none;
-            background: url("frekans2_bg.webp") left center / cover no-repeat;
+            background: url("frekans2_bg.webp") 22% center / cover no-repeat;
             filter: brightness(0.78) contrast(1.08) saturate(0.92);
             animation: frekBreathe 5s ease-in-out infinite, frekKenBurns 15s ease-in-out infinite alternate;
             transform-origin: center center;
@@ -377,7 +377,7 @@
 
         @media (max-width: 1040px) {
             body::before {
-                background-position: 28% center;
+                background-position: 22% center;
             }
 
             body::after {
@@ -402,7 +402,7 @@
 
         @media (max-width: 680px) {
             body::before {
-                background-position: 20% top;
+                background-position: 22% center;
                 background-size: auto 56vh;
                 filter: brightness(0.88) contrast(1.06) saturate(0.94);
             }
@@ -759,11 +759,11 @@
         }
 
         @keyframes frekKenBurns {
-            0%   { transform: scale(1.06) translate(0px,   0px);   }
-            25%  { transform: scale(1.10) translate(-12px, -8px);  }
-            50%  { transform: scale(1.08) translate(10px,   6px);  }
-            75%  { transform: scale(1.11) translate(-8px,  10px);  }
-            100% { transform: scale(1.09) translate(12px,  -6px);  }
+            0%   { transform: scale(1.06) translate(0px,   0px);  }
+            25%  { transform: scale(1.10) translate(12px,  -8px); }
+            50%  { transform: scale(1.08) translate(6px,    6px); }
+            75%  { transform: scale(1.11) translate(10px,  10px); }
+            100% { transform: scale(1.09) translate(8px,   -6px); }
         }
 
         /* ── Mobile: override CSS anim, use JS-driven div instead ── */
@@ -775,7 +775,7 @@
                 inset: -8%;
                 z-index: 0;
                 pointer-events: none;
-                background: url("frekans2_bg.webp") center / cover no-repeat;
+                background: url("frekans2_bg.webp") 22% center / cover no-repeat;
                 filter: brightness(0.80) contrast(1.06) saturate(0.92);
                 will-change: transform;
                 transform-origin: center center;
