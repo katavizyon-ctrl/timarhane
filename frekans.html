@@ -176,7 +176,7 @@
             position: relative;
             z-index: 5;
             min-height: 100vh;
-            padding: 112px clamp(24px, 5vw, 72px) 64px;
+            padding: 100px clamp(24px, 5vw, 72px) 64px;
         }
 
         .archive-grid {
@@ -209,11 +209,16 @@
             background: rgba(182, 74, 53, 0.76);
         }
 
+
+        .archive-single {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0;
+        }
         .archive-interface {
             width: 100%;
-            max-width: 720px;
-            justify-self: end;
-            padding: clamp(24px, 3.2vw, 44px);
+            margin-bottom: 24px;
+            padding: clamp(20px, 3vw, 36px);
             border: 1px solid rgba(140, 255, 176, 0.20);
             border-left-color: rgba(182, 74, 53, 0.52);
             background: linear-gradient(135deg, rgba(0,0,0,0.30), rgba(0,0,0,0.12));
@@ -589,17 +594,14 @@
         }
 
         /* ── FREKANS PLAYLIST PLAYER ── */
-        .fp-station {
-            position: relative;
-            z-index: 10;
-            padding: clamp(12px, 2vw, 24px) clamp(20px, 4vw, 64px);
-            margin-top: 96px;
-        }
+
 
         .frekans-player {
-            padding: 22px 26px 18px;
+            width: 100%;
+            margin-bottom: 24px;
+            padding: clamp(20px, 3vw, 36px);
             background: linear-gradient(135deg, rgba(0,0,0,0.60), rgba(3,6,5,0.40));
-            border: 1px solid rgba(140,255,176,0.18);
+            border: 1px solid rgba(140,255,176,0.20);
             border-left: 2px solid #B64A35;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -803,41 +805,8 @@
     </nav>
 
 
-    <!-- PLAYLIST PLAYER -->
-    <div class="fp-station">
-      <div class="frekans-player" id="frekansPlayer">
-        <span class="fp-label">FREKANS ARŞİVİ // ÇALMA LİSTESİ</span>
-        <div class="fp-now-playing">
-          <span class="fp-track-name" id="fpTrackName">AKA — TIMARHANE</span>
-          <span class="fp-time" id="fpTime">—</span>
-        </div>
-        <div class="fp-scrubber" id="fpScrubber">
-          <div class="fp-scrubber-fill" id="fpFill"></div>
-          <div class="fp-scrubber-thumb" id="fpThumb"></div>
-        </div>
-        <div class="fp-controls">
-          <button class="fp-btn" id="fpPlayAll">▶  TÜMÜNÜ OYNAT</button>
-          <button class="fp-btn" id="fpShuffle">⇄  KARIŞIK</button>
-          <button class="fp-btn" id="fpPrev">◀◀</button>
-          <button class="fp-btn" id="fpNext">▶▶</button>
-          <div class="fp-vol">
-            <span class="fp-vol-label">VOL</span>
-            <div class="fp-vol-track" id="fpVolTrack">
-              <div class="fp-vol-fill" id="fpVolFill"></div>
-              <div class="fp-vol-thumb" id="fpVolThumb"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <audio id="fpAudio" preload="none"></audio>
     <main class="archive-stage" aria-label="Frekans 101 şarkı arşivi">
-        <section class="archive-grid">
-            <div class="left-ghost-label">
-                Arşiv katmanı pasif / analog sızıntı izleniyor<br>
-                Görsel alan korunur / kayıtlar sağ panelde açılır
-            </div>
-
+        <section class="archive-single">
             <section class="archive-interface" aria-labelledby="frekans-title">
                 <p class="kicker">Arşiv Katmanı / Ses Kayıtları</p>
                 <h1 id="frekans-title">Frekans<br>101</h1>
@@ -846,6 +815,34 @@
                     Kayıt, hafıza ve arıza aynı frekansta buluşur.
                 </p>
 
+                <!-- PLAYLIST PLAYER -->
+                <div class="frekans-player" id="frekansPlayer">
+                    <span class="fp-label">FREKANS ARŞİVİ // ÇALMA LİSTESİ</span>
+                    <div class="fp-now-playing">
+                        <span class="fp-track-name" id="fpTrackName">AKA — TIMARHANE</span>
+                        <span class="fp-time" id="fpTime">—</span>
+                    </div>
+                    <div class="fp-scrubber" id="fpScrubber">
+                        <div class="fp-scrubber-fill" id="fpFill"></div>
+                        <div class="fp-scrubber-thumb" id="fpThumb"></div>
+                    </div>
+                    <div class="fp-controls">
+                        <button class="fp-btn" id="fpPlayAll">▶  TÜMÜNÜ OYNAT</button>
+                        <button class="fp-btn" id="fpShuffle">⇄  KARIŞIK</button>
+                        <button class="fp-btn" id="fpPrev">◀◀</button>
+                        <button class="fp-btn" id="fpNext">▶▶</button>
+                        <div class="fp-vol">
+                            <span class="fp-vol-label">VOL</span>
+                            <div class="fp-vol-track" id="fpVolTrack">
+                                <div class="fp-vol-fill" id="fpVolFill"></div>
+                                <div class="fp-vol-thumb" id="fpVolThumb"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <audio id="fpAudio" preload="none"></audio>
+
+                
                 <div class="track-list" aria-label="Şarkı listesi">
                     <a class="track-card" href="mavi.html">
                         <span class="track-no">01</span>
@@ -888,7 +885,6 @@
                     Her kayıt ayrı sayfada açılır / liste genişletilebilir
                 </div>
             </section>
-
         </section>
     </main>
     <script>
