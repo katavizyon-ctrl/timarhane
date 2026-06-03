@@ -37,9 +37,9 @@
 
         body::before {
             content: "";
-            position: fixed; inset: -1.5%; z-index: 0;
+            position: fixed; top: 72px; left: 0; right: 0; bottom: 0; z-index: 0;
             pointer-events: none;
-            background: url("oneheus.webp") center center / contain no-repeat;
+            background: url("oneheus.webp") top center / cover no-repeat;
             filter: brightness(0.52) contrast(1.12) saturate(0.35) sepia(0.55);
             animation: pageBreathe 4.5s ease-in-out infinite, pageKenBurns 12s ease-in-out infinite alternate;
             transform-origin: center center;
@@ -315,11 +315,11 @@
             body::before { animation: none; display: none; }
             #pageBg {
                 display: block;
-                position: fixed; inset: -1.5%;
+                position: fixed; top: 58px; left: 0; right: 0; bottom: 0;
                 z-index: 0; pointer-events: none;
-                background-size: contain;
+                background-size: cover;
                 background-repeat: no-repeat;
-                background-position: center center;
+                background-position: top center;
                 will-change: transform;
                 transform-origin: center center;
             }
@@ -352,7 +352,7 @@
 <body>
     <div id="pageVeil"></div>
 
-    <div id="pageBg" style="background-image:url('oneheus.webp'); background-size:contain; background-position:center center; filter:brightness(0.52) contrast(1.12) saturate(0.35) sepia(0.55);"></div>
+    <div id="pageBg" style="background-image:url('oneheus.webp'); background-size:cover; background-position:top center; filter:brightness(0.52) contrast(1.12) saturate(0.35) sepia(0.55);"></div>
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <div id="glow"></div>
