@@ -55,7 +55,7 @@
     z-index: 0;
     background: url('ahtapot.webp') center center / cover no-repeat;
     filter: brightness(0.72) contrast(1.08) saturate(0.88);
-    animation: kenBurns 24s ease-in-out infinite alternate, bgGlitch 12s step-end infinite;
+    animation: kenBurns 24s ease-in-out infinite alternate, bgGlitch 12s step-end infinite, bgBreathe 6s ease-in-out infinite;
     transform-origin: center center;
     will-change: transform;
   }
@@ -100,6 +100,11 @@
     100% { transform: scale(1.04) translate(0, 0); filter: brightness(0.72) contrast(1.08) saturate(0.88); }
   }
 
+  @keyframes bgBreathe {
+    0%, 100% { filter: brightness(0.72) contrast(1.08) saturate(0.88); }
+    50%       { filter: brightness(0.80) contrast(1.12) saturate(0.96); }
+  }
+
   @keyframes colorShift {
     0%   { background: rgba(14, 207, 176, 1); }
     25%  { background: rgba(192, 21, 42, 1);  }
@@ -129,7 +134,7 @@
     justify-content: space-between;
     padding: 0 clamp(18px, 5vw, 72px);
     background: rgba(6,9,16,0.85);
-    border-bottom: 1px solid var(--teal-dim);
+    border-bottom: 1px solid rgba(140, 255, 176, 0.10);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
@@ -138,7 +143,7 @@
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    color: var(--teal);
+    color: rgba(232, 216, 184, 0.64);
     text-decoration: none;
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(0.8rem, 1vw, 1rem);
@@ -152,7 +157,7 @@
     flex-shrink: 0;
     width: 36px;
     height: 1px;
-    background: var(--blood);
+    background: #B64A35;
     opacity: 0.82;
   }
 
@@ -163,7 +168,7 @@
   }
 
   .top-nav-link {
-    color: var(--text-muted);
+    color: rgba(140, 255, 176, 0.78);
     text-decoration: none;
     font-size: clamp(0.62rem, 0.8vw, 0.75rem);
     font-weight: 700;
@@ -178,9 +183,9 @@
 
   .top-nav-link:hover,
   .top-nav-link.active {
-    color: var(--teal);
+    color: #E8D8B8;
     opacity: 1;
-    border-color: var(--teal-dim);
+    border-color: #B64A35;
   }
 
   .top-nav-link.disabled {
@@ -202,13 +207,13 @@
   }
 
   .lang-switch a {
-    color: var(--teal-dim);
+    color: rgba(140, 255, 176, 0.52);
     text-decoration: none;
     transition: color 220ms ease;
   }
 
   .lang-switch a:hover,
-  .lang-switch a.lang-active { color: var(--teal); }
+  .lang-switch a.lang-active { color: #E8D8B8; }
 
   .menu-toggle {
     display: none;
@@ -216,9 +221,9 @@
     justify-content: center;
     width: 44px;
     height: 40px;
-    border: 1px solid var(--teal-dim);
+    border: 1px solid rgba(140, 255, 176, 0.34);
     background: rgba(0,0,0,0.42);
-    color: var(--teal);
+    color: #E8D8B8;
     cursor: pointer;
     position: relative;
     flex-shrink: 0;
@@ -260,7 +265,7 @@
       flex-direction: column;
       padding: 8px 22px 22px;
       background: rgba(6,9,16,0.96);
-      border-bottom: 1px solid var(--teal-dim);
+      border-bottom: 1px solid rgba(140, 255, 176, 0.18);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       transform: translateY(-115%);
@@ -276,7 +281,7 @@
     .top-nav-link {
       display: block;
       padding: 16px 0;
-      border-bottom: 1px solid var(--teal-dim);
+      border-bottom: 1px solid rgba(140, 255, 176, 0.14);
       font-size: 0.86rem;
       opacity: 1;
     }
@@ -539,28 +544,44 @@
   h1::before, h1::after {
     content: attr(data-text);
     position: absolute;
-    top: 0; bottom: 0;
+    top: 0; left: 0;
     width: 100%;
+    height: 100%;
     font-family: inherit;
     font-size: inherit;
     letter-spacing: inherit;
     line-height: inherit;
     pointer-events: none;
     z-index: 2;
+    opacity: 1;
   }
   .hero { position: relative; z-index: 10; }
-  h1 { position: relative; z-index: 1; }
   h1::before {
     color: var(--blood);
-    animation: glitchX 4s 2s infinite;
-    opacity: 0.6;
-    left: 2px;
+    animation: glitchBefore 5s 2s infinite;
+    left: 3px;
   }
   h1::after {
     color: var(--teal);
-    animation: glitchX 4s 2.5s infinite reverse;
-    opacity: 0.4;
-    left: -2px;
+    animation: glitchAfter 5s 2.5s infinite;
+    left: -3px;
+  }
+
+  @keyframes glitchBefore {
+    0%, 85%, 100% { clip-path: none; transform: translateX(0); opacity: 0; }
+    86%  { clip-path: inset(15% 0 70% 0); transform: translateX(-4px); opacity: 0.7; }
+    88%  { clip-path: inset(55% 0 10% 0); transform: translateX(4px);  opacity: 0.7; }
+    90%  { clip-path: inset(30% 0 45% 0); transform: translateX(-3px); opacity: 0.6; }
+    92%  { clip-path: inset(70% 0 5%  0); transform: translateX(3px);  opacity: 0.7; }
+    94%  { clip-path: none; transform: translateX(0); opacity: 0; }
+  }
+
+  @keyframes glitchAfter {
+    0%, 87%, 100% { clip-path: none; transform: translateX(0); opacity: 0; }
+    88%  { clip-path: inset(60% 0 20% 0); transform: translateX(5px);  opacity: 0.5; }
+    90%  { clip-path: inset(10% 0 65% 0); transform: translateX(-4px); opacity: 0.5; }
+    92%  { clip-path: inset(40% 0 30% 0); transform: translateX(3px);  opacity: 0.4; }
+    94%  { clip-path: none; transform: translateX(0); opacity: 0; }
   }
 
   /* ── SCAN LINE OVERLAY ── */
