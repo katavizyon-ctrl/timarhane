@@ -271,6 +271,8 @@
             html, body { height: auto; overflow-x: hidden; overflow-y: auto; }
             #bg-photo, #grain, #fx, #proxCanvas, #glow, .top-nav { display: none; }
             .nav-box { display: none; }
+            #mobile-bg { display: none; }
+            .mobile-img-spacer { display: none; }
 
             .mobile-topbar {
                 position: fixed; z-index: 100;
@@ -344,15 +346,19 @@
 
             #home-stage {
                 position: relative; z-index: 10;
-                display: block; width: 100%;
+                display: flex; flex-direction: column;
+                justify-content: center;
+                width: 100%;
                 min-height: 100svh;
+                padding-top: 80px;
+                padding-bottom: 40px;
                 background: transparent;
             }
 
             #mobile-bg {
                 position: absolute;
                 top: 64px; left: 0; right: 0;
-                height: 56.25vw;
+                height: 70vw;
                 z-index: 1;
                 overflow: hidden;
                 will-change: transform;
@@ -363,7 +369,7 @@
                 top: 0; left: 0;
                 width: 100%; height: 100%;
                 object-fit: cover;
-                object-position: center 25%;
+                object-position: center 35%;
                 display: block;
                 will-change: transform;
             }
@@ -382,7 +388,7 @@
 
             .mobile-img-spacer {
                 display: block;
-                height: calc(64px + 56.25vw + 16px);
+                height: calc(64px + 70vw + 16px);
             }
 
             .manifesto-panel {
@@ -392,9 +398,10 @@
                 margin: 0 auto 48px;
                 padding: 22px 18px 20px;
                 color: var(--phosphor-soft);
-                background: rgba(3,5,4,0.82);
-                border-left: 2px solid rgba(140,255,176,0.42);
-                backdrop-filter: blur(8px);
+                background: transparent;
+                border-left: 2px solid rgba(140,255,176,0.52);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
                 opacity: 0;
                 transform: translateY(20px);
                 transition: opacity 0.8s ease, transform 0.8s ease;
@@ -412,6 +419,10 @@
                 margin: 0 0 1rem;
                 font-size: 0.96rem; font-weight: 600;
                 line-height: 1.78; min-height: 1.4em;
+                text-shadow: 0 1px 10px rgba(0,0,0,0.95), 0 2px 28px rgba(0,0,0,0.8);
+            }
+            .manifesto-panel::before {
+                text-shadow: 0 1px 8px rgba(0,0,0,0.95);
             }
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
         }
@@ -483,7 +494,13 @@
         }
 
         @media (max-width: 760px) {
-            .scroll-indicator { bottom: clamp(16px, 3vh, 28px); }
+.scroll-indicator {
+                position: relative;
+                bottom: auto; left: auto;
+                transform: none;
+                margin: 8px auto 32px;
+                align-self: center;
+            }
         }
 
         /* ══════════════════════════════════════
@@ -699,7 +716,7 @@
             .origin-content { padding: 0; }
             .origin-line { font-size: 0.94rem; }
             .oneheus-stage-extension { height: 45vh; }
-            .origin-bg-home, .origin-bg-morpheus, .origin-bg-oneheus, #origin::before { position: absolute; }
+            /* origin backgrounds stay position:fixed on mobile for fixed-bg scroll effect */
             .kw-timarhane::after { right: -8px; }
         }
     </style>
