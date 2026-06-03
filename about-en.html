@@ -387,15 +387,15 @@
             }
 
             .mobile-img-spacer {
-                display: block;
-                height: calc(64px + 70vw + 16px);
+                display: none;
+                height: 0;
             }
 
             .manifesto-panel {
                 display: block;
                 position: relative; z-index: 12;
                 width: calc(100% - 44px);
-                margin: 0 auto 48px;
+                margin: 40px auto 48px;
                 padding: 22px 18px 20px;
                 color: var(--phosphor-soft);
                 background: transparent;
@@ -712,7 +712,7 @@
         .term-val { color: var(--paper); font-weight: 700; }
 
         @media (max-width: 760px) {
-            #origin { min-height: auto; padding-top: 32px; }
+            #origin { min-height: auto; padding-top: 32px; scroll-margin-top: 64px; }
             .origin-content { padding: 0; }
             .origin-line { font-size: 0.94rem; }
             .oneheus-stage-extension { height: 45vh; }
