@@ -24,11 +24,20 @@
 <link rel="canonical" href="https://oneheus.com/ahtapot.html">
 <link rel="alternate" hreflang="tr" href="https://oneheus.com/ahtapot.html">
 <link rel="alternate" hreflang="en" href="https://oneheus.com/ahtapot-en.html">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
+        /* TIMARHANE standard vars */
+        --void: #050505;
+        --phosphor: #8CFFB0;
+        --phosphor-soft: rgba(140, 255, 176, 0.78);
+        --phosphor-dim: rgba(140, 255, 176, 0.26);
+        --paper: #E8D8B8;
+        --paper-dim: rgba(232, 216, 184, 0.64);
+        --paper-faint: rgba(232, 216, 184, 0.38);
+        --red-memory: #B64A35;
+
     --ink: #0a0e1a;
     --deep: #060910;
     --blood: #c0152a;
@@ -47,7 +56,11 @@
   body {
     background: var(--deep);
     color: var(--text-main);
-    font-family: 'Share Tech Mono', monospace;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 72px;
+    font-family: 'Courier New', Courier, monospace;
     overflow-x: hidden;
     min-height: 100vh;
     padding-top: 72px;
@@ -59,7 +72,7 @@
     z-index: 0;
     background: url('ahtapot.webp') center center / cover no-repeat;
     filter: brightness(0.72) contrast(1.08) saturate(0.88);
-    animation: kenBurns 24s ease-in-out infinite alternate, bgGlitch 12s step-end infinite, bgBreathe 6s ease-in-out infinite;
+    
     transform-origin: center center;
     will-change: transform;
   }
@@ -305,17 +318,6 @@
   .breadcrumb a:hover { color: var(--teal); }
 
   /* ── HERO ── */
-  .hero {
-    position: relative;
-    z-index: 5;
-    min-height: 60vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 4rem 2rem 2rem;
-    text-align: center;
-  }
 
   .hero-eyebrow {
     font-size: 0.7rem;
@@ -327,20 +329,7 @@
     animation: fadeUp 0.8s 0.3s forwards;
   }
 
-  h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.5rem, 12vw, 8rem);
-    letter-spacing: 0.06em;
-    line-height: 0.9;
-    color: var(--text-main);
-    text-shadow:
-      0 0 40px rgba(14,207,176,0.15),
-      0 0 80px rgba(192,21,42,0.1);
-    opacity: 0;
-    animation: fadeUp 0.8s 0.5s forwards;
-  }
 
-  h1 span { color: var(--blood); }
 
   /* ── PLAYER SECTION ── */
   .player-section {
@@ -398,7 +387,7 @@
   }
 
   .player-artist {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 0.72rem;
     color: var(--teal);
     letter-spacing: 0.12em;
@@ -409,7 +398,7 @@
     font-size: 0.65rem;
     color: var(--text-muted);
     letter-spacing: 0.1em;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Courier New', Courier, monospace;
   }
 
   .player-scrubber {
@@ -441,7 +430,7 @@
     background: none;
     border: 1px solid var(--teal-dim);
     color: var(--teal);
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 0.7rem;
     letter-spacing: 0.14em;
     padding: 6px 14px;
@@ -509,7 +498,7 @@
     text-shadow: 0 0 12px rgba(14,207,176,0.35);
   }
   .lyric-tag-inline {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 0.58rem;
     color: var(--blood);
     letter-spacing: 0.2em;
@@ -522,8 +511,6 @@
   /* ── HORON SVG FIGURE (foreground) ── */
 
   /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
@@ -545,34 +532,7 @@
   }
 
   /* glitch overlay on h1 */
-  h1::before, h1::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    font-family: inherit;
-    font-size: inherit;
-    letter-spacing: inherit;
-    line-height: inherit;
-    pointer-events: none;
-    z-index: 2;
-    opacity: 1;
-  }
-  .hero { position: relative; z-index: 10; }
-  h1::before {
-    color: var(--blood);
-    animation: glitchBefore 5s 2s infinite;
-    left: 3px;
-  }
-  h1::after {
-    color: var(--teal);
-    animation: glitchAfter 5s 2.5s infinite;
-    left: -3px;
-  }
 
-  @keyframes glitchBefore {
-    0%, 85%, 100% { clip-path: none; transform: translateX(0); opacity: 0; }
     86%  { clip-path: inset(15% 0 70% 0); transform: translateX(-4px); opacity: 0.7; }
     88%  { clip-path: inset(55% 0 10% 0); transform: translateX(4px);  opacity: 0.7; }
     90%  { clip-path: inset(30% 0 45% 0); transform: translateX(-3px); opacity: 0.6; }
@@ -580,8 +540,6 @@
     94%  { clip-path: none; transform: translateX(0); opacity: 0; }
   }
 
-  @keyframes glitchAfter {
-    0%, 87%, 100% { clip-path: none; transform: translateX(0); opacity: 0; }
     88%  { clip-path: inset(60% 0 20% 0); transform: translateX(5px);  opacity: 0.5; }
     90%  { clip-path: inset(10% 0 65% 0); transform: translateX(-4px); opacity: 0.5; }
     92%  { clip-path: inset(40% 0 30% 0); transform: translateX(3px);  opacity: 0.4; }
@@ -607,8 +565,97 @@
   @media (max-width: 600px) {
     nav { padding: 1rem; gap: 0 1rem; font-size: 0.68rem; }
     .player-section, .lyrics-section { padding: 0 1rem; }
-    h1 { font-size: clamp(3rem, 16vw, 5rem); }
-  }
+    }
+
+        /* ── Main interface (03/04 refactor) ── */
+        .main-interface {
+            position: relative;
+            z-index: 10;
+            width: min(520px, 90vw);
+            margin-left: clamp(24px, 5vw, 80px);
+            padding: 28px 26px 24px;
+            background: rgba(3, 5, 4, 0.32);
+            border-left: 1px solid rgba(140, 255, 176, 0.26);
+            border-top: 1px solid rgba(140, 255, 176, 0.10);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            box-shadow: 0 28px 90px rgba(0,0,0,0.52);
+        }
+        .sys-label {
+            display: block;
+            margin-bottom: 6px;
+            color: rgba(232,216,184,0.38);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: titleFadeUp 0.8s 0.2s forwards;
+        }
+        .sys-label::before {
+            content: "";
+            display: inline-block;
+            width: 28px; height: 1px;
+            margin-right: 10px;
+            vertical-align: middle;
+            background: #B64A35;
+            opacity: 0.72;
+        }
+
+        /* ── Glitch Song Title ── */
+        .song-title {
+            font-size: clamp(2.2rem, 7.5vw, 5.8rem);
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            line-height: 0.88;
+            color: var(--paper);
+            position: relative;
+            margin: 4px 0 22px;
+            opacity: 0;
+            animation: titleFadeUp 0.8s 0.4s forwards;
+            text-shadow: 0 0 40px rgba(232,216,184,0.12);
+            text-transform: uppercase;
+        }
+        .song-title span { color: var(--red-memory); }
+        .song-title::before {
+            content: attr(data-text);
+            position: absolute; top: 0; left: 3px;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 2;
+            font-family: inherit; font-size: inherit;
+            letter-spacing: inherit; line-height: inherit;
+            color: var(--red-memory);
+            animation: titleGlitchA 7s 2s infinite;
+        }
+        .song-title::after {
+            content: attr(data-text);
+            position: absolute; top: 0; left: -3px;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 2;
+            font-family: inherit; font-size: inherit;
+            letter-spacing: inherit; line-height: inherit;
+            color: var(--phosphor);
+            animation: titleGlitchB 7s 2.5s infinite;
+        }
+        @keyframes titleFadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes titleGlitchA {
+            0%,84%,100% { clip-path: none; transform: translateX(0); opacity: 0; }
+            85%  { clip-path: inset(15% 0 70% 0); transform: translateX(-4px); opacity: 0.75; }
+            87%  { clip-path: inset(55% 0 10% 0); transform: translateX(4px);  opacity: 0.75; }
+            89%  { clip-path: inset(30% 0 45% 0); transform: translateX(-3px); opacity: 0.65; }
+            91%  { clip-path: inset(70% 0 5%  0); transform: translateX(3px);  opacity: 0.75; }
+            93%  { clip-path: none; transform: translateX(0); opacity: 0; }
+        }
+        @keyframes titleGlitchB {
+            0%,86%,100% { clip-path: none; transform: translateX(0); opacity: 0; }
+            87%  { clip-path: inset(60% 0 20% 0); transform: translateX(5px);  opacity: 0.55; }
+            89%  { clip-path: inset(10% 0 65% 0); transform: translateX(-4px); opacity: 0.55; }
+            91%  { clip-path: inset(40% 0 30% 0); transform: translateX(3px);  opacity: 0.45; }
+            93%  { clip-path: none; transform: translateX(0); opacity: 0; }
+        }
 </style>
 </head>
 <body>
@@ -626,7 +673,7 @@
   <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="songMenu"><span></span></button>
   <div class="nav-links" id="songMenu">
     <a class="top-nav-link" href="about.html">Core</a>
-    <a class="top-nav-link active" href="https://oneheus.com/frekans.html">Frekans_101</a>
+    <a class="top-nav-link active" href="frekans.html">Frekans_101</a>
     <a class="top-nav-link" href="https://oneheus.com/sentetik.html">Sentetik Anılar</a>
     <a class="top-nav-link" href="https://oneheus.com/veri.html">Veri Mahzeni</a>
     <a class="top-nav-link disabled" href="https://oneheus.com/senkron.html">Senkron: Kopuk</a>
@@ -636,16 +683,9 @@
   </div>
 </nav>
 
-<div class="breadcrumb">
-  <a href="https://oneheus.com/frekans.html">Frekans_101</a> // Kayıt
-</div>
-
-<!-- HERO -->
-<div class="hero">
-  <p class="hero-eyebrow">— sinyal kaydı —</p>
-  <h1 data-text="AHTAPOT">AH<span>TA</span>POT</h1>
-</div>
-
+<div class="main-interface">
+    <span class="sys-label">Frekans_101 // Kayıt</span>
+    <h1 class="song-title" data-text="AHTAPOT">AH<span>TA</span>POT</h1>
 <!-- PLAYER -->
 <div class="player-section">
   <p class="player-label">// ses kaydı</p>
