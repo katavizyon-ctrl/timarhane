@@ -42,7 +42,7 @@
             content: "";
             position: fixed; inset: -1.5%; z-index: 0;
             pointer-events: none;
-            background: url("morpheus.webp") center / cover no-repeat;
+            background: url("morpheus.webp") center 18% / cover no-repeat;
             filter: brightness(0.58) contrast(1.10) saturate(0.45) hue-rotate(195deg);
             animation: pageBreathe 4.5s ease-in-out infinite, pageKenBurns 12s ease-in-out infinite alternate;
             transform-origin: center center;
@@ -337,7 +337,7 @@
                 z-index: 0; pointer-events: none;
                 background-size: cover;
                 background-repeat: no-repeat;
-                background-position: center;
+                background-position: center 18%;
                 will-change: transform;
                 transform-origin: center center;
             }
@@ -370,7 +370,7 @@
 <body>
     <div id="pageVeil"></div>
 
-    <div id="pageBg" style="background-image:url('morpheus.webp'); filter:brightness(0.58) contrast(1.10) saturate(0.45) hue-rotate(195deg);"></div>
+    <div id="pageBg" style="background-image:url('morpheus.webp'); background-position:center 18%; filter:brightness(0.58) contrast(1.10) saturate(0.45) hue-rotate(195deg);"></div>
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <div id="glow"></div>

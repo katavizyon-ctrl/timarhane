@@ -39,7 +39,7 @@
             content: "";
             position: fixed; inset: -1.5%; z-index: 0;
             pointer-events: none;
-            background: url("oneheus.webp") center / cover no-repeat;
+            background: url("oneheus.webp") center 18% / cover no-repeat;
             filter: brightness(0.52) contrast(1.12) saturate(0.35) sepia(0.55);
             animation: pageBreathe 4.5s ease-in-out infinite, pageKenBurns 12s ease-in-out infinite alternate;
             transform-origin: center center;
@@ -319,7 +319,7 @@
                 z-index: 0; pointer-events: none;
                 background-size: cover;
                 background-repeat: no-repeat;
-                background-position: center;
+                background-position: center 18%;
                 will-change: transform;
                 transform-origin: center center;
             }
@@ -352,7 +352,7 @@
 <body>
     <div id="pageVeil"></div>
 
-    <div id="pageBg" style="background-image:url('oneheus.webp'); filter:brightness(0.52) contrast(1.12) saturate(0.35) sepia(0.55);"></div>
+    <div id="pageBg" style="background-image:url('oneheus.webp'); background-position:center 18%; filter:brightness(0.52) contrast(1.12) saturate(0.35) sepia(0.55);"></div>
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <div id="glow"></div>
