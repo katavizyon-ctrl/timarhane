@@ -39,6 +39,7 @@
             background: url('landing_bg.webp') center/cover no-repeat;
             filter: brightness(0.68) contrast(1.06) saturate(0.92);
             pointer-events: none;
+            will-change: transform;
         }
 
         .bg-photo::after {
@@ -384,17 +385,91 @@
             if (trail.length > 24) trail.shift();
         });
 
-        /* ── Parallax ── */
+        /* ── Ken Burns + Breathe constants ── */
+        const IS_MOBILE  = window.innerWidth <= 760;
+        const KB_PERIOD  = IS_MOBILE ? 13000 : 15000;
+        const KB_MAX_X   = IS_MOBILE ? 12 : 14;
+        const KB_MAX_Y   = IS_MOBILE ? 9  : 10;
+        const KB_SCALE   = 1.10;
+        const BR_PERIOD  = 5000;
+        const BR_EXTRA   = 0.03;
+
+        /* ── Parallax + Ken Burns + Breathe ── */
+        // On mobile: keep mx/my centred so parallax stays neutral
+        if (IS_MOBILE) { mx = 0; my = 0; }
+
         let px = 0, py = 0;
         function parallax() {
-            const tx = ((mx / W) - 0.5) * 16;
-            const ty = ((my / H) - 0.5) * 16;
+            // Mouse parallax (desktop only — mx/my stay 0 on mobile)
+            const tx = W ? ((mx / W) - 0.5) * 16 : 0;
+            const ty = H ? ((my / H) - 0.5) * 16 : 0;
             px += (tx - px) * 0.05;
             py += (ty - py) * 0.05;
-            bgPhoto.style.transform = `scale(1.07) translate(${-px*0.5}px,${-py*0.5}px)`;
+
+            // Ken Burns drift
+            const now    = performance.now();
+            const kbX    = Math.sin((now / KB_PERIOD) * Math.PI * 2)         * KB_MAX_X;
+            const kbY    = Math.sin((now / KB_PERIOD) * Math.PI * 2 * 0.618) * KB_MAX_Y;
+
+            // Breathe
+            const breath = Math.sin((now / BR_PERIOD) * Math.PI * 2) * 0.5 + 0.5;
+            const scale  = (KB_SCALE + breath * BR_EXTRA).toFixed(4);
+
+            bgPhoto.style.transform = `scale(${scale}) translate(${(kbX - px * 0.5).toFixed(2)}px,${(kbY - py * 0.5).toFixed(2)}px)`;
             requestAnimationFrame(parallax);
         }
         parallax();
+
+        /* ── Mobile Gyroscope ── */
+        if (IS_MOBILE) {
+            const GY_MAX = 22;
+            let gyroX = 0, gyroY = 0;
+            let rawGyroX = 0, rawGyroY = 0;
+
+            function onOrientation(e) {
+                if (e.gamma === null || e.beta === null) return;
+                const gamma = Math.max(-45, Math.min(45, e.gamma));
+                const beta  = Math.max(-45, Math.min(45, e.beta - 90));
+                rawGyroX = (gamma / 45) * GY_MAX;
+                rawGyroY = (beta  / 45) * GY_MAX;
+            }
+
+            function startGyro() {
+                if (typeof DeviceOrientationEvent !== 'undefined' &&
+                    typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(s => { if (s === 'granted') window.addEventListener('deviceorientation', onOrientation, { passive: true }); })
+                        .catch(() => {});
+                } else {
+                    window.addEventListener('deviceorientation', onOrientation, { passive: true });
+                }
+            }
+
+            let gyroStarted = false;
+            function tryStartGyro() {
+                if (gyroStarted) return;
+                gyroStarted = true;
+                startGyro();
+            }
+            document.addEventListener('touchstart', tryStartGyro, { once: true, passive: true });
+            document.addEventListener('touchend',   tryStartGyro, { once: true, passive: true });
+            window.addEventListener('scroll',       tryStartGyro, { once: true, passive: true });
+
+            // Blend gyro into the background transform each frame
+            (function gyroLoop() {
+                gyroX += (rawGyroX - gyroX) * 0.08;
+                gyroY += (rawGyroY - gyroY) * 0.08;
+                // Apply gyro offset on top of KB+breathe (already running in parallax())
+                // We use a secondary nudge via background-position shift
+                const now    = performance.now();
+                const kbX    = Math.sin((now / KB_PERIOD) * Math.PI * 2)         * KB_MAX_X;
+                const kbY    = Math.sin((now / KB_PERIOD) * Math.PI * 2 * 0.618) * KB_MAX_Y;
+                const breath = Math.sin((now / BR_PERIOD) * Math.PI * 2) * 0.5 + 0.5;
+                const scale  = (KB_SCALE + breath * BR_EXTRA).toFixed(4);
+                bgPhoto.style.transform = `scale(${scale}) translate(${(kbX + gyroX).toFixed(2)}px,${(kbY + gyroY).toFixed(2)}px)`;
+                requestAnimationFrame(gyroLoop);
+            })();
+        }
 
         /* ── Grain: rebuild every 3 frames ── */
         let grainTick = 0;
