@@ -582,6 +582,168 @@
         @media (min-width: 761px) {
             .mobile-topbar, .mobile-drawer { display: none; }
         }
+
+        /* ── FREKANS PLAYLIST PLAYER ── */
+        .fp-station {
+            position: relative;
+            z-index: 10;
+            padding: clamp(12px, 2vw, 24px) clamp(20px, 4vw, 64px);
+        }
+
+        .frekans-player {
+            padding: 22px 26px 18px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.60), rgba(3,6,5,0.40));
+            border: 1px solid rgba(140,255,176,0.18);
+            border-left: 2px solid #B64A35;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 8px 48px rgba(0,0,0,0.45), inset 0 1px 0 rgba(140,255,176,0.05);
+        }
+
+        .fp-label {
+            display: block;
+            font-size: 0.58rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: rgba(232,216,184,0.38);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .fp-now-playing {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .fp-track-name {
+            font-family: "Courier New", monospace;
+            font-size: 0.80rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(140,255,176,0.90);
+        }
+
+        .fp-time {
+            font-size: 0.62rem;
+            letter-spacing: 0.10em;
+            color: rgba(232,216,184,0.40);
+            font-family: "Courier New", monospace;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .fp-scrubber {
+            position: relative;
+            height: 2px;
+            background: rgba(140,255,176,0.12);
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        .fp-scrubber:hover { background: rgba(140,255,176,0.22); }
+
+        .fp-scrubber-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #B64A35, rgba(140,255,176,0.75));
+            pointer-events: none;
+            transition: width 0.25s linear;
+        }
+
+        .fp-scrubber-thumb {
+            position: absolute;
+            top: 50%; left: 0%;
+            width: 10px; height: 10px;
+            background: #E8D8B8;
+            border: 1px solid rgba(140,255,176,0.55);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: left 0.25s linear;
+            box-shadow: 0 0 6px rgba(140,255,176,0.35);
+        }
+
+        .fp-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .fp-btn {
+            background: transparent;
+            border: 1px solid rgba(140,255,176,0.22);
+            color: rgba(140,255,176,0.70);
+            font-family: "Courier New", monospace;
+            font-size: 0.60rem;
+            letter-spacing: 0.18em;
+            padding: 7px 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 200ms ease;
+            white-space: nowrap;
+        }
+
+        .fp-btn:hover {
+            background: rgba(140,255,176,0.08);
+            border-color: rgba(140,255,176,0.55);
+            color: #E8D8B8;
+        }
+
+        .fp-btn.active {
+            background: rgba(182,74,53,0.18);
+            border-color: #B64A35;
+            color: #E8D8B8;
+        }
+
+        .fp-vol {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .fp-vol-label {
+            font-size: 0.55rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(232,216,184,0.36);
+            font-family: "Courier New", monospace;
+        }
+
+        .fp-vol-track {
+            position: relative;
+            width: 64px;
+            height: 2px;
+            background: rgba(140,255,176,0.12);
+            cursor: pointer;
+        }
+
+        .fp-vol-fill {
+            height: 100%;
+            width: 80%;
+            background: rgba(140,255,176,0.42);
+            pointer-events: none;
+        }
+
+        .fp-vol-thumb {
+            position: absolute;
+            top: 50%; left: 80%;
+            width: 8px; height: 8px;
+            background: #E8D8B8;
+            border: 1px solid rgba(140,255,176,0.45);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        @media (max-width: 760px) {
+            .fp-vol { margin-left: 0; margin-top: 10px; }
+        }
     </style>
     <!-- SEO & Social -->
     <meta name="description" content="FREQUENCY_101 — AI-generated music archive. Sounds, rhythms and frequency experiments created with Suno.">
@@ -641,24 +803,20 @@
     <!-- PLAYLIST PLAYER -->
     <div class="fp-station">
       <div class="frekans-player" id="frekansPlayer">
-        <div class="fp-header">
-          <span class="fp-label">FREQUENCY ARCHIVE // PLAYLIST</span>
-        </div>
-        <div class="fp-header" style="margin-top:-8px;margin-bottom:12px;">
+        <span class="fp-label">FREQUENCY ARCHIVE // PLAYLIST</span>
+        <div class="fp-now-playing">
           <span class="fp-track-name" id="fpTrackName">AKA — TIMARHANE</span>
           <span class="fp-time" id="fpTime">—</span>
         </div>
-        <div class="fp-scrubber-wrap">
-          <div class="fp-scrubber" id="fpScrubber">
-            <div class="fp-scrubber-fill" id="fpFill"></div>
-            <div class="fp-scrubber-thumb" id="fpThumb"></div>
-          </div>
+        <div class="fp-scrubber" id="fpScrubber">
+          <div class="fp-scrubber-fill" id="fpFill"></div>
+          <div class="fp-scrubber-thumb" id="fpThumb"></div>
         </div>
         <div class="fp-controls">
           <button class="fp-btn" id="fpPlayAll">▶  PLAY ALL</button>
           <button class="fp-btn" id="fpShuffle">⇄  SHUFFLE</button>
-          <button class="fp-btn fp-icon-btn" id="fpPrev" title="Previous">◀◀</button>
-          <button class="fp-btn fp-icon-btn" id="fpNext" title="Next">▶▶</button>
+          <button class="fp-btn" id="fpPrev">◀◀</button>
+          <button class="fp-btn" id="fpNext">▶▶</button>
           <div class="fp-vol">
             <span class="fp-vol-label">VOL</span>
             <div class="fp-vol-track" id="fpVolTrack">
