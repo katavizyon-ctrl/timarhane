@@ -70,7 +70,9 @@
     position: fixed;
     top: 52px; left: 0; right: 0; bottom: 0;
     z-index: 0;
-    background: url('ahtapot.webp') center center / cover no-repeat;
+    background-size: contain;
+            background-position: top center;
+            background: url('ahtapot.webp') center center / cover no-repeat;
     filter: brightness(0.72) contrast(1.08) saturate(0.88);
     
     transform-origin: center center;
@@ -574,7 +576,7 @@
             width: min(520px, 90vw);
             margin-left: clamp(24px, 5vw, 80px);
             padding: 28px 26px 24px;
-            background: rgba(3, 5, 4, 0.32);
+            background: rgba(3, 5, 4, 0.06);
             border-left: 1px solid rgba(140, 255, 176, 0.26);
             border-top: 1px solid rgba(140, 255, 176, 0.10);
             backdrop-filter: blur(6px);
@@ -604,7 +606,7 @@
 
         /* ── Glitch Song Title ── */
         .song-title {
-            font-size: clamp(2.2rem, 7.5vw, 5.8rem);
+            font-size: clamp(1.5rem, 5vw, 4rem);
             font-weight: 800;
             letter-spacing: 0.06em;
             line-height: 0.88;
@@ -656,6 +658,11 @@
             91%  { clip-path: inset(40% 0 30% 0); transform: translateX(3px);  opacity: 0.45; }
             93%  { clip-path: none; transform: translateX(0); opacity: 0; }
         }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
