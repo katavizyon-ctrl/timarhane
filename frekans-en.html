@@ -41,7 +41,7 @@
             inset: -6%;
             z-index: 0;
             pointer-events: none;
-            background: url("frekans2_bg.webp") 22% center / cover no-repeat;
+            background: url("frekans2_bg.webp") 16% center / cover no-repeat;
             filter: brightness(0.78) contrast(1.08) saturate(0.92);
             animation: frekBreathe 5s ease-in-out infinite, frekKenBurns 15s ease-in-out infinite alternate;
             transform-origin: center center;
@@ -754,11 +754,10 @@
         }
 
         @keyframes frekKenBurns {
-            0%   { transform: scale(1.06) translate(0px,   0px);  }
-            25%  { transform: scale(1.10) translate(12px,  -8px); }
-            50%  { transform: scale(1.08) translate(6px,    6px); }
-            75%  { transform: scale(1.11) translate(10px,  10px); }
-            100% { transform: scale(1.09) translate(8px,   -6px); }
+            0%   { transform: scale(1.02) translate(0px,   0px);  }
+            33%  { transform: scale(1.04) translate(12px, -5px);  }
+            66%  { transform: scale(1.03) translate(20px,  3px);  }
+            100% { transform: scale(1.04) translate(28px, -4px);  }
         }
 
         /* ── Mobile: override CSS anim, use JS-driven div instead ── */
@@ -770,7 +769,7 @@
                 inset: -8%;
                 z-index: 0;
                 pointer-events: none;
-                background: url("frekans2_bg.webp") 22% center / cover no-repeat;
+                background: url("frekans2_bg.webp") 16% center / cover no-repeat;
                 filter: brightness(0.80) contrast(1.06) saturate(0.92);
                 will-change: transform;
                 transform-origin: center center;
