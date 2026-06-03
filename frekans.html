@@ -43,7 +43,7 @@
             pointer-events: none;
             background: url("frekans2_bg.webp") left center / cover no-repeat;
             filter: brightness(0.78) contrast(1.08) saturate(0.92);
-            animation: frekBreathe 5s ease-in-out infinite, frekKenBurns 15s ease-in-out infinite alternate;
+            animation: frekBreathe 3s ease-in-out infinite, frekKenBurns 9s ease-in-out infinite alternate;
             transform-origin: center center;
             will-change: transform, filter;
         }
@@ -950,6 +950,12 @@
                         <span class="track-title">Second Heart</span>
                         <span class="track-status">Açık</span>
                     </a>
+
+                    <a class="track-card is-offline" href="#" aria-disabled="true">
+                        <span class="track-no">06</span>
+                        <span class="track-title">Yeni Frekans</span>
+                        <span class="track-status">Yakında</span>
+                    </a>
                 </div>
 
                 <div class="archive-meta">
@@ -1038,11 +1044,11 @@
         if (window.innerWidth <= 760) {
             const frekBg = document.getElementById('frekBg');
             if (frekBg) {
-                const KB_PERIOD = 13000;
+                const KB_PERIOD = 8000;
                 const KB_MAX_X  = 12;
                 const KB_MAX_Y  = 9;
                 const KB_SCALE  = 1.10;
-                const BR_PERIOD = 5000;
+                const BR_PERIOD = 3000;
                 const BR_EXTRA  = 0.04;
                 const GY_MAX    = 22;
 
