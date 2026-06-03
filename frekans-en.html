@@ -973,7 +973,7 @@
     /* ── FREKANS PLAYLIST PLAYER ── */
     (function () {
         const TRACKS = [
-            { title: 'AKA — MAVİ RANDEVU',        src: 'mavi.mp3',               dur: '7:59' },
+            { title: 'AKA — MAVİ RANDEVU',        src: 'Onno v3.mp3',            dur: '7:59' },
             { title: 'AKA — WORLD OF ILLUSIONS',   src: 'world-of-illusions.mp3', dur: '5:26' },
             { title: 'AKA — AHTAPOT',              src: 'ahtapot.mp3',            dur: '2:11' },
         ];
@@ -1018,8 +1018,10 @@
         }
 
         function play() {
-            audio.play();
+            const p = audio.play();
+            if (p !== undefined) p.catch(() => {});
             isPlaying = true;
+            playAllBtn.dataset.state = 'playing';
             playAllBtn.textContent = '⏸ PAUSE';
             playAllBtn.classList.add('active');
         }
@@ -1027,7 +1029,8 @@
         function pause() {
             audio.pause();
             isPlaying = false;
-            playAllBtn.textContent = '▶ PLAY ALL';
+            playAllBtn.dataset.state = 'paused';
+            playAllBtn.textContent = playAllBtn.dataset.playLabel;
             playAllBtn.classList.remove('active');
         }
 
@@ -1058,6 +1061,10 @@
         });
 
         audio.addEventListener('ended', playNext);
+
+        // Store original label for reset
+        playAllBtn.dataset.playLabel = playAllBtn.textContent;
+        playAllBtn.dataset.state = 'idle';
 
         playAllBtn.addEventListener('click', () => {
             if (!audio.src || audio.src === window.location.href) {
