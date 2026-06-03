@@ -71,7 +71,7 @@
   /* ── BACKGROUND IMAGE ── */
   .bg-image {
     position: fixed;
-    inset: -8%;
+    top: 52px; left: 0; right: 0; bottom: 0;
     z-index: 0;
     background: url('crime_scene_bg.webp') center center / cover no-repeat;
     filter: brightness(0.60) contrast(1.12) saturate(0.75) hue-rotate(10deg);
@@ -82,8 +82,8 @@
 
   .bg-overlay {
     position: fixed;
-    inset: 0;
-    z-index: 1;
+            top: 52px; left: 0; right: 0; bottom: 0;
+            z-index: 1;
     pointer-events: none;
     background:
       linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.55) 100%),
@@ -93,8 +93,8 @@
 
   .bg-color-shift {
     position: fixed;
-    inset: 0;
-    z-index: 1;
+            top: 52px; left: 0; right: 0; bottom: 0;
+            z-index: 1;
     pointer-events: none;
     mix-blend-mode: color;
     animation: colorShift 20s ease-in-out infinite;
@@ -1144,9 +1144,9 @@ animateTrail();
 
         const IS_MOB   = window.innerWidth <= 760;
         const KB_PERIOD = IS_MOB ? 13000 : 15000;
-        const KB_MAX_X  = IS_MOB ? 10 : 12;
-        const KB_MAX_Y  = IS_MOB ? 7  : 9;
-        const KB_SCALE  = 1.08;
+        const KB_MAX_X  = IS_MOB ? 7 : 9;
+        const KB_MAX_Y  = IS_MOB ? 5  : 7;
+        const KB_SCALE  = 1.02;
         const BR_PERIOD = 5000;
         const BR_EXTRA  = 0.03;
 
