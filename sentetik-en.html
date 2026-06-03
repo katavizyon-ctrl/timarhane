@@ -41,7 +41,7 @@
             pointer-events: none;
             background: url("morpheus.webp") center / cover no-repeat;
             filter: brightness(0.58) contrast(1.10) saturate(0.45) hue-rotate(195deg);
-            animation: pageBreathe 5s ease-in-out infinite, pageKenBurns 15s ease-in-out infinite alternate;
+            animation: pageBreathe 4.5s ease-in-out infinite, pageKenBurns 12s ease-in-out infinite alternate;
             transform-origin: center center;
             will-change: transform, filter;
             --bg-filter: brightness(0.58) contrast(1.10) saturate(0.45) hue-rotate(195deg);
@@ -306,10 +306,10 @@
             50%      { filter: var(--bg-filter-bright); }
         }
         @keyframes pageKenBurns {
-            0%   { transform: scale(1.00) translate(0px,   0px);  }
-            33%  { transform: scale(1.01) translate(8px,  -4px);  }
-            66%  { transform: scale(1.00) translate(14px,  3px);  }
-            100% { transform: scale(1.01) translate(10px, -3px);  }
+            0%   { transform: scale(1.04) translate(0px,   0px);  }
+            33%  { transform: scale(1.07) translate(16px, -8px);  }
+            66%  { transform: scale(1.05) translate(22px,  6px);  }
+            100% { transform: scale(1.07) translate(14px, -6px);  }
         }
         @media (max-width: 760px) {
             body::before { animation: none; display: none; }
@@ -479,8 +479,8 @@
         if (window.innerWidth <= 760) {
             const pageBg = document.getElementById('pageBg');
             if (pageBg) {
-                const KB_PERIOD = 13000, KB_MAX_X = 10, KB_MAX_Y = 8, KB_SCALE = 1.08;
-                const BR_PERIOD = 5000,  BR_EXTRA  = 0.03;
+                const KB_PERIOD = 11000, KB_MAX_X = 14, KB_MAX_Y = 10, KB_SCALE = 1.10;
+                const BR_PERIOD = 4500,  BR_EXTRA  = 0.04;
                 const GY_MAX = 20;
                 let gyroX = 0, gyroY = 0, rawGyroX = 0, rawGyroY = 0;
 
