@@ -198,7 +198,7 @@
 
             .manifesto-panel {
                 position: absolute; z-index: 11;
-                left: clamp(28px,5vw,72px); top: 55%; 
+                left: clamp(28px,5vw,72px); top: 46%; 
                 width: min(520px,38vw);
                 padding: 22px 26px 20px;
                 color: var(--phosphor-soft);
@@ -218,14 +218,14 @@
                 letter-spacing: 0.32em; text-transform: uppercase;
             }
             .manifesto-panel p {
-                margin: 0 0 0.7rem;
+                margin: 0 0 0.22rem;
                 font-size: clamp(0.88rem, 0.95vw, 1.05rem);
                 font-weight: 600; line-height: 1.65;
                 min-height: 1.4em;
             }
             .manifesto-panel p:last-child { margin-bottom: 0; color: var(--paper); }
-            .manifesto-panel .mp-indent  { margin-bottom: 1.2rem; }
-            .manifesto-panel .mp-final   { margin-bottom: 0; color: var(--paper); margin-top: 0.4rem; }
+            .manifesto-panel .mp-indent  { margin-bottom: 0.6rem; }
+            .manifesto-panel .mp-final   { margin-bottom: 0; color: var(--paper); margin-top: 0.2rem; }
 
             .nav-box {
                 position: absolute; z-index: 11;
@@ -432,7 +432,7 @@
                 margin-top: 2px;
             }
             .manifesto-panel p {
-                margin: 0 0 1rem;
+                margin: 0 0 0.5rem;
                 font-size: 0.96rem; font-weight: 600;
                 line-height: 1.78; min-height: 1.4em;
                 text-shadow: 0 1px 10px rgba(0,0,0,0.95), 0 2px 28px rgba(0,0,0,0.8);
@@ -449,7 +449,7 @@
 
         .scroll-indicator {
             position: absolute;
-            bottom: clamp(65px, 12vh, 95px);
+            bottom: clamp(52px, 8vh, 75px);
             left: 50%; transform: translateX(-50%);
             z-index: 11;
             display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -746,7 +746,7 @@
             width: 32px;
             height: 1px;
             background: rgba(182,74,53,0.52);
-            margin: 1.3rem 0 1.2rem;
+            margin: 0.65rem 0 0.6rem;
             opacity: 0;
             transition: opacity 0.9s ease;
         }
@@ -755,14 +755,14 @@
         .manifesto-panel .mp-second {
             font-size: clamp(0.78rem, 0.84vw, 0.92rem);
             color: rgba(140,255,176,0.48);
-            margin-bottom: 0.55rem;
+            margin-bottom: 0.28rem;
             min-height: 1.3em;
             font-style: italic;
         }
         .manifesto-panel .mp-second.mp-last {
             color: var(--paper-dim);
             margin-bottom: 0;
-            margin-top: 0.3rem;
+            margin-top: 0.15rem;
             font-style: normal;
         }
     </style>
@@ -860,9 +860,9 @@
             <div class="mp-sep" id="mpSep"></div>
             <p id="mp6"></p>
             <p id="mp7"></p>
-            <p id="mp8" class="mp-indent"></p>
+            <p id="mp8"></p>
             <p id="mp9"></p>
-            <p id="mp10" class="mp-indent"></p>
+            <p id="mp10"></p>
             <p id="mp11" class="mp-final"></p>
         </section>
         <nav class="nav-box">
