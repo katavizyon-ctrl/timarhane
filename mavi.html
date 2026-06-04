@@ -239,8 +239,8 @@
         .main-interface {
             position: relative;
             z-index: 10;
-            width: min(468px, 90vw);
-            margin-left: 3vw;
+            width: min(520px, 90vw);
+            margin-left: 8vw;
             margin-right: auto;
             align-self: flex-start;
             margin-top: 30px;
@@ -278,7 +278,7 @@
             font-size: 0.58rem;
             font-weight: 700;
             letter-spacing: 0.20em;
-            color: rgba(232, 216, 184, 0.62);
+            color: var(--mavi-3);
             text-transform: uppercase;
             opacity: 0.90;
         }
@@ -317,11 +317,10 @@
 
         /* ── Custom audio player ── */
         .player {
-            margin: 20px 0 20px;
+            margin: 0 0 20px;
             padding: 16px 18px;
             background: rgba(0, 0, 5, 0.45);
             border: 1px solid var(--mavi-3);
-            border-top: 1px solid rgba(57, 177, 209, 0.35);
         }
 
         .player-track-info {
@@ -333,7 +332,7 @@
         }
 
         .player-track-name {
-            color: var(--mavi-4);
+            color: var(--mavi-1);
             font-size: 0.76rem;
             font-weight: 700;
             letter-spacing: 0.18em;
@@ -450,7 +449,7 @@
         .player-vol-fill {
             height: 100%;
             width: 80%;
-            background: rgba(57, 177, 209, 0.72);
+            background: rgba(140, 255, 176, 0.52);
             pointer-events: none;
         }
 
@@ -493,7 +492,7 @@
 
         .lyrics-block {
             margin-bottom: 20px;
-            opacity: 0.38;
+            opacity: 0.28;
             font-size: 0.92rem;
             line-height: 1.6;
             color: var(--paper-dim);
@@ -583,55 +582,7 @@
             .lyrics-container { height: min(44svh, 320px); }
         }
 
-        /* ── Right side ambient element ── */
-        .side-signal {
-            position: fixed;
-            right: clamp(18px, 3vw, 48px);
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            pointer-events: none;
-        }
-
-        .side-signal-line {
-            width: 1px;
-            height: 120px;
-            background: linear-gradient(to bottom, transparent, rgba(57, 177, 209, 0.45), transparent);
-        }
-
-        .side-signal-label {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.56rem;
-            font-weight: 700;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            color: rgba(57, 177, 209, 0.42);
-        }
-
-        .side-signal-dot {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: rgba(57, 177, 209, 0.55);
-            animation: dotPulse 2.4s ease-in-out infinite;
-        }
-
-        @keyframes dotPulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50%       { opacity: 1;   transform: scale(1.5); }
-        }
-
-        @media (max-width: 760px) {
-            .side-signal { display: none; }
-        }
-
-
+        /* ── Animations ── */
         @keyframes bgGlimmer {
             0%   { filter: brightness(0.76) contrast(1.04) saturate(0.88); }
             100% { filter: brightness(0.82) contrast(1.02) saturate(0.96); }
@@ -649,7 +600,7 @@
             position: fixed; z-index: 6;
             width: 380px; height: 380px; border-radius: 50%;
             pointer-events: none;
-            background: radial-gradient(circle, rgba(140,255,176,0.07) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(80,160,255,0.09) 0%, transparent 65%);
             transform: translate(-50%,-50%);
             left: -999px; top: -999px;
             mix-blend-mode: screen;
@@ -658,7 +609,7 @@
 
         /* ── Glitch Song Title ── */
         .song-title {
-            font-size: clamp(1.2rem, 3.6vw, 2.8rem);
+            font-size: clamp(1.5rem, 5vw, 4rem);
             font-weight: 800;
             letter-spacing: 0.06em;
             line-height: 0.88;
@@ -795,13 +746,6 @@
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <div id="glow"></div>
-
-    <div class="side-signal">
-        <div class="side-signal-line"></div>
-        <span class="side-signal-label">TIMARHANE // SIGNAL</span>
-        <div class="side-signal-dot"></div>
-        <div class="side-signal-line"></div>
-    </div>
 
     <nav class="site-nav" aria-label="Ana navigasyon">
         <a class="nav-brand" href="about.html">ONEHEUS // TIMARHANE by AKA</a>
@@ -982,7 +926,7 @@
             volTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
         }
 
-        // Spacebar play/pause
+        // Global key tracking attached natively inside instance block
         window.addEventListener('keydown', function(e) {
             if (e.code === 'Space' || e.keyCode === 32) {
                 const activeEl = document.activeElement;
@@ -991,7 +935,7 @@
                 }
                 e.preventDefault();
                 if (audio.paused) {
-                    audio.play().catch(err => { console.error('Playback failed:', err); });
+                    audio.play();
                 } else {
                     audio.pause();
                 }
@@ -1000,15 +944,8 @@
 
         // Play / pause
         playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play().catch(err => {
-                    console.error('Playback failed:', err);
-                    playBtn.textContent = '▶ OYNAT';
-                    playBtn.classList.remove('is-playing');
-                });
-            } else {
-                audio.pause();
-            }
+            if (audio.paused) { audio.play(); }
+            else { audio.pause(); }
         });
 
         audio.addEventListener('play', () => {
@@ -1154,9 +1091,9 @@
                 for (let i = 0; i < d.length; i += 4) {
                     const v = Math.random() * 255 | 0;
                     if (v > 210) {
-                        d[i]   = v * 0.42 | 0;
-                        d[i+1] = v;
-                        d[i+2] = v * 0.58 | 0;
+                        d[i]   = v * 0.18 | 0;
+                        d[i+1] = v * 0.52 | 0;
+                        d[i+2] = v;
                         d[i+3] = (v - 210) * 2;
                     }
                 }
@@ -1171,8 +1108,8 @@
                     if (p.life <= 0) { trail.splice(i, 1); continue; }
                     const r = p.life * 14;
                     const g = fxX.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
-                    g.addColorStop(0, `rgba(140,255,176,${p.life * 0.38})`);
-                    g.addColorStop(1, 'rgba(140,255,176,0)');
+                    g.addColorStop(0, `rgba(80,160,255,${p.life * 0.42})`);
+                    g.addColorStop(1, 'rgba(80,160,255,0)');
                     fxX.fillStyle = g;
                     fxX.beginPath();
                     fxX.arc(p.x, p.y, r, 0, Math.PI * 2);

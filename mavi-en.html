@@ -238,8 +238,8 @@
         .main-interface {
             position: relative;
             z-index: 10;
-            width: min(468px, 90vw);
-            margin-left: 3vw;
+            width: min(520px, 90vw);
+            margin-left: 8vw;
             margin-right: auto;
             align-self: flex-start;
             margin-top: 30px;
@@ -270,7 +270,7 @@
             margin: 6px 0 18px;
             font-size: 0.58rem; font-weight: 700;
             letter-spacing: 0.20em;
-            color: rgba(232, 216, 184, 0.62);
+            color: var(--mavi-3);
             text-transform: uppercase; opacity: 0.90;
         }
         .meta-row span { white-space: nowrap; }
@@ -307,11 +307,10 @@
 
         /* ── Custom audio player ── */
         .player {
-            margin: 20px 0 20px;
+            margin: 0 0 20px;
             padding: 16px 18px;
             background: rgba(0, 0, 5, 0.45);
             border: 1px solid var(--mavi-3);
-            border-top: 1px solid rgba(57, 177, 209, 0.35);
         }
 
         .player-track-info {
@@ -323,7 +322,7 @@
         }
 
         .player-track-name {
-            color: var(--mavi-4);
+            color: var(--phosphor);
             font-size: 0.76rem;
             font-weight: 700;
             letter-spacing: 0.18em;
@@ -440,7 +439,7 @@
         .player-vol-fill {
             height: 100%;
             width: 80%;
-            background: rgba(57, 177, 209, 0.72);
+            background: rgba(140, 255, 176, 0.52);
             pointer-events: none;
         }
 
@@ -483,7 +482,7 @@
 
         .lyrics-block {
             margin-bottom: 20px;
-            opacity: 0.38;
+            opacity: 0.28;
             font-size: 0.92rem;
             line-height: 1.6;
             color: var(--paper-dim);
@@ -495,21 +494,6 @@
             color: var(--mavi-1);
             font-weight: 700;
             text-shadow: 0 0 10px rgba(253, 178, 159, 0.38);
-        }
-
-        .lyrics-en {
-            display: block;
-            font-size: 0.76rem;
-            font-weight: 400;
-            font-style: italic;
-            color: var(--paper-faint);
-            opacity: 0.68;
-            margin-top: 3px;
-        }
-
-        .lyrics-block.active .lyrics-en {
-            color: var(--paper-dim);
-            opacity: 1;
         }
 
         /* ── Mobile ── */
@@ -588,55 +572,7 @@
             .lyrics-container { height: min(44svh, 320px); }
         }
 
-        /* ── Right side ambient element ── */
-        .side-signal {
-            position: fixed;
-            right: clamp(18px, 3vw, 48px);
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            pointer-events: none;
-        }
-
-        .side-signal-line {
-            width: 1px;
-            height: 120px;
-            background: linear-gradient(to bottom, transparent, rgba(57, 177, 209, 0.45), transparent);
-        }
-
-        .side-signal-label {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.56rem;
-            font-weight: 700;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            color: rgba(57, 177, 209, 0.42);
-        }
-
-        .side-signal-dot {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: rgba(57, 177, 209, 0.55);
-            animation: dotPulse 2.4s ease-in-out infinite;
-        }
-
-        @keyframes dotPulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50%       { opacity: 1;   transform: scale(1.5); }
-        }
-
-        @media (max-width: 760px) {
-            .side-signal { display: none; }
-        }
-
-
+        /* ── Animations ── */
         @keyframes bgGlimmer {
             0%   { filter: brightness(0.76) contrast(1.04) saturate(0.88); }
             100% { filter: brightness(0.82) contrast(1.02) saturate(0.96); }
@@ -654,7 +590,7 @@
             position: fixed; z-index: 6;
             width: 380px; height: 380px; border-radius: 50%;
             pointer-events: none;
-            background: radial-gradient(circle, rgba(140,255,176,0.07) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(80,160,255,0.09) 0%, transparent 65%);
             transform: translate(-50%,-50%);
             left: -999px; top: -999px;
             mix-blend-mode: screen;
@@ -663,7 +599,7 @@
 
         /* ── Glitch Song Title ── */
         .song-title {
-            font-size: clamp(1.2rem, 3.6vw, 2.8rem);
+            font-size: clamp(1.5rem, 5vw, 4rem);
             font-weight: 800;
             letter-spacing: 0.06em;
             line-height: 0.88;
@@ -804,13 +740,6 @@
     <canvas id="fx"></canvas>
     <div id="glow"></div>
 
-    <div class="side-signal">
-        <div class="side-signal-line"></div>
-        <span class="side-signal-label">TIMARHANE // SIGNAL</span>
-        <div class="side-signal-dot"></div>
-        <div class="side-signal-line"></div>
-    </div>
-
     <nav class="site-nav" aria-label="Main navigation">
         <a class="nav-brand" href="about-en.html">ONEHEUS // TIMARHANE by AKA</a>
         <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="songMenu"><span></span></button>
@@ -889,62 +818,62 @@
             });
         })();
 
-        /* ── Lyrics data — TR + EN ── */
+        /* ── Lyrics data ── */
         const lyrics = [
-            { t: 32,  text: "Sabah erkenden kalktık yine,",                                                    en: "We rose early again this morning," },
-            { t: 36,  text: "Cebimiz dar ama gülümsemek bedava.",                                              en: "Pockets thin, but smiling costs nothing." },
-            { t: 40,  text: "Trafik çıldırmış, ekmek pahalanmış,",                                            en: "Traffic's gone mad, bread's gone up," },
-            { t: 45,  text: "Bu açık hava tımarhanesinde...",                                                  en: "In this open-air asylum of ours..." },
-            { t: 47,  text: "Sistem mi çökmüş? Veriler mi çalınmış?",                                         en: "Has the system crashed? Has the data been stolen?" },
-            { t: 55,  text: "Aşk bu be güzelim, siber dinler mi hiç?",                                        en: "It's called love, darling — does the cyber world even listen?" },
-            { t: 62,  text: "Din! Din! Din!",                                                                  en: "Listen! Listen! Listen!" },
-            { t: 70,  text: "Dinlemez dinler!",                                                                en: "It won't listen, it never listens!" },
-            { t: 73,  text: "Şehirleri dar etseler de,",                                                      en: "Even if they shrink the cities," },
-            { t: 77,  text: "Uydudan, Mobese'ye hepimizi izleseler de...",                                    en: "Even if they watch us all — satellites to CCTV..." },
-            { t: 81,  text: "Yine daldık o muzip bilmeceye...",                                               en: "We dove back into that mischievous riddle again..." },
-            { t: 85,  text: "İster iste, isteme — Yapaya doğru evriliyoruz!",                                 en: "Want it or not — we are evolving toward the artificial!" },
-            { t: 92,  text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?",                           en: "Wait, just a second... Look around you... Is this real?" },
-            { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —",                      en: "We won't stop breathing just because someone told us to —" },
-            { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!",                                           en: "We are breathing! We can still love!" },
-            { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!",                                               en: "We are human and we will not bow down!" },
-            { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller.",                             en: "Sleeping beauties, too rotten to be awakened." },
-            { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler.",                                  en: "Even in their dreams, they chase world conquest." },
-            { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana.",         en: "Ignorance is bliss — for those who can't think, who bow, who become the sacrifice." },
-            { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?",                           en: "Wait, just a second... Look around you... Is this real?" },
-            { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun...",                       en: "When did we ever look at the face of this soil... this rain..." },
-            { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne.",                              en: "It was always bare, and we clothed it." },
-            { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —",                      en: "We won't stop breathing just because someone told us to —" },
-            { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!",          en: "We are breathing! We can still love! We are human and we will not bow down!" },
-            { t: 227, text: "Hadi gel... Kodları kıralım...",                                                 en: "Come on... let's crack the code..." },
-            { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da...",                         en: "We ring like a saxophone... In this simu-la-tion..." },
-            { t: 236, text: "Aaaah-yaaa... Çınlarız biz!",                                                    en: "Aaaah-yaaa... We shall ring out!" },
-            { t: 248, text: "Gülümse şimdi... Tam da böyle...",                                               en: "Smile now... Just like that..." },
-            { t: 288, text: "Sabah erkenden kalktık yine,",                                                    en: "We rose early again this morning," },
-            { t: 290, text: "Cebimiz dar ama gülümsemek bedava.",                                              en: "Pockets thin, but smiling costs nothing." },
-            { t: 294, text: "Trafik çıldırmış, ekmek pahalanmış,",                                            en: "Traffic's gone mad, bread's gone up," },
-            { t: 300, text: "Bu açık hava tımarhanesinde...",                                                  en: "In this open-air asylum of ours..." },
-            { t: 306, text: "Sistem mi çökmüş? Veriler mi çalınmış?",                                         en: "Has the system crashed? Has the data been stolen?" },
-            { t: 311, text: "Aşk bu be güzelim, siber dinler mi hiç?",                                        en: "It's called love, darling — does the cyber world even listen?" },
-            { t: 318, text: "Din! Din! Din!",                                                                  en: "Listen! Listen! Listen!" },
-            { t: 320, text: "Dinlemez dinler!",                                                                en: "It won't listen, it never listens!" },
-            { t: 323, text: "Şehirleri dar etseler de,",                                                      en: "Even if they shrink the cities," },
-            { t: 326, text: "Uydudan, Mobese'ye hepimizi izleseler de...",                                    en: "Even if they watch us all — satellites to CCTV..." },
-            { t: 330, text: "Yine daldık o muzip bilmeceye...",                                               en: "We dove back into that mischievous riddle again..." },
-            { t: 332, text: "İster iste, isteme — Yapaya doğru evriliyoruz!",                                 en: "Want it or not — we are evolving toward the artificial!" },
-            { t: 338, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?",                           en: "Wait, just a second... Look around you... Is this real?" },
-            { t: 348, text: "Dinlemez dinler!",                                                                en: "It won't listen, it never listens!" },
-            { t: 350, text: "Şehirleri dar etseler de,",                                                      en: "Even if they shrink the cities," },
-            { t: 356, text: "Uydudan, Mobese'ye hepimizi izleseler de...",                                    en: "Even if they watch us all — satellites to CCTV..." },
-            { t: 360, text: "Yine daldık o muzip bilmeceye...",                                               en: "We dove back into that mischievous riddle again..." },
-            { t: 368, text: "İster iste, isteme — Yapaya doğru evriliyoruz!",                                 en: "Want it or not — we are evolving toward the artificial!" },
-            { t: 371, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?",                           en: "Wait, just a second... Look around you... Is this real?" },
-            { t: 384, text: "Dinler ah dinler!",                                                               en: "It listens, oh it listens!" },
-            { t: 386, text: "Şehirleri dar etseler de,",                                                      en: "Even if they shrink the cities," },
-            { t: 389, text: "Uydudan, Mobese'ye hepimizi izleseler de...",                                    en: "Even if they watch us all — satellites to CCTV..." },
-            { t: 392, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?",                           en: "Wait, just a second... Look around you... Is this real?" },
-            { t: 394, text: "Yine daldık o muzip bilmeceye...",                                               en: "We dove back into that mischievous riddle again..." },
-            { t: 398, text: "İster iste, isteme — Yapaya doğru evriliyoruz!",                                 en: "Want it or not — we are evolving toward the artificial!" },
-            { t: 479, text: "Sistem kapanıyor...",                                                             en: "System shutting down..." }
+            { t: 32,  text: "Sabah erkenden kalktık yine," },
+            { t: 36,  text: "Cebimiz dar ama gülümsemek bedava." },
+            { t: 40,  text: "Trafik çıldırmış, ekmek pahalanmış," },
+            { t: 45,  text: "Bu açık hava tımarhanesinde..." },
+            { t: 47,  text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
+            { t: 55,  text: "Aşk bu be güzelim, siber dinler mi hiç?" },
+            { t: 62,  text: "Din! Din! Din!" },
+            { t: 70,  text: "Dinlemez dinler!" },
+            { t: 73,  text: "Şehirleri dar etseler de," },
+            { t: 77,  text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+            { t: 81,  text: "Yine daldık o muzip bilmeceye..." },
+            { t: 85,  text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+            { t: 92,  text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 102, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
+            { t: 110, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz!" },
+            { t: 119, text: "İnsanız biz ve boyun eğmiyoruz!" },
+            { t: 140, text: "Uyuyan güzeller, uyandırılamayacak kadar reziller." },
+            { t: 149, text: "Rüyalarında bile dünyayı fethetme peşindeler." },
+            { t: 157, text: "Cehalet mutluluktur — Kafası basmayana, biat kültüründe, kurban olana." },
+            { t: 168, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 188, text: "Ne zaman baktık ki yüzüne, bu toprağın... bu yağmurun..." },
+            { t: 196, text: "Cırılçıplak duruyordu hep, biz giydirdik üstüne." },
+            { t: 204, text: "Birileri nefes alma dediği için nefes almayacak değiliz —" },
+            { t: 212, text: "Nefes alıyoruz! Hâlâ sevebiliyoruz! İnsanız biz ve boyun eğmiyoruz!" },
+            { t: 227, text: "Hadi gel... Kodları kıralım..." },
+            { t: 230, text: "Saksafon gibi çın-lı-yo-ruz... Bu si-mü-las-yon-da..." },
+            { t: 236, text: "Aaaah-yaaa... Çınlarız biz!" },
+            { t: 248, text: "Gülümse şimdi... Tam da böyle..." },
+            { t: 288, text: "Sabah erkenden kalktık yine," },
+            { t: 290, text: "Cebimiz dar ama gülümsemek bedava." },
+            { t: 294, text: "Trafik çıldırmış, ekmek pahalanmış," },
+            { t: 300, text: "Bu açık hava tımarhanesinde..." },
+            { t: 306, text: "Sistem mi çökmüş? Veriler mi çalınmış?" },
+            { t: 311, text: "Aşk bu be güzelim, siber dinler mi hiç?" },
+            { t: 318, text: "Din! Din! Din!" },
+            { t: 320, text: "Dinlemez dinler!" },
+            { t: 323, text: "Şehirleri dar etseler de," },
+            { t: 326, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+            { t: 330, text: "Yine daldık o muzip bilmeceye..." },
+            { t: 332, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+            { t: 338, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 348, text: "Dinlemez dinler!" },
+            { t: 350, text: "Şehirleri dar etseler de," },
+            { t: 356, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+            { t: 360, text: "Yine daldık o muzip bilmeceye..." },
+            { t: 368, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+            { t: 371, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 384, text: "Dinler ah dinler!" },
+            { t: 386, text: "Şehirleri dar etseler de," },
+            { t: 389, text: "Uydudan, Mobese'ye hepimizi izleseler de..." },
+            { t: 392, text: "Dur! bir saniye... Etrafına bir bak... Gerçek mi bu?" },
+            { t: 394, text: "Yine daldık o muzip bilmeceye..." },
+            { t: 398, text: "İster iste, isteme — Yapaya doğru evriliyoruz!" },
+            { t: 479, text: "Sistem kapanıyor..." }
         ];
 
         /* ── Build lyrics DOM ── */
@@ -952,12 +881,8 @@
         lyrics.forEach(l => {
             const d = document.createElement('div');
             d.className = 'lyrics-block';
+            d.textContent = l.text;
             d.dataset.time = l.t;
-            d.appendChild(document.createTextNode(l.text));
-            const span = document.createElement('span');
-            span.className = 'lyrics-en';
-            span.textContent = '(' + l.en + ')';
-            d.appendChild(span);
             sc.appendChild(d);
         });
 
@@ -996,33 +921,10 @@
             volTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
         }
 
-        // Spacebar play/pause
-        window.addEventListener('keydown', function(e) {
-            if (e.code === 'Space' || e.keyCode === 32) {
-                const activeEl = document.activeElement;
-                if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
-                    return;
-                }
-                e.preventDefault();
-                if (audio.paused) {
-                    audio.play().catch(err => { console.error('Playback failed:', err); });
-                } else {
-                    audio.pause();
-                }
-            }
-        }, true);
-
         // Play / pause
         playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play().catch(err => {
-                    console.error('Playback failed:', err);
-                    playBtn.textContent = '▶ PLAY';
-                    playBtn.classList.remove('is-playing');
-                });
-            } else {
-                audio.pause();
-            }
+            if (audio.paused) { audio.play(); }
+            else { audio.pause(); }
         });
 
         audio.addEventListener('play', () => {
@@ -1168,9 +1070,9 @@
                 for (let i = 0; i < d.length; i += 4) {
                     const v = Math.random() * 255 | 0;
                     if (v > 210) {
-                        d[i]   = v * 0.42 | 0;
-                        d[i+1] = v;
-                        d[i+2] = v * 0.58 | 0;
+                        d[i]   = v * 0.18 | 0;
+                        d[i+1] = v * 0.52 | 0;
+                        d[i+2] = v;
                         d[i+3] = (v - 210) * 2;
                     }
                 }
@@ -1185,8 +1087,8 @@
                     if (p.life <= 0) { trail.splice(i, 1); continue; }
                     const r = p.life * 14;
                     const g = fxX.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
-                    g.addColorStop(0, `rgba(140,255,176,${p.life * 0.38})`);
-                    g.addColorStop(1, 'rgba(140,255,176,0)');
+                    g.addColorStop(0, `rgba(80,160,255,${p.life * 0.42})`);
+                    g.addColorStop(1, 'rgba(80,160,255,0)');
                     fxX.fillStyle = g;
                     fxX.beginPath();
                     fxX.arc(p.x, p.y, r, 0, Math.PI * 2);
