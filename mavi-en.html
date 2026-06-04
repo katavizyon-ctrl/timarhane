@@ -921,10 +921,33 @@
             volTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
         }
 
+        // Spacebar play/pause
+        window.addEventListener('keydown', function(e) {
+            if (e.code === 'Space' || e.keyCode === 32) {
+                const activeEl = document.activeElement;
+                if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
+                    return;
+                }
+                e.preventDefault();
+                if (audio.paused) {
+                    audio.play().catch(err => { console.error('Playback failed:', err); });
+                } else {
+                    audio.pause();
+                }
+            }
+        }, true);
+
         // Play / pause
         playBtn.addEventListener('click', () => {
-            if (audio.paused) { audio.play(); }
-            else { audio.pause(); }
+            if (audio.paused) {
+                audio.play().catch(err => {
+                    console.error('Playback failed:', err);
+                    playBtn.textContent = '▶ PLAY';
+                    playBtn.classList.remove('is-playing');
+                });
+            } else {
+                audio.pause();
+            }
         });
 
         audio.addEventListener('play', () => {

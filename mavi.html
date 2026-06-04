@@ -926,7 +926,7 @@
             volTrack.setAttribute('aria-valuenow', Math.round(pct * 100));
         }
 
-        // Global key tracking attached natively inside instance block
+        // Spacebar play/pause
         window.addEventListener('keydown', function(e) {
             if (e.code === 'Space' || e.keyCode === 32) {
                 const activeEl = document.activeElement;
@@ -935,7 +935,7 @@
                 }
                 e.preventDefault();
                 if (audio.paused) {
-                    audio.play();
+                    audio.play().catch(err => { console.error('Playback failed:', err); });
                 } else {
                     audio.pause();
                 }
@@ -944,8 +944,15 @@
 
         // Play / pause
         playBtn.addEventListener('click', () => {
-            if (audio.paused) { audio.play(); }
-            else { audio.pause(); }
+            if (audio.paused) {
+                audio.play().catch(err => {
+                    console.error('Playback failed:', err);
+                    playBtn.textContent = '▶ OYNAT';
+                    playBtn.classList.remove('is-playing');
+                });
+            } else {
+                audio.pause();
+            }
         });
 
         audio.addEventListener('play', () => {
