@@ -47,11 +47,9 @@
         /* ── Background layers ── */
         .bg-image {
             position: fixed;
-            top: 52px; left: 0; right: 0; bottom: 0;
+            top: 72px; left: 0; right: 0; bottom: 0;
             z-index: 1;
-            background-size: contain;
-            background-position: top center;
-            background: url('tape_2.webp') center center / cover no-repeat;
+            background: url('tape_2.webp') center center / contain no-repeat;
             transform-origin: center center;
             will-change: transform;
             filter: brightness(0.78) contrast(1.04) saturate(0.90);
@@ -626,7 +624,7 @@
         }
 
         @media (max-width: 760px) {
-            .bg-image { background-size: cover !important; background-position: top center !important; }
+            .bg-image { background-size: contain !important; background-position: center center !important; }
         }
 
         /* ══════════════════════════════════════
