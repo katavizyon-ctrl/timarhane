@@ -190,9 +190,10 @@
                 width: min(520px,38vw);
                 padding: 22px 26px 20px;
                 color: var(--phosphor-soft);
-                background: linear-gradient(135deg, rgba(0,0,0,0.58), rgba(0,0,0,0.24));
+                background: rgba(0,0,0,0.28);
                 border-left: 1px solid var(--phosphor-dim);
-                backdrop-filter: blur(2.5px);
+                box-shadow: 0 24px 90px rgba(0,0,0,0.6);
+                backdrop-filter: blur(2px);
                 opacity: 0;
                 transform: translateY(-50%) translateX(-14px);
                 transition: opacity 0.7s ease, transform 0.7s ease;
@@ -568,10 +569,11 @@
             gap: clamp(10px, 1.5vw, 24px);
             text-align: center;
             padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0,0,0,0.28);
             border: 1px solid rgba(232, 216, 184, 0.08);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            box-shadow: 0 24px 90px rgba(0,0,0,0.6);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
         }
         .origin-header::before,
         .origin-header::after { 
