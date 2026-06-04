@@ -63,9 +63,7 @@
     min-height: 100vh;
     padding-top: 72px;
     font-family: 'Courier New', Courier, monospace;
-    overflow-x: hidden;
-    min-height: 100vh;
-    padding-top: 72px;
+    overflow: hidden;
   }
 
   .bg-image {
@@ -339,9 +337,9 @@
   .player-section {
     position: relative;
     z-index: 10;
-    max-width: 680px;
-    margin: 2.5rem auto 0;
-    padding: 0 1.5rem;
+    max-width: none;
+    margin: 1.2rem 0 0;
+    padding: 0;
     opacity: 0;
     animation: fadeUp 0.8s 0.7s forwards;
   }
@@ -462,9 +460,9 @@
   .lyrics-section {
     position: relative;
     z-index: 10;
-    max-width: 680px;
-    margin: 2rem auto 5rem;
-    padding: 0 1.5rem;
+    max-width: none;
+    margin: 1.2rem 0 0;
+    padding: 0;
     opacity: 0;
     animation: fadeUp 0.8s 0.9s forwards;
   }
@@ -573,6 +571,12 @@
 
         /* ── Main interface (03/04 refactor) ── */
         .main-interface {
+            width: calc(100vw - 36px);
+            margin: 86px 18px 44px;
+            padding: 22px 18px 20px;
+        }
+        /* legacy override preserved below */
+        ._main-interface_unused {
             position: relative;
             z-index: 10;
             width: min(520px, 90vw);
