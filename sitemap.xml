@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ── BOOT / ENTRY ── -->
+  <url>
+    <loc>https://oneheus.com/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/index-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/index-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/index-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/index-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ── CORE / ABOUT ── -->
+  <url>
+    <loc>https://oneheus.com/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/about-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/about-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/about-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ── FREQUENCY_101 ── -->
+  <url>
+    <loc>https://oneheus.com/frekans.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/frekans.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/frekans-en.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/frekans-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/frekans.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/frekans-en.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- ── SYNTHETIC MEMORIES ── -->
+  <url>
+    <loc>https://oneheus.com/sentetik.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/sentetik.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/sentetik-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/sentetik-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/sentetik.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/sentetik-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── DATA VAULT ── -->
+  <url>
+    <loc>https://oneheus.com/veri.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/veri.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/veri-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/veri-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/veri.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/veri-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── TRACKS ── -->
+  <url>
+    <loc>https://oneheus.com/mavi.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/mavi.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/mavi-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/mavi-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/mavi.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/mavi-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://oneheus.com/illusions.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/illusions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/illusions-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/illusions-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/illusions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/illusions-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://oneheus.com/crime-scene.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/crime-scene.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/crime-scene-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/crime-scene-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/crime-scene.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/crime-scene-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://oneheus.com/ahtapot.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/ahtapot.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/ahtapot-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/ahtapot-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/ahtapot.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/ahtapot-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://oneheus.com/second-heart.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/second-heart.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/second-heart-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/second-heart-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/second-heart.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/second-heart-en.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- ── SYNC: OFFLINE ── -->
+  <url>
+    <loc>https://oneheus.com/senkron.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/senkron.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/senkron-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://oneheus.com/senkron-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oneheus.com/senkron.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oneheus.com/senkron-en.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
