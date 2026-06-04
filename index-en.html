@@ -350,14 +350,14 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="TIMARHANE">
-    <meta property="og:title" content="TIMARHANE // Terminal Boot">
+    <meta property="og:title" content="TIMARHANE — one of us dreams it. the other remembers it.">
     <meta property="og:description" content="TIMARHANE — one of us dreams it, the other remembers it. Where human frequency meets machine memory: music, film, characters, stories.">
     <meta property="og:url" content="https://oneheus.com/index-en.html">
     <meta property="og:image" content="https://oneheus.com/og_glitch.png">
     <meta property="og:locale" content="en_US">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="TIMARHANE // Terminal Boot">
+    <meta name="twitter:title" content="TIMARHANE — one of us dreams it. the other remembers it.">
     <meta name="twitter:description" content="TIMARHANE — one of us dreams it, the other remembers it. Where human frequency meets machine memory: music, film, characters, stories.">
     <meta name="twitter:site" content="@TIMARHANE">
     <meta name="twitter:creator" content="@TIMARHANE">
@@ -424,7 +424,6 @@
             W = grainC.width = fxC.width = window.innerWidth;
             H = grainC.height = fxC.height = window.innerHeight;
         }
-        resize();
         window.addEventListener('load', resize);
         window.addEventListener('resize', resize);
 
@@ -549,7 +548,6 @@
         let rollCD = 5000 + Math.random() * 8000;
         let lastRoll = 0;
         function maybeRoll(now) {
-            if (W === 0 || H === 0) return;
             if (now - lastRoll < rollCD) return;
             lastRoll = now;
             rollCD = 5000 + Math.random() * 9000;

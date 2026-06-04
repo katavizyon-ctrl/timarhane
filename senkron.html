@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <title>TIMARHANE // Senkron: Kopuk</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="alternate" hreflang="tr" href="https://oneheus.com/senkron.html" />
+    <link rel="alternate" hreflang="en" href="https://oneheus.com/senkron-en.html" />
+    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/senkron.html" />
+    <title>TIMARHANE — Senkron: Kopuk // Arşiv Çevrimdışı</title>
     <style>
         :root {
             --void: #050505;
@@ -298,14 +302,24 @@
         @media (min-width: 761px) {
             .mobile-topbar, .mobile-drawer { display: none; }
         }
+    
+        @media (prefers-reduced-motion: reduce) {
+            .scanlines,
+            #grain, #fx, #glow,
+            #rgbFlash, #proxCanvas { display: none !important; }
+            .bg-photo, #bg-photo,
+            .origin-bg-home, .origin-bg-morpheus, .origin-bg-oneheus { transform: scale(1.04) !important; transition: none !important; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
     <!-- SEO & Social -->
     <meta name="description" content="Senkron katmanı şu an pasif — dış bağlantı izlenemiyor. TIMARHANE arşivi çevrimdışı.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://oneheus.com/senkron.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/senkron.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/senkron-en.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="TIMARHANE">
@@ -318,9 +332,34 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="TIMARHANE // Senkron: Kopuk">
     <meta name="twitter:description" content="Senkron katmanı şu an pasif — dış bağlantı izlenemiyor. TIMARHANE arşivi çevrimdışı.">
+    <meta name="twitter:site" content="@TIMARHANE">
+    <meta name="twitter:creator" content="@TIMARHANE">
     <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Senkron: Kopuk",
+    "url": "https://oneheus.com/senkron.html",
+    "description": "TIMARHANE senkron katmanı — şu an pasif.",
+    "inLanguage": "tr",
+    "creator": {
+        "@type": "Organization",
+        "name": "TIMARHANE",
+        "url": "https://oneheus.com/"
+    }
+}
+    </script>
 </head>
 <body>
+<noscript>
+<div style="font-family:'Courier New',monospace;background:#050505;color:#8cffb0;padding:40px;min-height:100vh">
+<p style="margin:0 0 12px;letter-spacing:.2em;font-weight:700">TIMARHANE</p>
+<h2 style="margin:0 0 20px;font-size:1rem;font-weight:400;color:#e8d8b8">Senkron: Kopuk</h2>
+<p style="margin:0 0 24px;color:rgba(140,255,176,0.72)">Senkron katmanı şu an pasif — dış bağlantı izlenemiyor.</p>
+<nav style="font-size:.8rem;letter-spacing:.15em"><a href="about.html" style="color:#8cffb0">Core</a> // <a href="frekans.html" style="color:#8cffb0">Frekans_101</a> // <a href="sentetik.html" style="color:#8cffb0">Sentetik Anılar</a> // <a href="veri.html" style="color:#8cffb0">Veri Mahzeni</a></nav>
+</div>
+</noscript>
     <div id="pageVeil"></div>
 
     <canvas id="grain"></canvas>
