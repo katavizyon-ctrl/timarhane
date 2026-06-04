@@ -313,6 +313,35 @@
             .input-line { flex-direction: column; gap: 8px; }
             .interactive-btn { width: 100%; margin-left: 0; margin-top: 8px; padding: 14px 16px; }
         }
+
+        /* ══════════════════════════════════════
+           PREFERS-REDUCED-MOTION
+           Kills decorative animation for users
+           who have enabled Reduce Motion in
+           their OS accessibility settings.
+           Typing, page fade and nav still work.
+        ══════════════════════════════════════ */
+        @media (prefers-reduced-motion: reduce) {
+
+            /* Canvas overlays + effect layers → hidden */
+            .scanlines,
+            #grain, #fx, #glow,
+            #rgbFlash, #proxCanvas { display: none !important; }
+
+            /* Ken Burns / parallax backgrounds → frozen
+               !important overrides JS-applied inline transforms */
+            .bg-photo, #bg-photo,
+            .origin-bg-home,
+            .origin-bg-morpheus,
+            .origin-bg-oneheus { transform: scale(1.04) !important; transition: none !important; }
+
+            /* All CSS animations + transitions → effectively instant */
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
     <!-- SEO & Social -->
     <meta name="description" content="TIMARHANE — one of us dreams it, the other remembers it. Where human frequency meets machine memory: music, film, characters, stories.">

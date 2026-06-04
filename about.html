@@ -765,6 +765,35 @@
             margin-top: 0.15rem;
             font-style: normal;
         }
+
+        /* ══════════════════════════════════════
+           PREFERS-REDUCED-MOTION
+           Kills decorative animation for users
+           who have enabled Reduce Motion in
+           their OS accessibility settings.
+           Typing, page fade and nav still work.
+        ══════════════════════════════════════ */
+        @media (prefers-reduced-motion: reduce) {
+
+            /* Canvas overlays + effect layers → hidden */
+            .scanlines,
+            #grain, #fx, #glow,
+            #rgbFlash, #proxCanvas { display: none !important; }
+
+            /* Ken Burns / parallax backgrounds → frozen
+               !important overrides JS-applied inline transforms */
+            .bg-photo, #bg-photo,
+            .origin-bg-home,
+            .origin-bg-morpheus,
+            .origin-bg-oneheus { transform: scale(1.04) !important; transition: none !important; }
+
+            /* All CSS animations + transitions → effectively instant */
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
     <!-- SEO & Social -->
     <meta name="description" content="TIMARHANE — birimiz hayal eder, diğerimiz hatırlar. İnsan frekansının makine belleğiyle kesiştiği yerde.">
