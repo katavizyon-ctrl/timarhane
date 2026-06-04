@@ -13,9 +13,9 @@
     <style>
         :root {
             --void: #050505;
-            --phosphor: #8CFFB0;
-            --phosphor-soft: rgba(140, 255, 176, 0.78);
-            --phosphor-dim: rgba(140, 255, 176, 0.26);
+            --phosphor: #C060E0;
+            --phosphor-soft: rgba(192, 96, 224, 0.78);
+            --phosphor-dim: rgba(192, 96, 224, 0.26);
             --paper: #E8D8B8;
             --paper-dim: rgba(232, 216, 184, 0.64);
             --paper-faint: rgba(232, 216, 184, 0.38);
@@ -115,7 +115,7 @@
             justify-content: space-between;
             padding: 0 clamp(18px, 5vw, 72px);
             background: linear-gradient(180deg, rgba(0,0,0,0.82), rgba(0,0,0,0.32) 68%, transparent);
-            border-bottom: 1px solid rgba(140, 255, 176, 0.12);
+            border-bottom: 1px solid rgba(192, 96, 224, 0.12);
             backdrop-filter: blur(7px);
             -webkit-backdrop-filter: blur(7px);
         }
@@ -138,7 +138,7 @@
             flex-shrink: 0;
             width: 36px;
             height: 1px;
-            background: var(--red-memory);
+            background: #E87DB0;
             opacity: 0.82;
         }
 
@@ -188,7 +188,7 @@
         }
 
         .lang-switch a {
-            color: rgba(140, 255, 176, 0.52);
+            color: rgba(192, 96, 224, 0.52);
             text-decoration: none;
             transition: color 220ms ease;
         }
@@ -202,7 +202,7 @@
             justify-content: center;
             width: 44px;
             height: 40px;
-            border: 1px solid rgba(140, 255, 176, 0.34);
+            border: 1px solid rgba(192, 96, 224, 0.34);
             background: rgba(0, 0, 0, 0.42);
             color: var(--paper);
             font-family: inherit;
@@ -242,10 +242,10 @@
             margin-top: 30px;
             padding: 28px 26px 24px;
             background: rgba(0, 0, 5, 0.14);
-            border-left: 2px solid rgba(140, 255, 176, 0.40);
-            border-top: 1px solid rgba(140, 255, 176, 0.15);
-            border-right: 1px solid rgba(140, 255, 176, 0.15);
-            border-bottom: 1px solid rgba(140, 255, 176, 0.15);
+            border-left: 2px solid rgba(192, 96, 224, 0.40);
+            border-top: 1px solid rgba(192, 96, 224, 0.15);
+            border-right: 1px solid rgba(192, 96, 224, 0.15);
+            border-bottom: 1px solid rgba(192, 96, 224, 0.15);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
         }
@@ -253,7 +253,7 @@
         .corner {
             position: absolute;
             width: 12px; height: 12px;
-            border-color: rgba(140, 255, 176, 0.50);
+            border-color: rgba(192, 96, 224, 0.50);
             border-style: solid;
             pointer-events: none;
         }
@@ -297,7 +297,7 @@
             font-size: clamp(0.96rem, 1.1vw, 1.18rem);
             font-weight: 700;
             letter-spacing: 0.08em;
-            text-shadow: 0 0 18px rgba(140, 255, 176, 0.18);
+            text-shadow: 0 0 18px rgba(192, 96, 224, 0.18);
             line-height: 1.3;
         }
 
@@ -318,7 +318,7 @@
         }
 
         .player-track-name {
-            color: var(--phosphor);
+            color: var(--paper);
             font-size: 0.76rem;
             font-weight: 700;
             letter-spacing: 0.18em;
@@ -329,7 +329,7 @@
         }
 
         .player-time {
-            color: var(--paper-faint);
+            color: var(--paper);
             font-size: 0.68rem;
             font-weight: 700;
             letter-spacing: 0.10em;
@@ -339,7 +339,7 @@
         .player-scrubber {
             position: relative;
             height: 3px;
-            background: rgba(140, 255, 176, 0.14);
+            background: rgba(192, 96, 224, 0.14);
             margin-bottom: 16px;
             cursor: pointer;
         }
@@ -350,7 +350,7 @@
             background: var(--phosphor);
             pointer-events: none;
             transition: width 0.25s linear;
-            box-shadow: 0 0 6px rgba(140, 255, 176, 0.48);
+            box-shadow: 0 0 6px rgba(192, 96, 224, 0.48);
         }
 
         .player-scrubber-thumb {
@@ -364,7 +364,7 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             transition: left 0.25s linear;
-            box-shadow: 0 0 8px rgba(140, 255, 176, 0.42);
+            box-shadow: 0 0 8px rgba(192, 96, 224, 0.42);
         }
 
         .player-controls {
@@ -389,14 +389,14 @@
         }
 
         .player-btn:hover {
-            background: rgba(140, 255, 176, 0.12);
+            background: rgba(192, 96, 224, 0.12);
             border-color: var(--phosphor);
             color: var(--paper);
         }
 
         .player-btn.is-playing {
-            background: rgba(140, 255, 176, 0.10);
-            border-color: rgba(140, 255, 176, 0.52);
+            background: rgba(192, 96, 224, 0.10);
+            border-color: rgba(192, 96, 224, 0.52);
             color: var(--phosphor);
         }
 
@@ -420,7 +420,7 @@
             position: relative;
             width: 64px;
             height: 3px;
-            background: rgba(140, 255, 176, 0.14);
+            background: rgba(192, 96, 224, 0.14);
             cursor: pointer;
             flex-shrink: 0;
         }
@@ -428,7 +428,7 @@
         .player-vol-fill {
             height: 100%;
             width: 80%;
-            background: rgba(140, 255, 176, 0.52);
+            background: rgba(192, 96, 224, 0.52);
             pointer-events: none;
         }
 
@@ -439,7 +439,7 @@
             width: 8px;
             height: 8px;
             background: var(--paper-dim);
-            border: 1px solid rgba(140, 255, 176, 0.52);
+            border: 1px solid rgba(192, 96, 224, 0.52);
             transform: translate(-50%, -50%);
             pointer-events: none;
         }
@@ -482,7 +482,7 @@
             opacity: 1;
             color: var(--phosphor);
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(140, 255, 176, 0.38);
+            text-shadow: 0 0 10px rgba(192, 96, 224, 0.38);
         }
 
         /* ── Mobile ── */
@@ -523,7 +523,7 @@
                 flex-direction: column;
                 padding: 8px 22px 22px;
                 background: rgba(0, 0, 0, 0.92);
-                border-bottom: 1px solid rgba(140, 255, 176, 0.18);
+                border-bottom: 1px solid rgba(192, 96, 224, 0.18);
                 backdrop-filter: blur(14px);
                 -webkit-backdrop-filter: blur(14px);
                 transform: translateY(-115%);
@@ -541,7 +541,7 @@
             .top-nav-link {
                 display: block;
                 padding: 16px 0;
-                border-bottom: 1px solid rgba(140, 255, 176, 0.14);
+                border-bottom: 1px solid rgba(192, 96, 224, 0.14);
                 font-size: 0.86rem;
                 letter-spacing: 0.18em;
                 opacity: 1;
@@ -579,7 +579,7 @@
             position: fixed; z-index: 6;
             width: 380px; height: 380px; border-radius: 50%;
             pointer-events: none;
-            background: radial-gradient(circle, rgba(140,255,176,0.07) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(192, 96, 224, 0.07) 0%, transparent 65%);
             transform: translate(-50%,-50%);
             left: -999px; top: -999px;
             mix-blend-mode: screen;
@@ -591,7 +591,7 @@
             font-weight: 800;
             letter-spacing: 0.06em;
             line-height: 0.88;
-            color: var(--paper);
+            color: #C8C4BC;
             position: relative;
             margin: 4px 0 22px;
             opacity: 0;
@@ -599,7 +599,7 @@
             text-shadow: 0 0 40px rgba(232,216,184,0.12);
             text-transform: uppercase;
         }
-        .song-title span { color: var(--red-memory); }
+        .song-title span { color: #E87DB0; }
         .song-title::before {
             content: attr(data-text);
             position: absolute; top: 0; left: 3px;
@@ -607,7 +607,7 @@
             pointer-events: none; z-index: 2;
             font-family: inherit; font-size: inherit;
             letter-spacing: inherit; line-height: inherit;
-            color: var(--red-memory);
+            color: #E87DB0;
             opacity: 0;
             animation: titleGlitchA 3.5s 1s infinite;
         }
@@ -713,7 +713,7 @@
 <div style="font-family:'Courier New',monospace;background:#050505;color:#8cffb0;padding:40px;min-height:100vh">
 <p style="margin:0 0 12px;letter-spacing:.2em;font-weight:700">TIMARHANE</p>
 <h2 style="margin:0 0 20px;font-size:1rem;font-weight:400;color:#e8d8b8">Second Heart</h2>
-<p style="margin:0 0 24px;color:rgba(140,255,176,0.72)">Intimate jazz ballad fused with Persian percussion and Anatolian rhythms.</p>
+<p style="margin:0 0 24px;color:rgba(192, 96, 224, 0.72)">Intimate jazz ballad fused with Persian percussion and Anatolian rhythms.</p>
 <nav style="font-size:.8rem;letter-spacing:.15em"><a href="about-en.html" style="color:#8cffb0">Core</a> // <a href="frekans-en.html" style="color:#8cffb0">Frequency_101</a> // <a href="sentetik-en.html" style="color:#8cffb0">Synthetic Memories</a> // <a href="veri-en.html" style="color:#8cffb0">Data Vault</a></nav>
 </div>
 </noscript>
@@ -974,7 +974,7 @@
         setInterval(() => {
             ctx.fillStyle = 'rgba(5, 5, 5, 0.028)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(140, 255, 176, 0.65)';
+            ctx.fillStyle = 'rgba(192, 96, 224, 0.65)';
             ctx.font = '13px monospace';
             drops.forEach((d, i) => {
                 ctx.fillText(alphabet[Math.floor(Math.random() * alphabet.length)], i * 14, d * 14);
@@ -983,59 +983,58 @@
             });
         }, 40);
 
-        /* ── Mouse tracking ── */
-        const IS_MOBILE = window.innerWidth <= 760;
-        if (!IS_MOBILE) {
-            const grainC = document.getElementById('grain');
-            const grainX = grainC.getContext('2d');
-            const fxC    = document.getElementById('fx');
-            const fxX    = fxC.getContext('2d');
-            const glow   = document.getElementById('glow');
-            let W = 0, H = 0;
-            function resizeMouseCanvas() {
-                const w = window.innerWidth, h = window.innerHeight;
-                if (!w || !h) return;
-                W = grainC.width = fxC.width = w;
-                H = grainC.height = fxC.height = h;
-            }
-            if (document.readyState === 'complete') { resizeMouseCanvas(); }
-            else { window.addEventListener('load', resizeMouseCanvas); }
-            window.addEventListener('resize', resizeMouseCanvas);
-            let mx = 0, my = 0;
-            const trail = [];
-            document.addEventListener('mousemove', e => {
-                mx = e.clientX; my = e.clientY;
-                glow.style.left = mx + 'px'; glow.style.top = my + 'px';
-                trail.push({ x: mx, y: my, life: 1 });
-                if (trail.length > 28) trail.shift();
-            });
-            let grainTick = 0;
-            function drawGrain() {
-                if (!W || !H) return;
-                const img = grainX.createImageData(W, H);
-                const d = img.data;
-                for (let i = 0; i < d.length; i += 4) {
-                    const v = Math.random() * 255 | 0;
-                    if (v > 210) { d[i] = v*0.42|0; d[i+1] = v; d[i+2] = v*0.58|0; d[i+3] = (v-210)*2; }
-                }
-                grainX.putImageData(img, 0, 0);
-            }
-            (function mouseLoop() {
-                if (++grainTick % 3 === 0) drawGrain();
-                fxX.clearRect(0, 0, W, H);
-                for (let i = trail.length - 1; i >= 0; i--) {
-                    const p = trail[i]; p.life -= 0.065;
-                    if (p.life <= 0) { trail.splice(i, 1); continue; }
-                    const r = p.life * 14;
-                    const g = fxX.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
-                    g.addColorStop(0, `rgba(140,255,176,${p.life * 0.38})`);
-                    g.addColorStop(1, 'rgba(140,255,176,0)');
-                    fxX.fillStyle = g;
-                    fxX.beginPath(); fxX.arc(p.x, p.y, r, 0, Math.PI * 2); fxX.fill();
-                }
-                requestAnimationFrame(mouseLoop);
-            })();
-        }
+
+/* ── MOUSE TRAIL (purple + rose) ── */
+const trailCanvas = document.createElement('canvas');
+trailCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;';
+document.body.appendChild(trailCanvas);
+const tCtx = trailCanvas.getContext('2d');
+trailCanvas.width  = window.innerWidth;
+trailCanvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  trailCanvas.width  = window.innerWidth;
+  trailCanvas.height = window.innerHeight;
+});
+
+const trailParticles = [];
+let mouseX = -999, mouseY = -999;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  for (let i = 0; i < 3; i++) {
+    trailParticles.push({
+      x:     mouseX + (Math.random() - 0.5) * 6,
+      y:     mouseY + (Math.random() - 0.5) * 6,
+      r:     1.5 + Math.random() * 2.5,
+      alpha: 0.7 + Math.random() * 0.3,
+      vx:    (Math.random() - 0.5) * 0.8,
+      vy:    -0.5 - Math.random() * 1.2,
+      decay: 0.022 + Math.random() * 0.015,
+      color: Math.random() > 0.35 ? '#C060E0' : '#E87DB0'
+    });
+  }
+});
+
+function animateTrail() {
+  tCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+  for (let i = trailParticles.length - 1; i >= 0; i--) {
+    const p = trailParticles[i];
+    p.x    += p.vx;
+    p.y    += p.vy;
+    p.alpha -= p.decay;
+    p.r    *= 0.97;
+    if (p.alpha <= 0) { trailParticles.splice(i, 1); continue; }
+    tCtx.beginPath();
+    tCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    tCtx.fillStyle   = p.color;
+    tCtx.globalAlpha = p.alpha;
+    tCtx.fill();
+  }
+  tCtx.globalAlpha = 1;
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
     </script>
 
     <script>
