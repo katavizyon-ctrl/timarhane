@@ -228,7 +228,7 @@
             .manifesto-panel .mp-final   { margin-bottom: 0; color: var(--paper); margin-top: 0.2rem; }
 
             .nav-box {
-                position: absolute; z-index: 11;
+                position: fixed; z-index: 20;
                 top: clamp(180px,32vh,280px); right: clamp(28px,5vw,74px);
                 width: min(370px,27vw);
                 display: flex; flex-direction: column; gap: 18px;
@@ -1008,7 +1008,7 @@
 
             if (!IS_MOBILE) {
                 document.querySelectorAll('.nav-link').forEach((link, i) => {
-                    setTimeout(() => link.classList.add('visible'), 650 + i * 150);
+                    setTimeout(() => link.classList.add('visible'), 1800 + i * 80);
                 });
                 setTimeout(() => {
                     const cap = document.getElementById('archCaption');
