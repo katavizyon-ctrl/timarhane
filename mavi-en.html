@@ -270,7 +270,7 @@
             margin: 6px 0 18px;
             font-size: 0.58rem; font-weight: 700;
             letter-spacing: 0.20em;
-            color: var(--mavi-3);
+            color: rgba(232, 216, 184, 0.62);
             text-transform: uppercase; opacity: 0.90;
         }
         .meta-row span { white-space: nowrap; }
@@ -307,10 +307,11 @@
 
         /* ── Custom audio player ── */
         .player {
-            margin: 0 0 20px;
+            margin: 20px 0 20px;
             padding: 16px 18px;
             background: rgba(0, 0, 5, 0.45);
             border: 1px solid var(--mavi-3);
+            border-top: 1px solid rgba(57, 177, 209, 0.35);
         }
 
         .player-track-info {
@@ -482,7 +483,7 @@
 
         .lyrics-block {
             margin-bottom: 20px;
-            opacity: 0.28;
+            opacity: 0.38;
             font-size: 0.92rem;
             line-height: 1.6;
             color: var(--paper-dim);
@@ -587,7 +588,55 @@
             .lyrics-container { height: min(44svh, 320px); }
         }
 
-        /* ── Animations ── */
+        /* ── Right side ambient element ── */
+        .side-signal {
+            position: fixed;
+            right: clamp(18px, 3vw, 48px);
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            pointer-events: none;
+        }
+
+        .side-signal-line {
+            width: 1px;
+            height: 120px;
+            background: linear-gradient(to bottom, transparent, rgba(57, 177, 209, 0.45), transparent);
+        }
+
+        .side-signal-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.56rem;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(57, 177, 209, 0.42);
+        }
+
+        .side-signal-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(57, 177, 209, 0.55);
+            animation: dotPulse 2.4s ease-in-out infinite;
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50%       { opacity: 1;   transform: scale(1.5); }
+        }
+
+        @media (max-width: 760px) {
+            .side-signal { display: none; }
+        }
+
+
         @keyframes bgGlimmer {
             0%   { filter: brightness(0.76) contrast(1.04) saturate(0.88); }
             100% { filter: brightness(0.82) contrast(1.02) saturate(0.96); }
@@ -614,7 +663,7 @@
 
         /* ── Glitch Song Title ── */
         .song-title {
-            font-size: clamp(1.5rem, 5vw, 4rem);
+            font-size: clamp(1.2rem, 3.6vw, 2.8rem);
             font-weight: 800;
             letter-spacing: 0.06em;
             line-height: 0.88;
@@ -754,6 +803,13 @@
     <canvas id="grain"></canvas>
     <canvas id="fx"></canvas>
     <div id="glow"></div>
+
+    <div class="side-signal">
+        <div class="side-signal-line"></div>
+        <span class="side-signal-label">TIMARHANE // SIGNAL</span>
+        <div class="side-signal-dot"></div>
+        <div class="side-signal-line"></div>
+    </div>
 
     <nav class="site-nav" aria-label="Main navigation">
         <a class="nav-brand" href="about-en.html">ONEHEUS // TIMARHANE by AKA</a>
