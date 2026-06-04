@@ -571,16 +571,12 @@
 
         /* ── Main interface (03/04 refactor) ── */
         .main-interface {
-            width: calc(100vw - 36px);
-            margin: 86px 18px 44px;
-            padding: 22px 18px 20px;
-        }
-        /* legacy override preserved below */
-        ._main-interface_unused {
             position: relative;
             z-index: 10;
             width: min(520px, 90vw);
             margin-left: clamp(24px, 5vw, 80px);
+            align-self: flex-start;
+            margin-top: 30px;
             padding: 28px 26px 24px;
             background: rgba(3, 5, 4, 0.06);
             border-left: 1px solid rgba(140, 255, 176, 0.26);
