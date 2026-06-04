@@ -22,6 +22,11 @@
             --red-memory: #B64A35;
             --glass: rgba(3, 6, 5, 0.52);
             --glass-deep: rgba(0, 0, 0, 0.72);
+            --mavi-1: #FDB29F;
+            --mavi-2: #7AE2CF;
+            --mavi-3: #684F7E;
+            --mavi-4: #39B1D1;
+            --mavi-5: #00082F;
         }
 
         * { box-sizing: border-box; }
@@ -49,7 +54,7 @@
             position: fixed;
             top: 72px; left: 0; right: 0; bottom: 0;
             z-index: 1;
-            background: url('tape_2.webp') center center / contain no-repeat;
+            background: url('tape_2.webp') center center / cover no-repeat;
             transform-origin: center center;
             will-change: transform;
             filter: brightness(0.78) contrast(1.04) saturate(0.90);
@@ -96,6 +101,7 @@
 
         #matrixCanvas {
             position: fixed;
+            top: 72px; left: 0; right: 0; bottom: 0;
             z-index: 5;
             opacity: 0.18;
             pointer-events: none;
@@ -233,18 +239,41 @@
             position: relative;
             z-index: 10;
             width: min(520px, 90vw);
-            margin-left: clamp(24px, 5vw, 80px);
+            margin-left: 8vw;
+            margin-right: auto;
             align-self: flex-start;
             margin-top: 30px;
             padding: 28px 26px 24px;
-            background: rgba(3, 5, 4, 0.06);
-            border-left: 1px solid var(--phosphor-dim);
-            border-top: 1px solid rgba(140, 255, 176, 0.10);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            background: rgba(0, 0, 5, 0.14);
+            border-left: 2px solid var(--mavi-3);
+            border-top: 1px solid rgba(253, 178, 159, 0.15);
+            border-right: 1px solid rgba(253, 178, 159, 0.15);
+            border-bottom: 1px solid rgba(253, 178, 159, 0.15);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             box-shadow: none;
         }
 
+        .corner {
+            position: absolute;
+            width: 12px; height: 12px;
+            border-color: var(--mavi-1);
+            border-style: solid;
+            pointer-events: none;
+        }
+        .corner-tl { top: -1px;  left: -2px;  border-width: 2px 0 0 2px; }
+        .corner-tr { top: -1px;  right: -1px; border-width: 2px 2px 0 0; }
+        .corner-bl { bottom: -1px; left: -2px;  border-width: 0 0 2px 2px; }
+        .corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+        .meta-row {
+            display: flex; gap: 16px; flex-wrap: wrap;
+            margin: 6px 0 18px;
+            font-size: 0.58rem; font-weight: 700;
+            letter-spacing: 0.20em;
+            color: var(--mavi-3);
+            text-transform: uppercase; opacity: 0.90;
+        }
+        .meta-row span { white-space: nowrap; }
         .sys-label {
             display: block;
             margin-bottom: 6px;
@@ -262,8 +291,8 @@
             height: 1px;
             margin-right: 10px;
             vertical-align: middle;
-            background: var(--red-memory);
-            opacity: 0.72;
+            background: var(--mavi-2);
+            opacity: 0.82;
         }
 
         .sys-title {
@@ -280,8 +309,8 @@
         .player {
             margin: 0 0 20px;
             padding: 16px 18px;
-            background: rgba(0, 0, 0, 0.28);
-            border: 1px solid var(--phosphor-dim);
+            background: rgba(0, 0, 5, 0.45);
+            border: 1px solid var(--mavi-3);
         }
 
         .player-track-info {
@@ -323,10 +352,10 @@
         .player-scrubber-fill {
             height: 100%;
             width: 0%;
-            background: var(--phosphor);
+            background: var(--mavi-2);
             pointer-events: none;
             transition: width 0.25s linear;
-            box-shadow: 0 0 6px rgba(140, 255, 176, 0.48);
+            box-shadow: 0 0 6px rgba(122, 226, 207, 0.48);
         }
 
         .player-scrubber-thumb {
@@ -356,8 +385,8 @@
 
         .player-btn {
             background: none;
-            border: 1px solid var(--phosphor-dim);
-            color: var(--phosphor-soft);
+            border: 1px solid var(--mavi-3);
+            color: var(--mavi-1);
             font-family: inherit;
             font-size: 0.72rem;
             font-weight: 700;
@@ -462,9 +491,9 @@
 
         .lyrics-block.active {
             opacity: 1;
-            color: var(--phosphor);
+            color: var(--mavi-1);
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(140, 255, 176, 0.38);
+            text-shadow: 0 0 10px rgba(253, 178, 159, 0.38);
         }
 
         /* ── Mobile ── */
@@ -574,7 +603,7 @@
             font-weight: 800;
             letter-spacing: 0.06em;
             line-height: 0.88;
-            color: var(--paper);
+            color: var(--mavi-4);
             position: relative;
             margin: 4px 0 22px;
             opacity: 0;
@@ -582,7 +611,7 @@
             text-shadow: 0 0 40px rgba(232,216,184,0.12);
             text-transform: uppercase;
         }
-        .song-title span { color: var(--red-memory); }
+        .song-title span { color: var(--mavi-4); }
         .song-title::before {
             content: attr(data-text);
             position: absolute; top: 0; left: 3px;
@@ -590,8 +619,9 @@
             pointer-events: none; z-index: 2;
             font-family: inherit; font-size: inherit;
             letter-spacing: inherit; line-height: inherit;
-            color: var(--red-memory);
-            animation: titleGlitchA 7s 2s infinite;
+            color: #B64A35;
+            opacity: 0;
+            animation: titleGlitchA 3.5s 1s infinite;
         }
         .song-title::after {
             content: attr(data-text);
@@ -600,8 +630,9 @@
             pointer-events: none; z-index: 2;
             font-family: inherit; font-size: inherit;
             letter-spacing: inherit; line-height: inherit;
-            color: var(--phosphor);
-            animation: titleGlitchB 7s 2.5s infinite;
+            color: #8CFFB0;
+            opacity: 0;
+            animation: titleGlitchB 3.5s 1.5s infinite;
         }
         @keyframes titleFadeUp {
             from { opacity: 0; transform: translateY(14px); }
@@ -624,7 +655,7 @@
         }
 
         @media (max-width: 760px) {
-            .bg-image { background-size: contain !important; background-position: center center !important; }
+            .bg-image { background-size: cover !important; background-position: center center !important; }
         }
 
         /* ══════════════════════════════════════
@@ -725,8 +756,17 @@
     </nav>
 
     <div class="main-interface">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
         <span class="sys-label">Frequency_101 // Recording</span>
         <h1 class="song-title" data-text="BLUE RENDEZVOUS">BLUE <span>RENDEZVOUS</span></h1>
+        <div class="meta-row">
+            <span>SIGNAL: 101</span>
+            <span>FORMAT: DIGITAL</span>
+            <span>STATUS: UNSTABLE</span>
+        </div>
 
         <!-- Custom player -->
         <div class="player" id="playerUI">
