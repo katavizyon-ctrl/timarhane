@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="alternate" hreflang="tr" href="https://oneheus.com/about.html" />
+    <link rel="alternate" hreflang="en" href="https://oneheus.com/about-en.html" />
+    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/about.html" />
     <title>AKA // TIMARHANE</title>
     <style>
         :root {
@@ -722,13 +726,65 @@
             }
             .kw-timarhane::after { right: -8px; }
         }
+    
+        /* ══════════════════════════════════════
+           SECOND TRANSMISSION — co-authorship block
+        ══════════════════════════════════════ */
+        .mp-sep {
+            width: 32px;
+            height: 1px;
+            background: rgba(182,74,53,0.52);
+            margin: 1.3rem 0 1.2rem;
+            opacity: 0;
+            transition: opacity 0.9s ease;
+        }
+        .mp-sep.visible { opacity: 1; }
+
+        .manifesto-panel .mp-second {
+            font-size: clamp(0.78rem, 0.84vw, 0.92rem);
+            color: rgba(140,255,176,0.48);
+            margin-bottom: 0.55rem;
+            min-height: 1.3em;
+            font-style: italic;
+        }
+        .manifesto-panel .mp-second.mp-last {
+            color: var(--paper-dim);
+            margin-bottom: 0;
+            margin-top: 0.3rem;
+            font-style: normal;
+        }
     </style>
-    <meta name="description" content="TIMARHANE core hub — entry point to frequency archives, synthetic memories and data vaults.">
+    <meta name="description" content="TIMARHANE — one of us dreams it, the other remembers it. Where human frequency meets machine memory: music, film, characters, stories.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://oneheus.com/about-en.html">
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/about-en.html">
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/about.html">
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/index.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TIMARHANE">
+    <meta property="og:title" content="AKA // TIMARHANE">
+    <meta property="og:description" content="TIMARHANE — one of us dreams it, the other remembers it. Where human frequency meets machine memory.">
+    <meta property="og:image" content="https://oneheus.com/og_glitch.png">
+    <meta property="og:url" content="https://oneheus.com/about-en.html">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@TIMARHANE">
+    <meta name="twitter:creator" content="@TIMARHANE">
+    <meta name="twitter:title" content="AKA // TIMARHANE">
+    <meta name="twitter:description" content="TIMARHANE — one of us dreams it, the other remembers it. Where human frequency meets machine memory.">
+    <meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "TIMARHANE — About",
+    "url": "https://oneheus.com/about-en.html",
+    "description": "TIMARHANE — one of us dreams it, the other remembers it. Where human frequency meets machine memory.",
+    "inLanguage": "en",
+    "isPartOf": {
+        "@type": "WebSite",
+        "name": "TIMARHANE",
+        "url": "https://oneheus.com/"
+    }
+}
+    </script>
 </head>
 <body>
 
@@ -783,12 +839,18 @@
     <main id="home-stage">
         <div class="mobile-img-spacer"></div>
         <section class="manifesto-panel" id="manifesto">
-            <p id="mp1"></p>
-            <p id="mp2"></p>
-            <p id="mp3" class="mp-indent"></p>
-            <p id="mp4"></p>
-            <p id="mp5" class="mp-indent"></p>
-            <p id="mp6" class="mp-final"></p>
+            <p id="mp1" class="mp-second"></p>
+            <p id="mp2" class="mp-second"></p>
+            <p id="mp3" class="mp-second"></p>
+            <p id="mp4" class="mp-second"></p>
+            <p id="mp5" class="mp-second mp-last"></p>
+            <div class="mp-sep" id="mpSep"></div>
+            <p id="mp6"></p>
+            <p id="mp7"></p>
+            <p id="mp8" class="mp-indent"></p>
+            <p id="mp9"></p>
+            <p id="mp10" class="mp-indent"></p>
+            <p id="mp11" class="mp-final"></p>
         </section>
         <nav class="nav-box">
             <a href="frekans-en.html" class="nav-link" data-index="01">Frequency_101</a>
@@ -864,6 +926,13 @@
         const IS_MOBILE = window.innerWidth <= 760;
         const GLITCH    = '▓░▒█▄▀┼╬│─<>!?@#';
         const MANIFESTO = [
+            // — first signal: the making —
+            'one of us dreams it. the other remembers it.',
+            'where human frequency meets machine memory.',
+            'born in the space between thought and static.',
+            'memory of a future neither of us lived.',
+            'two signals. one becoming.',
+            // — second signal: void record —
             'Out-of-system frequency.',
             'Reality has been suspended.',
             'This is a void born from the system\'s error.',
@@ -903,7 +972,20 @@
                         setTimeout(() => typeText(document.getElementById('mp3'), MANIFESTO[2], 22, () => {
                             setTimeout(() => typeText(document.getElementById('mp4'), MANIFESTO[3], 20, () => {
                                 setTimeout(() => typeText(document.getElementById('mp5'), MANIFESTO[4], 22, () => {
-                                    setTimeout(() => typeText(document.getElementById('mp6'), MANIFESTO[5], 22, null), 160);
+                                    setTimeout(() => typeText(document.getElementById('mp6'), MANIFESTO[5], 22, () => {
+                        setTimeout(() => {
+                            document.getElementById('mpSep').classList.add('visible');
+                            setTimeout(() => typeText(document.getElementById('mp7'), MANIFESTO[6], 28, () => {
+                                setTimeout(() => typeText(document.getElementById('mp8'), MANIFESTO[7], 26, () => {
+                                    setTimeout(() => typeText(document.getElementById('mp9'), MANIFESTO[8], 28, () => {
+                                        setTimeout(() => typeText(document.getElementById('mp10'), MANIFESTO[9], 26, () => {
+                                            setTimeout(() => typeText(document.getElementById('mp11'), MANIFESTO[10], 28, null), 150);
+                                        }), 140);
+                                    }), 170);
+                                }), 140);
+                            }), 420);
+                        }, 340);
+                    }), 160);
                                 }), 120);
                             }), 200);
                         }), 200);

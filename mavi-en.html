@@ -45,6 +45,8 @@
             position: fixed;
             top: 52px; left: 0; right: 0; bottom: 0;
             z-index: 1;
+            background-size: contain;
+            background-position: top center;
             background: url('tape_2.webp') center center / cover no-repeat;
             transform-origin: center center;
             will-change: transform;
@@ -231,12 +233,12 @@
             width: min(520px, 90vw);
             margin-left: clamp(24px, 5vw, 80px);
             padding: 28px 26px 24px;
-            background: rgba(3, 5, 4, 0.32);
+            background: rgba(3, 5, 4, 0.06);
             border-left: 1px solid var(--phosphor-dim);
             border-top: 1px solid rgba(140, 255, 176, 0.10);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            box-shadow: 0 28px 90px rgba(0,0,0,0.42);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            box-shadow: none;
         }
 
         .sys-label {
@@ -274,7 +276,7 @@
         .player {
             margin: 0 0 20px;
             padding: 16px 18px;
-            background: rgba(0, 0, 0, 0.52);
+            background: rgba(0, 0, 0, 0.28);
             border: 1px solid var(--phosphor-dim);
         }
 
@@ -564,7 +566,7 @@
 
         /* ── Glitch Song Title ── */
         .song-title {
-            font-size: clamp(2.2rem, 7.5vw, 5.8rem);
+            font-size: clamp(1.5rem, 5vw, 4rem);
             font-weight: 800;
             letter-spacing: 0.06em;
             line-height: 0.88;
@@ -615,6 +617,10 @@
             89%  { clip-path: inset(10% 0 65% 0); transform: translateX(-4px); opacity: 0.55; }
             91%  { clip-path: inset(40% 0 30% 0); transform: translateX(3px);  opacity: 0.45; }
             93%  { clip-path: none; transform: translateX(0); opacity: 0; }
+        }
+
+        @media (max-width: 760px) {
+            .bg-image { background-size: cover !important; background-position: top center !important; }
         }
     </style>
     <!-- SEO & Social -->
