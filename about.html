@@ -198,7 +198,7 @@
 
             .manifesto-panel {
                 position: absolute; z-index: 11;
-                left: clamp(28px,5vw,72px); top: 54%; 
+                left: clamp(28px,5vw,72px); top: 54%;
                 width: min(380px,28vw);
                 padding: 22px 26px 20px;
                 color: var(--phosphor-soft);
@@ -208,6 +208,11 @@
                 opacity: 0;
                 transform: translateY(-50%) translateX(-14px);
                 transition: opacity 0.7s ease, transform 0.7s ease;
+                /* push center down so top edge always clears the 84px nav */
+                margin-top: clamp(52px, 7vh, 88px);
+                /* cap height so panel never overflows the viewport bottom */
+                max-height: calc(100vh - 84px - clamp(52px, 7vh, 88px) - 40px);
+                overflow-y: auto;
             }
             .manifesto-panel.visible { opacity: 1; transform: translateY(-50%) translateX(0); }
             .manifesto-panel::before {
@@ -841,7 +846,7 @@
 <h1 style="margin:0 0 12px;letter-spacing:.2em">TIMARHANE</h1>
 <h2 style="margin:0 0 20px;font-size:1rem;font-weight:400;color:#e8d8b8">ONEHEUS // TIMARHANE by AKA</h2>
 <p style="margin:0 0 24px;color:rgba(140,255,176,0.72)">Sistem dışı frekans. Burası, sistemin hatasından doğan bir boşluk.</p>
-<nav style="font-size:.8rem;letter-spacing:.15em"><a href="about.html" style="color:#8cffb0">Öz</a> // <a href="frekans.html" style="color:#8cffb0">Frekans_101</a> // <a href="sentetik.html" style="color:#8cffb0">Sentetik Anılar</a> // <a href="veri.html" style="color:#8cffb0">Veri Mahzeni</a></nav>
+<nav style="font-size:.8rem;letter-spacing:.15em"><a href="about.html" style="color:#8cffb0">Core</a> // <a href="frekans.html" style="color:#8cffb0">Frekans_101</a> // <a href="sentetik.html" style="color:#8cffb0">Sentetik Anılar</a> // <a href="veri.html" style="color:#8cffb0">Veri Mahzeni</a></nav>
 </div>
 </noscript>
 
@@ -856,7 +861,7 @@
     </header>
 
     <nav class="mobile-drawer" id="mobileMenu">
-        <a href="about.html" class="is-active">Öz</a>
+        <a href="about.html" class="is-active">Core</a>
         <a href="frekans.html">Frekans_101</a>
         <a href="sentetik.html">Sentetik Anılar</a>
         <a href="veri.html">Veri Mahzeni</a>
@@ -870,7 +875,7 @@
             <span class="brand-tagline">Sistem Dışı Frekans // 01</span>
         </a>
         <div class="top-links">
-            <a href="about.html" class="is-active">Öz</a>
+            <a href="about.html" class="is-active">Core</a>
             <a href="frekans.html">Frekans_101</a>
             <a href="sentetik.html">Sentetik Anılar</a>
             <a href="veri.html">Veri Mahzeni</a>
