@@ -159,6 +159,21 @@
 
             .top-nav .brand-tagline { display: none; }
 
+            /* sys-label: sits 20px below nav bottom, locked */
+            .sys-label {
+                position: fixed;
+                top: 104px;
+                left: clamp(28px, 5vw, 72px);
+                z-index: 15;
+                color: #B64A35;
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.28em;
+                text-transform: uppercase;
+                opacity: 0.85;
+                pointer-events: none;
+            }
+
             #bg-photo {
                 position: fixed; inset: 0; z-index: 1;
                 background: url('home.webp') center/cover no-repeat;
@@ -190,21 +205,6 @@
                 mix-blend-mode: screen;
             }
 
-            /* System label — below nav, above manifesto */
-            .sys-label {
-                position: fixed;
-                top: 84px;
-                left: clamp(28px, 5vw, 72px);
-                z-index: 15;
-                color: var(--red-memory);
-                font-size: clamp(0.60rem, 0.72vw, 0.72rem);
-                font-weight: 700;
-                letter-spacing: 0.30em;
-                text-transform: uppercase;
-                opacity: 0.82;
-                pointer-events: none;
-            }
-
             #home-stage {
                 position: relative; z-index: 10;
                 width: 100vw; height: 100vh; min-height: 620px;
@@ -213,18 +213,23 @@
 
             .manifesto-panel {
                 position: absolute; z-index: 11;
-                left: clamp(28px,5vw,72px); top: 54%; 
+                left: clamp(28px,5vw,72px);
+                /* fixed top anchor — 140px below viewport top (nav 84px + label + gap) */
+                top: clamp(140px, 17vh, 180px);
                 width: min(380px,28vw);
+                /* fixed height so the frame never moves — only text scrolls inside */
+                height: calc(100vh - clamp(140px, 17vh, 180px) - 48px);
+                overflow-y: auto;
                 padding: 22px 26px 20px;
                 color: var(--phosphor-soft);
                 background: linear-gradient(135deg, rgba(0,0,0,0.58), rgba(0,0,0,0.24));
                 border-left: 1px solid var(--phosphor-dim);
                 backdrop-filter: blur(2.5px);
                 opacity: 0;
-                transform: translateY(-50%) translateX(-14px);
+                transform: translateX(-14px);
                 transition: opacity 0.7s ease, transform 0.7s ease;
             }
-            .manifesto-panel.visible { opacity: 1; transform: translateY(-50%) translateX(0); }
+            .manifesto-panel.visible { opacity: 1; transform: translateX(0); }
             .manifesto-panel::before {
                 content: "MANIFESTO / VOID RECORD";
                 display: block; margin-bottom: 14px;
@@ -881,7 +886,6 @@
     <nav class="top-nav" aria-label="Main navigation">
         <a class="top-brand" href="about-en.html">
             <span class="brand-main">ONEHEUS // TIMARHANE by AKA</span>
-            <span class="brand-tagline">Out-of-System Frequency // 01</span>
         </a>
         <div class="top-links">
             <a href="about-en.html" class="is-active">Core</a>
