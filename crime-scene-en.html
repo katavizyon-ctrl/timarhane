@@ -6,62 +6,42 @@
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-    <link rel="alternate" hreflang="tr" href="https://oneheus.com/crime-scene.html" />
-    <link rel="alternate" hreflang="en" href="https://oneheus.com/crime-scene-en.html" />
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/crime-scene.html" />
-
-<title>TIMARHANE — Crime Scene // AI Creative Universe</title>
+<title>TIMARHANE // Crime Scene</title>
 <meta name="description" content="Crime Scene — A signal record from TIMARHANE's AI-powered creative universe.">
 <meta property="og:title" content="TIMARHANE // Crime Scene">
 <meta property="og:description" content="Crime Scene — A signal record from TIMARHANE's AI-powered creative universe.">
-<meta property="og:image" content="https://oneheus.com/og_glitch.webp">
+<meta property="og:image" content="https://oneheus.com/og_glitch.png">
 <meta property="og:url" content="https://oneheus.com/crime-scene-en.html">
-<meta property="og:type" content="music.song">
+<meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="TIMARHANE">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TIMARHANE // Crime Scene">
 <meta name="twitter:description" content="Crime Scene — A signal record from TIMARHANE's AI-powered creative universe.">
-<meta name="twitter:site" content="@TIMARHANE">
-    <meta name="twitter:creator" content="@TIMARHANE">
-    <meta name="twitter:image" content="https://oneheus.com/og_glitch.webp">
+<meta name="twitter:image" content="https://oneheus.com/og_glitch.png">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://oneheus.com/crime-scene-en.html">
+<link rel="alternate" hreflang="tr" href="https://oneheus.com/crime-scene.html">
+<link rel="alternate" hreflang="en" href="https://oneheus.com/crime-scene-en.html">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-        /* TIMARHANE standard vars */
-        --void: #050505;
-        --phosphor: #8CFFB0;
-        --phosphor-soft: rgba(140, 255, 176, 0.78);
-        --phosphor-dim: rgba(140, 255, 176, 0.26);
-        --paper: #E8D8B8;
-        --paper-dim: rgba(232, 216, 184, 0.64);
-        --paper-faint: rgba(232, 216, 184, 0.38);
-        --red-memory: #8B3510;
-
     --deep:       #06080a;
     --ink:        #0a0c10;
-    --copper:     #C07818;
-    --gold:       #C07818;
-    --copper-dim: #5C3008;
-    --gold-dim:   #5C3008;
-    --copper-soft:rgba(192,120,24,0.72);
-    --gold-soft:  rgba(192,120,24,0.72);
-    --rust:       #8B3510;
-    --fuchsia:    #8B3510;
-    --rust-dim:   #4A1808;
-    --fuchsia-dim:#4A1808;
+    --gold:       #d4a017;
+    --gold-dim:   #6b5008;
+    --gold-soft:  rgba(212,160,23,0.72);
+    --fuchsia:    #c0152a;
+    --fuchsia-dim:#6b0b17;
     --phosphor:   #8CFFB0;
     --phosphor-dim:rgba(140,255,176,0.22);
     --spotlight:  rgba(255,255,255,0.92);
     --text-main:  #e8e0d4;
     --text-muted: #6a6050;
-    --blood:      #8B3510;
-    --blood-dim:  #4A1808;
+    --blood:      #c0152a;
   }
 
   html { scroll-behavior: smooth; }
@@ -69,43 +49,39 @@
   body {
     background: var(--deep);
     color: var(--text-main);
-    display: flex;
-    align-items: center;
+    font-family: 'Share Tech Mono', monospace;
+    overflow-x: hidden;
     min-height: 100vh;
     padding-top: 72px;
-    font-family: 'Courier New', Courier, monospace;
-    overflow: hidden;
   }
 
   /* ── BACKGROUND IMAGE ── */
   .bg-image {
     position: fixed;
-    top: 72px; left: 0; right: 0; bottom: 0;
+    inset: -8%;
     z-index: 0;
-    background-size: contain;
-            background-position: top center;
-            background: url('crime_scene_bg.webp') center center / cover no-repeat;
+    background: url('crime_scene_bg.webp') center center / cover no-repeat;
     filter: brightness(0.60) contrast(1.12) saturate(0.75) hue-rotate(10deg);
-    
+    animation: kenBurns 28s ease-in-out infinite alternate, bgGlitch 14s step-end infinite, bgBreathe 7s ease-in-out infinite;
     transform-origin: center center;
     will-change: transform;
   }
 
   .bg-overlay {
     position: fixed;
-            top: 72px; left: 0; right: 0; bottom: 0;
-            z-index: 1;
+    inset: 0;
+    z-index: 1;
     pointer-events: none;
     background:
       linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.55) 100%),
-      radial-gradient(ellipse at 50% 0%, rgba(192,120,24,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, rgba(139,53,16,0.05) 0%, transparent 55%);
+      radial-gradient(ellipse at 50% 0%, rgba(212,160,23,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(192,21,42,0.05) 0%, transparent 55%);
   }
 
   .bg-color-shift {
     position: fixed;
-            top: 72px; left: 0; right: 0; bottom: 0;
-            z-index: 1;
+    inset: 0;
+    z-index: 1;
     pointer-events: none;
     mix-blend-mode: color;
     animation: colorShift 20s ease-in-out infinite;
@@ -136,12 +112,12 @@
   }
 
   @keyframes colorShift {
-    0%   { background: rgba(192,120,24,1); }
-    20%  { background: rgba(139,53,16,1); }
-    45%  { background: rgba(192,120,24,1); }
+    0%   { background: rgba(212,160,23,1); }
+    20%  { background: rgba(192,21,42,1); }
+    45%  { background: rgba(212,160,23,1); }
     65%  { background: rgba(140,255,176,1); }
-    80%  { background: rgba(139,53,16,1); }
-    100% { background: rgba(192,120,24,1); }
+    80%  { background: rgba(192,21,42,1); }
+    100% { background: rgba(212,160,23,1); }
   }
 
   /* ── CANVAS ── */
@@ -180,7 +156,7 @@
     justify-content: space-between;
     padding: 0 clamp(18px, 5vw, 72px);
     background: rgba(6,8,10,0.88);
-    border-bottom: 1px solid rgba(192,120,24,0.14);
+    border-bottom: 1px solid rgba(212,160,23,0.14);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
@@ -229,9 +205,9 @@
 
   .top-nav-link:hover,
   .top-nav-link.active {
-    color: var(--paper);
+    color: #E8D8B8;
     opacity: 1;
-    border-color: rgba(182, 74, 53, 0.78);
+    border-color: var(--gold);
   }
 
   .top-nav-link.disabled {
@@ -253,7 +229,7 @@
   }
 
   .lang-switch a {
-    color: rgba(140, 255, 176, 0.52);
+    color: rgba(212,160,23,0.55);
     text-decoration: none;
     transition: color 220ms ease;
   }
@@ -267,7 +243,7 @@
     justify-content: center;
     width: 44px;
     height: 40px;
-    border: 1px solid rgba(192,120,24,0.34);
+    border: 1px solid rgba(212,160,23,0.34);
     background: rgba(0,0,0,0.42);
     color: #E8D8B8;
     cursor: pointer;
@@ -309,7 +285,7 @@
       flex-direction: column;
       padding: 8px 22px 22px;
       background: rgba(6,8,10,0.97);
-      border-bottom: 1px solid rgba(192,120,24,0.18);
+      border-bottom: 1px solid rgba(212,160,23,0.18);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       transform: translateY(-115%);
@@ -325,7 +301,7 @@
     .top-nav-link {
       display: block;
       padding: 16px 0;
-      border-bottom: 1px solid rgba(192,120,24,0.14);
+      border-bottom: 1px solid rgba(212,160,23,0.14);
       font-size: 0.86rem;
       opacity: 1;
     }
@@ -345,6 +321,17 @@
   .breadcrumb a:hover { color: var(--gold); }
 
   /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 5;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+  }
 
   .hero-eyebrow {
     font-size: 0.7rem;
@@ -356,9 +343,49 @@
     animation: fadeUp 0.8s 0.3s forwards;
   }
 
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.2rem, 11vw, 7.5rem);
+    letter-spacing: 0.08em;
+    line-height: 0.9;
+    color: var(--text-main);
+    text-shadow:
+      0 0 40px rgba(212,160,23,0.22),
+      0 0 80px rgba(192,21,42,0.12);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+    position: relative;
+  }
 
+  h1 span { color: var(--gold); }
+  h1 em   { color: var(--fuchsia); font-style: normal; }
 
+  .hero { position: relative; z-index: 10; }
+  h1::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 3px;
+    width: 100%; height: 100%;
+    font-family: inherit; font-size: inherit;
+    letter-spacing: inherit; line-height: inherit;
+    pointer-events: none; z-index: 2;
+    color: var(--fuchsia);
+    animation: glitchBefore 6s 2s infinite;
+  }
+  h1::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: -3px;
+    width: 100%; height: 100%;
+    font-family: inherit; font-size: inherit;
+    letter-spacing: inherit; line-height: inherit;
+    pointer-events: none; z-index: 2;
+    color: var(--gold);
+    animation: glitchAfter 6s 2.5s infinite;
+  }
 
+  @keyframes glitchBefore {
+    0%,85%,100% { clip-path: none; transform: translateX(0); opacity: 0; }
     86%  { clip-path: inset(15% 0 70% 0); transform: translateX(-4px); opacity: 0.75; }
     88%  { clip-path: inset(55% 0 10% 0); transform: translateX(4px); opacity: 0.75; }
     90%  { clip-path: inset(30% 0 45% 0); transform: translateX(-3px); opacity: 0.65; }
@@ -366,6 +393,8 @@
     94%  { clip-path: none; transform: translateX(0); opacity: 0; }
   }
 
+  @keyframes glitchAfter {
+    0%,87%,100% { clip-path: none; transform: translateX(0); opacity: 0; }
     88%  { clip-path: inset(60% 0 20% 0); transform: translateX(5px); opacity: 0.55; }
     90%  { clip-path: inset(10% 0 65% 0); transform: translateX(-4px); opacity: 0.55; }
     92%  { clip-path: inset(40% 0 30% 0); transform: translateX(3px); opacity: 0.45; }
@@ -377,7 +406,7 @@
     margin-top: 1.2rem;
     font-size: 0.62rem;
     letter-spacing: 0.2em;
-    color: rgba(192,120,24,0.48);
+    color: rgba(212,160,23,0.48);
     text-transform: uppercase;
     opacity: 0;
     animation: fadeUp 0.8s 0.9s forwards;
@@ -387,9 +416,9 @@
   .player-section {
     position: relative;
     z-index: 10;
-    max-width: none;
-    margin: 1.2rem 0 0;
-    padding: 0;
+    max-width: 680px;
+    margin: 2.5rem auto 0;
+    padding: 0 1.5rem;
     opacity: 0;
     animation: fadeUp 0.8s 0.7s forwards;
   }
@@ -404,7 +433,7 @@
   }
 
   .player-box {
-    border: 1px solid var(--gold-dim);
+    border: 1px solid var(--blood-dim);
     background: rgba(6,8,10,0.88);
     backdrop-filter: blur(8px);
     padding: 1.2rem 1.5rem;
@@ -416,7 +445,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(192,120,24,0.05) 0%, transparent 55%);
+    background: linear-gradient(135deg, rgba(212,160,23,0.05) 0%, transparent 55%);
     pointer-events: none;
   }
 
@@ -438,24 +467,24 @@
   }
 
   .player-artist {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.72rem;
-    color: var(--paper);
+    color: var(--gold);
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
   .player-time-in-title {
     font-size: 0.65rem;
-    color: var(--paper);
+    color: var(--text-muted);
     letter-spacing: 0.1em;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Share Tech Mono', monospace;
   }
 
   .player-scrubber {
     position: relative;
     height: 3px;
-    background: rgba(192,120,24,0.15);
+    background: rgba(212,160,23,0.15);
     margin: 12px 0 14px;
     cursor: pointer;
   }
@@ -481,7 +510,7 @@
     background: none;
     border: 1px solid var(--blood-dim);
     color: var(--gold);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.7rem;
     letter-spacing: 0.14em;
     padding: 6px 14px;
@@ -490,18 +519,18 @@
     transition: background 0.2s, border-color 0.2s, color 0.2s;
     flex-shrink: 0;
   }
-  .player-btn:hover { background: rgba(192,120,24,0.12); border-color: var(--gold); color: #fff; }
-  .player-btn.is-playing { background: rgba(192,120,24,0.08); border-color: var(--gold); color: var(--gold); }
+  .player-btn:hover { background: rgba(212,160,23,0.12); border-color: var(--gold); color: #fff; }
+  .player-btn.is-playing { background: rgba(212,160,23,0.08); border-color: var(--gold); color: var(--gold); }
 
   .player-vol { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-  .vol-label { font-size: 0.6rem; color: var(--gold); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-  .vol-track { position: relative; width: 58px; height: 3px; background: rgba(192,120,24,0.15); cursor: pointer; }
-  .vol-fill { height: 100%; width: 80%; background: rgba(192,120,24,0.55); pointer-events: none; }
+  .vol-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase; }
+  .vol-track { position: relative; width: 58px; height: 3px; background: rgba(212,160,23,0.15); cursor: pointer; }
+  .vol-fill { height: 100%; width: 80%; background: rgba(212,160,23,0.55); pointer-events: none; }
   .vol-thumb {
     position: absolute; top: 50%; left: 80%;
     width: 8px; height: 8px;
     background: var(--text-muted);
-    border: 1px solid rgba(192,120,24,0.55);
+    border: 1px solid rgba(212,160,23,0.55);
     transform: translate(-50%,-50%);
     pointer-events: none;
   }
@@ -510,15 +539,15 @@
   .lyrics-section {
     position: relative;
     z-index: 10;
-    max-width: none;
-    margin: 1.2rem 0 0;
-    padding: 0;
+    max-width: 680px;
+    margin: 2rem auto 5rem;
+    padding: 0 1.5rem;
     opacity: 0;
     animation: fadeUp 0.8s 0.9s forwards;
   }
   .lyrics-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-  .lyrics-label { font-family: 'Courier New', Courier, monospace; font-size: 0.875rem; letter-spacing: 0.20em; color: var(--gold); font-weight: 800; text-transform: uppercase; flex-shrink: 0; }
-  .lyrics-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--gold-dim), transparent); }
+  .lyrics-label { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--blood); text-transform: uppercase; flex-shrink: 0; }
+  .lyrics-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--blood-dim), transparent); }
   .lyrics-container { height: 280px; overflow: hidden; position: relative; }
   .lyrics-container::after {
     content: '';
@@ -547,7 +576,7 @@
     opacity: 1;
     color: #ffffff;
     font-weight: 600;
-    text-shadow: 0 0 14px rgba(192,120,24,0.40);
+    text-shadow: 0 0 14px rgba(212,160,23,0.40);
   }
   .lyric-block.spoken {
     font-style: italic;
@@ -562,7 +591,7 @@
     text-shadow: 0 0 16px rgba(255,255,255,0.50);
   }
   .lyric-tag-inline {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.58rem;
     color: var(--fuchsia);
     letter-spacing: 0.2em;
@@ -573,189 +602,19 @@
   }
 
   /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
     .player-section, .lyrics-section { padding: 0 1rem; }
-    }
-
-        /* ── Main interface (03/04 refactor) ── */
-        .main-interface {
-            position: relative;
-            z-index: 10;
-            width: min(460px, 88vw);
-            margin-left: 3vw;
-            margin-right: auto;
-            align-self: flex-start;
-            margin-top: 30px;
-            padding: 28px 26px 24px;
-            background: rgba(3, 5, 4, 0.06);
-            border-left: 2px solid rgba(192,120,24,0.60);
-            border-top: 1px solid rgba(192,120,24,0.25);
-            border-right: 1px solid rgba(192,120,24,0.25);
-            border-bottom: 1px solid rgba(192,120,24,0.25);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-        .corner {
-            position: absolute;
-            width: 12px; height: 12px;
-            border-color: rgba(192,120,24,0.70);
-            border-style: solid;
-            pointer-events: none;
-        }
-        .corner-tl { top: -1px;  left: -2px;  border-width: 2px 0 0 2px; }
-        .corner-tr { top: -1px;  right: -1px; border-width: 2px 2px 0 0; }
-        .corner-bl { bottom: -1px; left: -2px;  border-width: 0 0 2px 2px; }
-        .corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-        .meta-row {
-            display: flex; gap: 16px; flex-wrap: wrap;
-            margin: 6px 0 18px;
-            font-size: 0.58rem; font-weight: 700;
-            letter-spacing: 0.20em;
-            color: var(--paper-faint);
-            text-transform: uppercase; opacity: 0.90;
-        }
-        .meta-row span { white-space: nowrap; }
-        .sys-label {
-            display: block;
-            margin-bottom: 6px;
-            color: rgba(232,216,184,0.38);
-            font-size: 0.66rem;
-            font-weight: 700;
-            letter-spacing: 0.34em;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: titleFadeUp 0.8s 0.2s forwards;
-        }
-        .sys-label::before {
-            content: "";
-            display: inline-block;
-            width: 28px; height: 1px;
-            margin-right: 10px;
-            vertical-align: middle;
-            background: var(--gold);
-            opacity: 0.82;
-        }
-
-        /* ── Glitch Song Title ── */
-        .song-title {
-            font-size: clamp(1.5rem, 5vw, 4rem);
-            font-weight: 800;
-            letter-spacing: 0.06em;
-            line-height: 0.88;
-            color: #C8C4BC;
-            position: relative;
-            margin: 4px 0 22px;
-            opacity: 0;
-            animation: titleFadeUp 0.8s 0.4s forwards;
-            text-shadow: 0 0 40px rgba(232,216,184,0.12);
-            text-transform: uppercase;
-        }
-        .song-title span { color: var(--gold); }
-        .song-title::before {
-            content: attr(data-text);
-            position: absolute; top: 0; left: 3px;
-            width: 100%; height: 100%;
-            pointer-events: none; z-index: 2;
-            font-family: inherit; font-size: inherit;
-            letter-spacing: inherit; line-height: inherit;
-            color: var(--gold);
-            opacity: 0;
-            animation: titleGlitchA 3.5s 1s infinite;
-        }
-        .song-title::after {
-            content: attr(data-text);
-            position: absolute; top: 0; left: -3px;
-            width: 100%; height: 100%;
-            pointer-events: none; z-index: 2;
-            font-family: inherit; font-size: inherit;
-            letter-spacing: inherit; line-height: inherit;
-            color: var(--phosphor);
-            opacity: 0;
-            animation: titleGlitchB 3.5s 1.5s infinite;
-        }
-        @keyframes titleFadeUp {
-            from { opacity: 0; transform: translateY(14px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes titleGlitchA {
-            0%,84%,100% { clip-path: none; transform: translateX(0); opacity: 0; }
-            85%  { clip-path: inset(15% 0 70% 0); transform: translateX(-4px); opacity: 0.75; }
-            87%  { clip-path: inset(55% 0 10% 0); transform: translateX(4px);  opacity: 0.75; }
-            89%  { clip-path: inset(30% 0 45% 0); transform: translateX(-3px); opacity: 0.65; }
-            91%  { clip-path: inset(70% 0 5%  0); transform: translateX(3px);  opacity: 0.75; }
-            93%  { clip-path: none; transform: translateX(0); opacity: 0; }
-        }
-        @keyframes titleGlitchB {
-            0%,86%,100% { clip-path: none; transform: translateX(0); opacity: 0; }
-            87%  { clip-path: inset(60% 0 20% 0); transform: translateX(5px);  opacity: 0.55; }
-            89%  { clip-path: inset(10% 0 65% 0); transform: translateX(-4px); opacity: 0.55; }
-            91%  { clip-path: inset(40% 0 30% 0); transform: translateX(3px);  opacity: 0.45; }
-            93%  { clip-path: none; transform: translateX(0); opacity: 0; }
-        }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+    h1 { font-size: clamp(2.8rem, 15vw, 5rem); }
   }
-
-        /* ══════════════════════════════════════
-           PREFERS-REDUCED-MOTION
-           Kills decorative animation for users
-           who have enabled Reduce Motion in
-           their OS accessibility settings.
-           Typing, page fade and nav still work.
-        ══════════════════════════════════════ */
-        @media (prefers-reduced-motion: reduce) {
-
-            /* Canvas overlays + effect layers → hidden */
-            .scanlines,
-            #grain, #fx, #glow,
-            #rgbFlash, #proxCanvas { display: none !important; }
-
-            /* Ken Burns / parallax backgrounds → frozen
-               !important overrides JS-applied inline transforms */
-            .bg-photo, #bg-photo,
-            .origin-bg-home,
-            .origin-bg-morpheus,
-            .origin-bg-oneheus { transform: scale(1.04) !important; transition: none !important; }
-
-            /* All CSS animations + transitions → effectively instant */
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
 </style>
-    <script type="application/ld+json">
-    {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "name": "Crime Scene",
-    "url": "https://oneheus.com/crime-scene-en.html",
-    "description": "A signal record from TIMARHANE's AI-powered creative universe.",
-    "inLanguage": "en",
-    "creator": {
-        "@type": "Organization",
-        "name": "TIMARHANE",
-        "url": "https://oneheus.com/"
-    }
-}
-    </script>
 </head>
 <body>
-<noscript>
-<div style="font-family:'Courier New',monospace;background:#050505;color:#8cffb0;padding:40px;min-height:100vh">
-<p style="margin:0 0 12px;letter-spacing:.2em;font-weight:700">TIMARHANE</p>
-<h2 style="margin:0 0 20px;font-size:1rem;font-weight:400;color:#e8d8b8">Crime Scene</h2>
-<p style="margin:0 0 24px;color:rgba(140,255,176,0.72)">A signal record from TIMARHANE's AI-powered creative universe.</p>
-<nav style="font-size:.8rem;letter-spacing:.15em"><a href="about-en.html" style="color:#8cffb0">Core</a> // <a href="frekans-en.html" style="color:#8cffb0">Frequency_101</a> // <a href="sentetik-en.html" style="color:#8cffb0">Synthetic Memories</a> // <a href="veri-en.html" style="color:#8cffb0">Data Vault</a></nav>
-</div>
-</noscript>
 
 <canvas id="bg-canvas"></canvas>
 <div class="bg-image"></div>
@@ -765,32 +624,31 @@
 
 <!-- NAV -->
 <nav class="site-nav" aria-label="Main navigation">
-  <a class="nav-brand" href="about-en.html">ONEHEUS // TIMARHANE by AKA</a>
+  <a class="nav-brand" href="https://oneheus.com/about-en.html">AKA // TIMARHANE</a>
   <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="songMenu"><span></span></button>
   <div class="nav-links" id="songMenu">
-    <a class="top-nav-link" href="about-en.html">Core</a>
-    <a class="top-nav-link active" href="frekans-en.html">Frequency_101</a>
-    <a class="top-nav-link" href="https://oneheus.com/sentetik-en.html">Synthetic Memories</a>
-    <a class="top-nav-link" href="https://oneheus.com/veri-en.html">Data Vault</a>
-    <a class="top-nav-link" href="https://oneheus.com/senkron-en.html">Sync: Offline</a>
+    <a class="top-nav-link" href="https://oneheus.com/about-en.html">Core</a>
+    <a class="top-nav-link active" href="https://oneheus.com/frekans.html">Frekans_101</a>
+    <a class="top-nav-link" href="https://oneheus.com/sentetik.html">Sentetik Anılar</a>
+    <a class="top-nav-link" href="https://oneheus.com/veri.html">Veri Mahzeni</a>
+    <a class="top-nav-link disabled" href="https://oneheus.com/senkron.html">Senkron: Kopuk</a>
     <div class="lang-switch" aria-label="Language">
       <a href="https://oneheus.com/crime-scene.html">TR</a><span>/</span><a href="https://oneheus.com/crime-scene-en.html" class="lang-active">EN</a>
     </div>
   </div>
 </nav>
 
-<div class="main-interface">
-        <div class="corner corner-tl"></div>
-        <div class="corner corner-tr"></div>
-        <div class="corner corner-bl"></div>
-        <div class="corner corner-br"></div>
-    <span class="sys-label">Frequency_101 // Record</span>
-    <h1 class="song-title" data-text="CRIME SCENE">CRIME <span>SCENE</span></h1>
-        <div class="meta-row">
-            <span>SIGNAL: 404</span>
-            <span>FORMAT: AI / CLASSIFIED</span>
-            <span>STATUS: EVIDENCE</span>
-        </div>
+<div class="breadcrumb">
+  <a href="https://oneheus.com/frekans.html">Frekans_101</a> // Record
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">— signal record —</p>
+  <h1 data-text="CRIME SCENE">CRIME <em>SC</em><span>ENE</span></h1>
+  <p class="style-tag">Cinematic Big Beat · Trip-Hop · 110 BPM</p>
+</div>
+
 <!-- PLAYER -->
 <div class="player-section">
   <p class="player-label">// audio record</p>
@@ -862,9 +720,9 @@ class GoldCoin {
     this.wobble = Math.random() * Math.PI * 2;
     this.wobbleSpeed = 0.02 + Math.random() * 0.02;
     const t = Math.random();
-    if (t < 0.5)      this.color = '#C07818';
+    if (t < 0.5)      this.color = '#d4a017';
     else if (t < 0.8) this.color = '#f0c040';
-    else              this.color = '#8B3510';
+    else              this.color = '#c0152a';
   }
   update() {
     this.y += this.vy;
@@ -906,8 +764,8 @@ class Boomerang {
     this.t = 0;
     this.maxT = (W * 1.4) / this.speed;
     const r = Math.random();
-    if (r < 0.45)      this.color = 'rgba(192,120,24,';
-    else if (r < 0.75) this.color = 'rgba(139,53,16,';
+    if (r < 0.45)      this.color = 'rgba(212,160,23,';
+    else if (r < 0.75) this.color = 'rgba(192,21,42,';
     else               this.color = 'rgba(140,255,176,';
     this.history = [];
   }
@@ -979,12 +837,12 @@ class TextColumn {
         ctx.fillStyle = 'rgba(0,0,0,0.85)';
         ctx.fillRect(this.x - 2, cy - 9, Math.min(this.word.length * 7, 58), 11);
         ctx.globalAlpha = this.alpha * 0.3;
-        ctx.fillStyle = '#C07818';
+        ctx.fillStyle = '#d4a017';
         ctx.fillText(this.word.substring(0, Math.floor(this.word.length * 0.6)), this.x, cy);
         ctx.globalAlpha = 1;
       } else {
         ctx.globalAlpha = this.alpha * (i === this.chars.length - 1 ? 1.8 : 1);
-        ctx.fillStyle = i % 3 === 0 ? '#C07818' : i % 3 === 1 ? '#8B3510' : 'rgba(140,255,176,0.7)';
+        ctx.fillStyle = i % 3 === 0 ? '#d4a017' : i % 3 === 1 ? '#c0152a' : 'rgba(140,255,176,0.7)';
         ctx.fillText(this.chars[i], this.x, cy);
         ctx.globalAlpha = 1;
       }
@@ -1196,7 +1054,7 @@ document.addEventListener('mousemove', e => {
       vx: (Math.random() - 0.5) * 0.8,
       vy: -0.5 - Math.random() * 1.2,
       decay: 0.022 + Math.random() * 0.015,
-      color: r < 0.5 ? '#C07818' : r < 0.8 ? '#8B3510' : '#8cffb0'
+      color: r < 0.5 ? '#d4a017' : r < 0.8 ? '#c0152a' : '#8cffb0'
     });
   }
 });
@@ -1238,79 +1096,5 @@ animateTrail();
   });
 })();
 </script>
-
-    <script>
-    /* ── Ken Burns + Breathe + Parallax / Gyroscope on .bg-image ── */
-    (function() {
-        const bgImg = document.querySelector('.bg-image');
-        if (!bgImg) return;
-
-        const IS_MOB   = window.innerWidth <= 760;
-        const KB_PERIOD = IS_MOB ? 13000 : 15000;
-        const KB_MAX_X  = IS_MOB ? 7 : 9;
-        const KB_MAX_Y  = IS_MOB ? 5  : 7;
-        const KB_SCALE  = 1.02;
-        const BR_PERIOD = 5000;
-        const BR_EXTRA  = 0.03;
-
-        if (!IS_MOB) {
-            /* Desktop: KB + Breathe + mouse parallax */
-            let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-            let px = 0, py = 0;
-            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-            (function animLoop() {
-                const W = window.innerWidth, H = window.innerHeight;
-                const tx = ((mx / W) - 0.5) * 16;
-                const ty = ((my / H) - 0.5) * 16;
-                px += (tx - px) * 0.04;
-                py += (ty - py) * 0.04;
-                const now    = performance.now();
-                const kbX    = Math.sin((now / KB_PERIOD) * Math.PI * 2)         * KB_MAX_X;
-                const kbY    = Math.sin((now / KB_PERIOD) * Math.PI * 2 * 0.618) * KB_MAX_Y;
-                const breath = Math.sin((now / BR_PERIOD) * Math.PI * 2) * 0.5 + 0.5;
-                const scale  = (KB_SCALE + breath * BR_EXTRA).toFixed(4);
-                bgImg.style.transform = `scale(${scale}) translate(${(kbX - px * 0.5).toFixed(2)}px,${(kbY - py * 0.5).toFixed(2)}px)`;
-                requestAnimationFrame(animLoop);
-            })();
-        } else {
-            /* Mobile: KB + Breathe + Gyroscope */
-            let gyroX = 0, gyroY = 0, rawGyroX = 0, rawGyroY = 0;
-
-            function onOrientation(e) {
-                if (e.gamma === null || e.beta === null) return;
-                rawGyroX = (Math.max(-45, Math.min(45, e.gamma)) / 45) * 22;
-                rawGyroY = (Math.max(-45, Math.min(45, e.beta - 90)) / 45) * 22;
-            }
-            function startGyro() {
-                if (typeof DeviceOrientationEvent !== 'undefined' &&
-                    typeof DeviceOrientationEvent.requestPermission === 'function') {
-                    DeviceOrientationEvent.requestPermission()
-                        .then(s => { if (s === 'granted') window.addEventListener('deviceorientation', onOrientation, { passive: true }); })
-                        .catch(() => {});
-                } else {
-                    window.addEventListener('deviceorientation', onOrientation, { passive: true });
-                }
-            }
-            let gyroStarted = false;
-            function tryStartGyro() { if (!gyroStarted) { gyroStarted = true; startGyro(); } }
-            document.addEventListener('touchstart', tryStartGyro, { once: true, passive: true });
-            document.addEventListener('touchend',   tryStartGyro, { once: true, passive: true });
-            window.addEventListener('scroll',       tryStartGyro, { once: true, passive: true });
-
-            (function bgAnimate(ts) {
-                const kbX    = Math.sin((ts / KB_PERIOD) * Math.PI * 2)         * KB_MAX_X;
-                const kbY    = Math.sin((ts / KB_PERIOD) * Math.PI * 2 * 0.618) * KB_MAX_Y;
-                const breath = Math.sin((ts / BR_PERIOD) * Math.PI * 2) * 0.5 + 0.5;
-                const scale  = (KB_SCALE + breath * BR_EXTRA).toFixed(4);
-                gyroX += (rawGyroX - gyroX) * 0.08;
-                gyroY += (rawGyroY - gyroY) * 0.08;
-                bgImg.style.transform = `scale(${scale}) translate(${(kbX + gyroX).toFixed(2)}px,${(kbY + gyroY).toFixed(2)}px)`;
-                requestAnimationFrame(bgAnimate);
-            })(0);
-        }
-    })();
-    </script>
-
 </body>
 </html>
