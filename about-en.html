@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="alternate" hreflang="tr" href="https://oneheus.com/about.html" />
     <link rel="alternate" hreflang="en" href="https://oneheus.com/about-en.html" />
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/about.html" />
+    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/" />
     <title>TIMARHANE — one of us dreams it. the other remembers it.</title>
     <style>
         :root {
@@ -727,7 +727,6 @@
             .origin-content { padding: 24px 18px 32px; }
             .origin-line { font-size: 0.94rem; }
             .oneheus-stage-extension { height: 45vh; }
-            .terminal-readout { width: min(500px, 80vw); }
             /* origin backgrounds stay position:fixed on mobile for fixed-bg scroll effect */
             .origin-bg-home, .origin-bg-morpheus, .origin-bg-oneheus {
                 will-change: transform, opacity;
@@ -1215,7 +1214,7 @@
             }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
             originEls.forEach((el, i) => {
-                el.style.transitionDelay = `${i * 30}ms`;
+                el.style.transitionDelay = `${i * 55}ms`;
                 observer.observe(el);
             });
         }

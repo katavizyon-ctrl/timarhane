@@ -421,9 +421,13 @@
 
         let W = 0, H = 0;
         function resize() {
-            W = grainC.width = fxC.width = window.innerWidth;
-            H = grainC.height = fxC.height = window.innerHeight;
+            const nw = window.innerWidth  || document.documentElement.clientWidth  || 1;
+            const nh = window.innerHeight || document.documentElement.clientHeight || 1;
+            if (nw <= 0 || nh <= 0) return; // guard against 0 during orientation change
+            W = grainC.width = fxC.width = nw;
+            H = grainC.height = fxC.height = nh;
         }
+        resize(); // call immediately — don't wait for load
         window.addEventListener('load', resize);
         window.addEventListener('resize', resize);
 
@@ -529,7 +533,7 @@
         /* ── Grain: rebuild every 3 frames ── */
         let grainTick = 0;
         function drawGrain() {
-            if (W === 0 || H === 0) return;
+            if (!W || !H || W <= 0 || H <= 0) return;
             const imgd = grainX.createImageData(W, H);
             const d = imgd.data;
             for (let i = 0; i < d.length; i += 4) {

@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="alternate" hreflang="tr" href="https://oneheus.com/about.html" />
     <link rel="alternate" hreflang="en" href="https://oneheus.com/about-en.html" />
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/about.html" />
+    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/" />
     <title>TIMARHANE — birimiz hayal eder. diğerimiz hatırlar.</title>
     <style>
         :root {
@@ -739,7 +739,6 @@
             .origin-content { padding: 24px 18px 32px; }
             .origin-line { font-size: 0.94rem; }
             .oneheus-stage-extension { height: 45vh; }
-            .terminal-readout { width: min(500px, 80vw); }
             /* origin backgrounds stay position:fixed on mobile for fixed-bg scroll effect */
             .origin-bg-home, .origin-bg-morpheus, .origin-bg-oneheus {
                 will-change: transform, opacity;
@@ -838,7 +837,7 @@
 </head>
 <body>
 <noscript>
-<div style="font-family:'Courier New',monospace;background:#050505;color:#8cffb0;padding:40px;min-height:100vh">
+<div style="font-family:'Courier New',monospace;background:#050505;color:#8cffb0;padding:10px;min-height:100vh">
 <h1 style="margin:0 0 12px;letter-spacing:.2em">TIMARHANE</h1>
 <h2 style="margin:0 0 20px;font-size:1rem;font-weight:400;color:#e8d8b8">ONEHEUS // TIMARHANE by AKA</h2>
 <p style="margin:0 0 24px;color:rgba(140,255,176,0.72)">Sistem dışı frekans. Burası, sistemin hatasından doğan bir boşluk.</p>
@@ -1228,7 +1227,7 @@
             }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
             originEls.forEach((el, i) => {
-                el.style.transitionDelay = `${i * 30}ms`;
+                el.style.transitionDelay = `${i * 55}ms`;
                 observer.observe(el);
             });
         }
