@@ -188,7 +188,7 @@
         }
 
         .lang-switch a {
-            color: rgba(192, 96, 224, 0.52);
+            color: rgba(140, 255, 176, 0.52);
             text-decoration: none;
             transition: color 220ms ease;
         }
@@ -287,8 +287,8 @@
             height: 1px;
             margin-right: 10px;
             vertical-align: middle;
-            background: var(--red-memory);
-            opacity: 0.72;
+            background: var(--phosphor);
+            opacity: 0.82;
         }
 
         .sys-title {
@@ -408,7 +408,7 @@
         }
 
         .player-vol-label {
-            color: var(--paper-faint);
+            color: var(--phosphor);
             font-size: 0.62rem;
             font-weight: 700;
             letter-spacing: 0.14em;
@@ -445,6 +445,10 @@
         }
 
         /* ── Lyrics ── */
+        .lyrics-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .lyrics-label { font-family: 'Courier New', Courier, monospace; font-size: 0.875rem; letter-spacing: 0.20em; color: var(--phosphor); font-weight: 800; text-transform: uppercase; flex-shrink: 0; }
+        .lyrics-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--phosphor), transparent); }
+
         .lyrics-container {
             height: 260px;
             overflow: hidden;
@@ -757,7 +761,7 @@
         <div class="player" id="playerUI">
             <div class="player-track-info">
                 <span class="player-track-name">AKA — SECOND HEART</span>
-                <span class="player-time" id="playerTime">0:00 / 0:00</span>
+                <span class="player-time" id="playerTime">0:00 / 3:49</span>
             </div>
             <div class="player-scrubber" id="scrubber" role="slider" aria-label="Progress bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
                 <div class="player-scrubber-fill" id="scrubberFill"></div>
@@ -773,6 +777,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="lyrics-header">
+            <span class="lyrics-label">// lyrics</span>
+            <div class="lyrics-divider"></div>
         </div>
 
         <div class="lyrics-container">

@@ -270,7 +270,7 @@
             margin: 6px 0 18px;
             font-size: 0.58rem; font-weight: 700;
             letter-spacing: 0.20em;
-            color: var(--mavi-3);
+            color: var(--paper-faint);
             text-transform: uppercase; opacity: 0.90;
         }
         .meta-row span { white-space: nowrap; }
@@ -291,7 +291,7 @@
             height: 1px;
             margin-right: 10px;
             vertical-align: middle;
-            background: var(--mavi-2);
+            background: #39B1D1;
             opacity: 0.82;
         }
 
@@ -310,7 +310,7 @@
             margin: 0 0 20px;
             padding: 16px 18px;
             background: rgba(0, 0, 5, 0.45);
-            border: 1px solid var(--mavi-3);
+            border: 1px solid rgba(57, 177, 209, 0.55);
         }
 
         .player-track-info {
@@ -419,7 +419,7 @@
         }
 
         .player-vol-label {
-            color: var(--paper-faint);
+            color: #39B1D1;
             font-size: 0.62rem;
             font-weight: 700;
             letter-spacing: 0.14em;
@@ -456,6 +456,10 @@
         }
 
         /* ── Lyrics ── */
+        .lyrics-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .lyrics-label { font-family: 'Courier New', Courier, monospace; font-size: 0.875rem; letter-spacing: 0.20em; color: #39B1D1; font-weight: 800; text-transform: uppercase; flex-shrink: 0; }
+        .lyrics-divider { flex: 1; height: 1px; background: linear-gradient(to right, #39B1D1, transparent); }
+
         .lyrics-container {
             height: 260px;
             overflow: hidden;
@@ -772,7 +776,7 @@
         <div class="player" id="playerUI">
             <div class="player-track-info">
                 <span class="player-track-name">AKA — BLUE RENDEZVOUS</span>
-                <span class="player-time" id="playerTime">0:00 / 0:00</span>
+                <span class="player-time" id="playerTime">0:00 / 7:59</span>
             </div>
             <div class="player-scrubber" id="scrubber" role="slider" aria-label="Progress bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
                 <div class="player-scrubber-fill" id="scrubberFill"></div>
@@ -788,6 +792,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="lyrics-header">
+            <span class="lyrics-label">// lyrics</span>
+            <div class="lyrics-divider"></div>
         </div>
 
         <div class="lyrics-container">

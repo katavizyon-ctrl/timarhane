@@ -291,8 +291,8 @@
             height: 1px;
             margin-right: 10px;
             vertical-align: middle;
-            background: var(--red-memory);
-            opacity: 0.72;
+            background: var(--amber);
+            opacity: 0.82;
         }
 
         .sys-title {
@@ -415,7 +415,7 @@
         }
 
         .player-vol-label {
-            color: var(--paper-faint);
+            color: var(--amber);
             font-size: 0.62rem;
             font-weight: 700;
             letter-spacing: 0.14em;
@@ -452,6 +452,10 @@
         }
 
         /* ── Lyrics ── */
+        .lyrics-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .lyrics-label { font-family: 'Courier New', Courier, monospace; font-size: 0.875rem; letter-spacing: 0.20em; color: var(--amber); font-weight: 800; text-transform: uppercase; flex-shrink: 0; }
+        .lyrics-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--amber), transparent); }
+
         .lyrics-container {
             height: 260px;
             overflow: hidden;
@@ -825,6 +829,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="lyrics-header">
+            <span class="lyrics-label">// lyrics</span>
+            <div class="lyrics-divider"></div>
         </div>
 
         <div class="lyrics-container">

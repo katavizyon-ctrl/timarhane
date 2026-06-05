@@ -202,9 +202,9 @@
 
   .top-nav-link:hover,
   .top-nav-link.active {
-    color: #E8D8B8;
+    color: var(--paper);
     opacity: 1;
-    border-color: #B64A35;
+    border-color: rgba(182, 74, 53, 0.78);
   }
 
   .top-nav-link.disabled {
@@ -444,14 +444,14 @@
   .player-btn:hover { background: rgba(192,21,42,0.12); border-color: var(--blood); color: #fff; }
   .player-btn.is-playing { background: rgba(192,21,42,0.10); border-color: var(--blood); color: var(--blood); }
   .player-vol { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-  .vol-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase; }
-  .vol-track { position: relative; width: 58px; height: 3px; background: rgba(192,21,42,0.18); cursor: pointer; }
-  .vol-fill { height: 100%; width: 80%; background: rgba(192,21,42,0.55); pointer-events: none; }
+  .vol-label { font-size: 0.6rem; color: var(--blood); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+  .vol-track { position: relative; width: 58px; height: 3px; background: rgba(192, 21, 42, 0.18); cursor: pointer; }
+  .vol-fill { height: 100%; width: 80%; background: rgba(192, 21, 42, 0.55); pointer-events: none; }
   .vol-thumb {
     position: absolute; top: 50%; left: 80%;
     width: 8px; height: 8px;
-    background: var(--text-muted);
-    border: 1px solid rgba(14,207,176,0.5);
+    background: var(--blood);
+    border: 1px solid var(--blood);
     transform: translate(-50%,-50%);
     pointer-events: none;
   }
@@ -467,8 +467,8 @@
     animation: fadeUp 0.8s 0.9s forwards;
   }
   .lyrics-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-  .lyrics-label { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--teal-dim); text-transform: uppercase; flex-shrink: 0; }
-  .lyrics-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--teal-dim), transparent); }
+  .lyrics-label { font-family: 'Courier New', Courier, monospace; font-size: 0.875rem; letter-spacing: 0.20em; color: var(--blood); font-weight: 800; text-transform: uppercase; flex-shrink: 0; }
+  .lyrics-divider { flex: 1; height: 1px; background: linear-gradient(to right, var(--blood), transparent); }
   .lyrics-container { height: 280px; overflow: hidden; position: relative; }
   .lyrics-container::after {
     content: '';
@@ -624,8 +624,8 @@
             width: 28px; height: 1px;
             margin-right: 10px;
             vertical-align: middle;
-            background: #B64A35;
-            opacity: 0.72;
+            background: var(--blood);
+            opacity: 0.82;
         }
 
         /* ── Glitch Song Title ── */
@@ -782,7 +782,6 @@
         </div>
 <!-- PLAYER -->
 <div class="player-section">
-  <p class="player-label">// ses kaydı</p>
   <div class="player-box">
     <div class="player-title-row">
       <span class="player-artist">AKA — AHTAPOT</span>
