@@ -179,7 +179,7 @@
             }
 
             .sys-label {
-                position: fixed;
+                position: absolute;
                 top: 104px;
                 left: clamp(28px, 5vw, 72px);
                 z-index: 20;
@@ -230,7 +230,7 @@
             .manifesto-panel .mp-final   { margin-bottom: 0; color: var(--paper); margin-top: 0.2rem; }
 
             .nav-box {
-                position: fixed; z-index: 20;
+                position: absolute; z-index: 20;
                 top: clamp(180px,32vh,280px); right: clamp(28px,5vw,74px);
                 width: min(370px,27vw);
                 display: flex; flex-direction: column; gap: 18px;
@@ -532,8 +532,10 @@
             width: 100%;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: flex-start;
-            justify-content: center;
+            justify-content: flex-start;
+            padding-top: clamp(120px, 16vh, 170px);
             overflow: visible;
         }
 
@@ -565,29 +567,40 @@
 
         .origin-content {
             position: relative; z-index: 3;
-            width: min(680px, 88vw);
-            padding: clamp(80px,12vh,140px) 0px 0px;
+            width: min(560px, 42vw);
+            margin: 0 0 0 clamp(28px, 5vw, 72px);
+            padding: 22px 26px 24px;
             display: flex; flex-direction: column; gap: 0;
-            margin: 0 auto;
+            color: var(--phosphor-soft);
+            background: linear-gradient(135deg, rgba(0,0,0,0.58), rgba(0,0,0,0.24));
+            border-left: 1px solid var(--phosphor-dim);
+            backdrop-filter: blur(2.5px);
+            -webkit-backdrop-filter: blur(2.5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.42);
         }
 
         /* Refined UI Header Status Configuration */
         .origin-header {
+            position: relative; z-index: 3;
+            width: fit-content;
+            max-width: calc(100% - 56px);
             font-size: clamp(0.85rem, 0.95vw, 1.1rem);
             font-weight: 800; 
             letter-spacing: 0.38em;
             text-transform: uppercase;
-            margin-bottom: clamp(36px,5vh,56px);
+            margin: 0 auto clamp(36px,5vh,56px);
             display: flex; 
             align-items: center; 
             justify-content: center; 
             gap: clamp(10px, 1.5vw, 24px);
             text-align: center;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(232, 216, 184, 0.08);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            padding: 10px 24px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.58), rgba(0,0,0,0.24));
+            border: 1px solid rgba(140,255,176,0.20);
+            border-top: 2px solid rgba(140,255,176,0.62);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            box-shadow: 0 18px 54px rgba(0,0,0,0.42);
         }
         .origin-header::before,
         .origin-header::after { 
@@ -622,7 +635,7 @@
             color: var(--paper-dim);
             opacity: 0; transform: translateY(14px);
             transition: opacity 0.7s ease, transform 0.7s ease;
-            margin: 0; text-align: center;
+            margin: 0; text-align: left;
         }
         .origin-line.visible { opacity: 1; transform: translateY(0); }
         .origin-line.spacer { height: clamp(18px, 2.8vh, 32px); }
@@ -687,7 +700,7 @@
         .origin-divider {
             width: 48px; height: 1px;
             background: rgba(140,255,176,0.24);
-            margin: clamp(28px,4vh,44px) auto;
+            margin: clamp(28px,4vh,44px) 0;
             opacity: 0; transition: opacity 0.7s ease;
         }
         .origin-divider.visible { opacity: 1; }
@@ -701,10 +714,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-left: clamp(28px, 5vw, 72px);
+            padding-right: clamp(28px, 5vw, 72px);
         }
 
         .terminal-readout {
-            width: min(500px, 80vw);
+            width: min(790px, 78vw);
             padding: 20px;
             background: rgba(0, 0, 0, 0.65);
             border: 1px solid var(--phosphor-dim);
@@ -732,10 +747,33 @@
         .term-val { color: var(--paper); font-weight: 700; }
 
         @media (max-width: 760px) {
-            #origin { min-height: auto; padding-top: 32px; scroll-margin-top: 64px; }
-            .origin-content { padding: 0; }
+            #origin { min-height: auto; padding-top: 32px; scroll-margin-top: 64px; align-items: center; justify-content: flex-start; }
+            .origin-content {
+                width: calc(100% - 44px);
+                margin: 0 auto;
+                padding: 22px 18px 20px;
+                background: linear-gradient(135deg, rgba(0,0,0,0.58), rgba(0,0,0,0.24));
+                border-left: 2px solid rgba(140,255,176,0.52);
+            }
+            .origin-header {
+                width: calc(100% - 44px);
+                max-width: none;
+                margin: 0 auto 22px;
+                font-size: 0.68rem;
+                letter-spacing: 0.22em;
+                padding: 9px 12px;
+                gap: 10px;
+            }
+            .origin-header::before,
+            .origin-header::after { width: 22px; }
             .origin-line { font-size: 0.94rem; }
-            .oneheus-stage-extension { height: 45vh; }
+            .oneheus-stage-extension {
+                height: 45vh;
+                justify-content: center;
+                padding-left: 22px;
+                padding-right: 22px;
+            }
+            .terminal-readout { width: 100%; }
             /* origin backgrounds stay position:fixed on mobile for fixed-bg scroll effect */
             .origin-bg-home, .origin-bg-morpheus, .origin-bg-oneheus {
                 will-change: transform, opacity;
@@ -925,15 +963,15 @@
         <div class="origin-bg-morpheus" id="layer-morpheus"></div>
         <div class="origin-bg-oneheus" id="layer-oneheus"></div>
 
-        <div class="origin-content">
-            <div class="origin-header">
-                <span class="hdr-one">ONE</span> 
-                <span class="hdr-sep">//</span> 
-                <span class="hdr-morpheus">MORPHEUS</span> 
-                <span class="hdr-sep">//</span> 
-                <span class="hdr-oneheus">ONEHEUS</span>
-            </div>
+        <div class="origin-header">
+            <span class="hdr-one">ONE</span> 
+            <span class="hdr-sep">//</span> 
+            <span class="hdr-morpheus">MORPHEUS</span> 
+            <span class="hdr-sep">//</span> 
+            <span class="hdr-oneheus">ONEHEUS</span>
+        </div>
 
+        <div class="origin-content">
             <p class="origin-line">Leave enough places behind,</p>
             <p class="origin-line">and you no longer belong to any of them.</p>
             <p class="origin-line">Or perhaps— every place becomes yours.</p>
