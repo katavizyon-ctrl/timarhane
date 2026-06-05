@@ -91,6 +91,16 @@
             text-transform: uppercase;
         }
 
+        .brand-main::before {
+            content: "";
+            display: inline-block;
+            width: 34px; height: 1px;
+            margin-right: 14px;
+            vertical-align: middle;
+            background: var(--red-memory);
+            opacity: 0.78;
+        }
+
         .brand-tagline {
             color: var(--red-memory);
             font-size: clamp(0.64rem, 0.85vw, 0.78rem);
@@ -147,6 +157,8 @@
             .mobile-img-spacer { display: none; }
             #mobile-bg { display: none; }
 
+            .top-nav .brand-tagline { display: none; }
+
             #bg-photo {
                 position: fixed; inset: 0; z-index: 1;
                 background: url('home.webp') center/cover no-repeat;
@@ -178,6 +190,21 @@
                 mix-blend-mode: screen;
             }
 
+            /* System label — below nav, above manifesto */
+            .sys-label {
+                position: fixed;
+                top: 84px;
+                left: clamp(28px, 5vw, 72px);
+                z-index: 15;
+                color: var(--red-memory);
+                font-size: clamp(0.60rem, 0.72vw, 0.72rem);
+                font-weight: 700;
+                letter-spacing: 0.30em;
+                text-transform: uppercase;
+                opacity: 0.82;
+                pointer-events: none;
+            }
+
             #home-stage {
                 position: relative; z-index: 10;
                 width: 100vw; height: 100vh; min-height: 620px;
@@ -186,7 +213,7 @@
 
             .manifesto-panel {
                 position: absolute; z-index: 11;
-                left: clamp(28px,5vw,72px); top: 54%;
+                left: clamp(28px,5vw,72px); top: 54%; 
                 width: min(380px,28vw);
                 padding: 22px 26px 20px;
                 color: var(--phosphor-soft);
@@ -196,11 +223,6 @@
                 opacity: 0;
                 transform: translateY(-50%) translateX(-14px);
                 transition: opacity 0.7s ease, transform 0.7s ease;
-                /* push center down so top edge always clears the 84px nav */
-                margin-top: clamp(52px, 7vh, 88px);
-                /* cap height so panel never overflows the viewport bottom */
-                max-height: calc(100vh - 84px - clamp(52px, 7vh, 88px) - 40px);
-                overflow-y: auto;
             }
             .manifesto-panel.visible { opacity: 1; transform: translateY(-50%) translateX(0); }
             .manifesto-panel::before {
@@ -866,6 +888,7 @@
             <a href="frekans-en.html">Frequency_101</a>
             <a href="sentetik-en.html">Synthetic Memories</a>
             <a href="veri-en.html">Data Vault</a>
+            <a href="senkron-en.html">Sync: Offline</a>
             <span class="lang-switch">
                 <a href="about.html">TR</a>
                 <span>/</span>
@@ -887,6 +910,7 @@
 
     <main id="home-stage">
         <div class="mobile-img-spacer"></div>
+        <div class="sys-label" id="sysLabel">OUT-OF-SYSTEM FREQUENCY // 01</div>
         <section class="manifesto-panel" id="manifesto">
             <p id="mp1" class="mp-second"></p>
             <p id="mp2" class="mp-second"></p>
@@ -1002,7 +1026,7 @@
                     }
                     el.textContent = out;
                     i++;
-                    setTimeout(tick, speed + Math.random() * 10);
+                    setTimeout(tick, speed + Math.random() * 5);
                 } else {
                     el.textContent = text;
                     if (cb) cb();
@@ -1016,19 +1040,19 @@
             setTimeout(() => {
                 const panel = document.getElementById('manifesto');
                 panel.classList.add('visible');
-                setTimeout(() => typeText(document.getElementById('mp1'), MANIFESTO[0], 22, () => {
-                    setTimeout(() => typeText(document.getElementById('mp2'), MANIFESTO[1], 20, () => {
-                        setTimeout(() => typeText(document.getElementById('mp3'), MANIFESTO[2], 22, () => {
-                            setTimeout(() => typeText(document.getElementById('mp4'), MANIFESTO[3], 20, () => {
-                                setTimeout(() => typeText(document.getElementById('mp5'), MANIFESTO[4], 22, () => {
-                                    setTimeout(() => typeText(document.getElementById('mp6'), MANIFESTO[5], 22, () => {
+                setTimeout(() => typeText(document.getElementById('mp1'), MANIFESTO[0], 11, () => {
+                    setTimeout(() => typeText(document.getElementById('mp2'), MANIFESTO[1], 10, () => {
+                        setTimeout(() => typeText(document.getElementById('mp3'), MANIFESTO[2], 11, () => {
+                            setTimeout(() => typeText(document.getElementById('mp4'), MANIFESTO[3], 10, () => {
+                                setTimeout(() => typeText(document.getElementById('mp5'), MANIFESTO[4], 11, () => {
+                                    setTimeout(() => typeText(document.getElementById('mp6'), MANIFESTO[5], 11, () => {
                         setTimeout(() => {
                             document.getElementById('mpSep').classList.add('visible');
-                            setTimeout(() => typeText(document.getElementById('mp7'), MANIFESTO[6], 28, () => {
-                                setTimeout(() => typeText(document.getElementById('mp8'), MANIFESTO[7], 26, () => {
-                                    setTimeout(() => typeText(document.getElementById('mp9'), MANIFESTO[8], 28, () => {
-                                        setTimeout(() => typeText(document.getElementById('mp10'), MANIFESTO[9], 26, () => {
-                                            setTimeout(() => typeText(document.getElementById('mp11'), MANIFESTO[10], 28, null), 150);
+                            setTimeout(() => typeText(document.getElementById('mp7'), MANIFESTO[6], 13, () => {
+                                setTimeout(() => typeText(document.getElementById('mp8'), MANIFESTO[7], 12, () => {
+                                    setTimeout(() => typeText(document.getElementById('mp9'), MANIFESTO[8], 13, () => {
+                                        setTimeout(() => typeText(document.getElementById('mp10'), MANIFESTO[9], 12, () => {
+                                            setTimeout(() => typeText(document.getElementById('mp11'), MANIFESTO[10], 13, null), 150);
                                         }), 140);
                                     }), 170);
                                 }), 140);
