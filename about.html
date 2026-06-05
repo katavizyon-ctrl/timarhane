@@ -739,6 +739,7 @@
             .origin-content { padding: 24px 18px 32px; }
             .origin-line { font-size: 0.94rem; }
             .oneheus-stage-extension { height: 45vh; }
+            .terminal-readout { width: min(500px, 80vw); }
             /* origin backgrounds stay position:fixed on mobile for fixed-bg scroll effect */
             .origin-bg-home, .origin-bg-morpheus, .origin-bg-oneheus {
                 will-change: transform, opacity;
@@ -1227,7 +1228,7 @@
             }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
             originEls.forEach((el, i) => {
-                el.style.transitionDelay = `${i * 55}ms`;
+                el.style.transitionDelay = `${i * 30}ms`;
                 observer.observe(el);
             });
         }
