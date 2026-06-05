@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="alternate" hreflang="tr" href="https://oneheus.com/about.html" />
     <link rel="alternate" hreflang="en" href="https://oneheus.com/about-en.html" />
-    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://oneheus.com/about.html" />
     <title>TIMARHANE — birimiz hayal eder. diğerimiz hatırlar.</title>
     <style>
         :root {
@@ -91,16 +91,6 @@
             text-transform: uppercase;
         }
 
-        .brand-main::before {
-            content: "";
-            display: inline-block;
-            width: 34px; height: 1px;
-            margin-right: 14px;
-            vertical-align: middle;
-            background: var(--red-memory);
-            opacity: 0.78;
-        }
-
         .brand-tagline {
             color: var(--red-memory);
             font-size: clamp(0.64rem, 0.85vw, 0.78rem);
@@ -169,23 +159,6 @@
             .mobile-img-spacer { display: none; }
             #mobile-bg { display: none; }
 
-            .top-nav .brand-tagline { display: none; }
-
-            /* sys-label: sits 20px below nav bottom, locked */
-            .sys-label {
-                position: fixed;
-                top: 104px;
-                left: clamp(28px, 5vw, 72px);
-                z-index: 15;
-                color: #B64A35;
-                font-size: 0.62rem;
-                font-weight: 700;
-                letter-spacing: 0.28em;
-                text-transform: uppercase;
-                opacity: 0.85;
-                pointer-events: none;
-            }
-
             #bg-photo {
                 position: fixed; inset: 0; z-index: 1;
                 background: url('home.webp') center/cover no-repeat;
@@ -217,6 +190,20 @@
                 mix-blend-mode: screen;
             }
 
+            .sys-label {
+                position: fixed;
+                top: 104px;
+                left: clamp(28px, 5vw, 72px);
+                z-index: 20;
+                color: #B64A35;
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.28em;
+                text-transform: uppercase;
+                opacity: 0.85;
+                pointer-events: none;
+            }
+
             #home-stage {
                 position: relative; z-index: 10;
                 width: 100vw; height: 100vh; min-height: 620px;
@@ -225,13 +212,8 @@
 
             .manifesto-panel {
                 position: absolute; z-index: 11;
-                left: clamp(28px,5vw,72px);
-                /* fixed top anchor — 140px below viewport top (nav 84px + label + gap) */
-                top: clamp(140px, 17vh, 180px);
-                width: min(380px,28vw);
-                /* fixed height so the frame never moves — only text scrolls inside */
-                height: calc(100vh - clamp(140px, 17vh, 180px) - 48px);
-                overflow-y: auto;
+                left: clamp(28px,5vw,72px); top: clamp(140px, 17vh, 180px);
+                width: min(520px,38vw);
                 padding: 22px 26px 20px;
                 color: var(--phosphor-soft);
                 background: linear-gradient(135deg, rgba(0,0,0,0.58), rgba(0,0,0,0.24));
@@ -391,6 +373,8 @@
             }
             .mobile-drawer a.is-offline { color: rgba(140,255,176,0.28); }
             .mobile-drawer a.is-active  { color: rgba(232,216,184,0.9); }
+
+            .sys-label { display: none; }
 
             #home-stage {
                 position: relative; z-index: 10;
@@ -561,7 +545,7 @@
             min-height: 100vh;
             display: flex;
             align-items: flex-start;
-            justify-content: flex-start;
+            justify-content: center;
             overflow: visible;
         }
 
@@ -593,15 +577,10 @@
 
         .origin-content {
             position: relative; z-index: 3;
-            width: min(560px, 85vw);
-            padding: clamp(80px,12vh,140px) 28px 40px;
+            width: min(680px, 88vw);
+            padding: clamp(80px,12vh,140px) 0px 0px;
             display: flex; flex-direction: column; gap: 0;
-            margin: 0 0 0 4vw;
-            background: rgba(0,0,0,0.28);
-            border-left: 2px solid rgba(140,255,176,0.52);
-            box-shadow: 0 24px 90px rgba(0,0,0,0.6);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            margin: 0 auto;
         }
 
         /* Refined UI Header Status Configuration */
@@ -613,15 +592,14 @@
             margin-bottom: clamp(36px,5vh,56px);
             display: flex; 
             align-items: center; 
-            justify-content: center;
+            justify-content: center; 
             gap: clamp(10px, 1.5vw, 24px);
             text-align: center;
             padding: 10px 20px;
-            background: rgba(0,0,0,0.28);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(232, 216, 184, 0.08);
-            box-shadow: 0 24px 90px rgba(0,0,0,0.6);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
         .origin-header::before,
         .origin-header::after { 
@@ -656,7 +634,7 @@
             color: var(--paper-dim);
             opacity: 0; transform: translateY(14px);
             transition: opacity 0.7s ease, transform 0.7s ease;
-            margin: 0; text-align: left;
+            margin: 0; text-align: center;
         }
         .origin-line.visible { opacity: 1; transform: translateY(0); }
         .origin-line.spacer { height: clamp(18px, 2.8vh, 32px); }
@@ -721,7 +699,7 @@
         .origin-divider {
             width: 48px; height: 1px;
             background: rgba(140,255,176,0.24);
-            margin: clamp(28px,4vh,44px) 0;
+            margin: clamp(28px,4vh,44px) auto;
             opacity: 0; transition: opacity 0.7s ease;
         }
         .origin-divider.visible { opacity: 1; }
@@ -738,7 +716,7 @@
         }
 
         .terminal-readout {
-            width: min(400px, 52vw);
+            width: min(500px, 80vw);
             padding: 20px;
             background: rgba(0, 0, 0, 0.65);
             border: 1px solid var(--phosphor-dim);
@@ -748,7 +726,6 @@
             line-height: 1.8;
             color: var(--phosphor-soft);
             box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            overflow: hidden;
         }
 
         .terminal-header {
@@ -768,7 +745,7 @@
 
         @media (max-width: 760px) {
             #origin { min-height: auto; padding-top: 32px; scroll-margin-top: 64px; }
-            .origin-content { padding: 24px 18px 32px; }
+            .origin-content { padding: 0; }
             .origin-line { font-size: 0.94rem; }
             .oneheus-stage-extension { height: 45vh; }
             /* origin backgrounds stay position:fixed on mobile for fixed-bg scroll effect */
@@ -869,7 +846,7 @@
 </head>
 <body>
 <noscript>
-<div style="font-family:'Courier New',monospace;background:#050505;color:#8cffb0;padding:10px;min-height:100vh">
+<div style="font-family:'Courier New',monospace;background:#050505;color:#8cffb0;padding:40px;min-height:100vh">
 <h1 style="margin:0 0 12px;letter-spacing:.2em">TIMARHANE</h1>
 <h2 style="margin:0 0 20px;font-size:1rem;font-weight:400;color:#e8d8b8">ONEHEUS // TIMARHANE by AKA</h2>
 <p style="margin:0 0 24px;color:rgba(140,255,176,0.72)">Sistem dışı frekans. Burası, sistemin hatasından doğan bir boşluk.</p>
@@ -925,9 +902,9 @@
 
     <div id="mobile-bg"><img src="home.webp" alt=""></div>
 
+    <div class="sys-label" id="sysLabel">SİSTEM DIŞI FREKANS // 01</div>
     <main id="home-stage">
         <div class="mobile-img-spacer"></div>
-        <div class="sys-label" id="sysLabel">SİSTEM DIŞI FREKANS // 01</div>
         <section class="manifesto-panel" id="manifesto">
             <p id="mp1" class="mp-second"></p>
             <p id="mp2" class="mp-second"></p>
@@ -1410,58 +1387,5 @@
         }
     })();
     </script>
-<script>
-/* ── MOUSE TRAIL (phosphor + red-memory) ── */
-const trailCanvas = document.createElement('canvas');
-trailCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;';
-document.body.appendChild(trailCanvas);
-const tCtx = trailCanvas.getContext('2d');
-trailCanvas.width  = window.innerWidth;
-trailCanvas.height = window.innerHeight;
-window.addEventListener('resize', () => {
-  trailCanvas.width  = window.innerWidth;
-  trailCanvas.height = window.innerHeight;
-});
-
-const trailParticles = [];
-let mouseX = -999, mouseY = -999;
-
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  for (let i = 0; i < 3; i++) {
-    trailParticles.push({
-      x:     mouseX + (Math.random() - 0.5) * 6,
-      y:     mouseY + (Math.random() - 0.5) * 6,
-      r:     1.5 + Math.random() * 2.5,
-      alpha: 0.7 + Math.random() * 0.3,
-      vx:    (Math.random() - 0.5) * 0.8,
-      vy:    -0.5 - Math.random() * 1.2,
-      decay: 0.022 + Math.random() * 0.015,
-      color: Math.random() > 0.35 ? '#8CFFB0' : '#B64A35'
-    });
-  }
-});
-
-function animateTrail() {
-  tCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
-  for (let i = trailParticles.length - 1; i >= 0; i--) {
-    const p = trailParticles[i];
-    p.x    += p.vx;
-    p.y    += p.vy;
-    p.alpha -= p.decay;
-    p.r    *= 0.97;
-    if (p.alpha <= 0) { trailParticles.splice(i, 1); continue; }
-    tCtx.beginPath();
-    tCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    tCtx.fillStyle   = p.color;
-    tCtx.globalAlpha = p.alpha;
-    tCtx.fill();
-  }
-  tCtx.globalAlpha = 1;
-  requestAnimationFrame(animateTrail);
-}
-animateTrail();
-</script>
 </body>
 </html>
